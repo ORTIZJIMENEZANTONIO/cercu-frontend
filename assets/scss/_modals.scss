@@ -1,0 +1,78 @@
+// ============================================
+// CERCU Modal Overrides
+// ============================================
+
+.modal-content {
+  border: none;
+  border-radius: $border-radius-lg;
+  box-shadow: $box-shadow-xl;
+}
+
+.modal-header {
+  border-bottom: 1px solid $neutral-200;
+  padding: 1.25rem 1.5rem;
+
+  .modal-title {
+    font-family: $headings-font-family;
+    font-weight: 700;
+    font-size: 1.125rem;
+  }
+}
+
+.modal-body {
+  padding: 1.5rem;
+}
+
+.modal-footer {
+  border-top: 1px solid $neutral-200;
+  padding: 1rem 1.5rem;
+}
+
+// Confirm dialog
+.modal-confirm {
+  text-align: center;
+
+  .modal-confirm-icon {
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 1rem;
+    font-size: 1.75rem;
+
+    &.icon-warning {
+      background-color: rgba($warning, 0.1);
+      color: $warning;
+    }
+
+    &.icon-danger {
+      background-color: rgba($danger, 0.1);
+      color: $danger;
+    }
+
+    &.icon-success {
+      background-color: rgba($success, 0.1);
+      color: $success;
+    }
+  }
+}
+
+// Bottom sheet (mobile)
+@media (max-width: 575.98px) {
+  .modal-bottom-sheet {
+    .modal-dialog {
+      margin: 0;
+      max-width: 100%;
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+    }
+
+    .modal-content {
+      border-radius: $border-radius-xl $border-radius-xl 0 0;
+    }
+  }
+}

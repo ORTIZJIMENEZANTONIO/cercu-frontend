@@ -1,0 +1,119 @@
+// ============================================
+// CERCU Button Overrides
+// Nu/Duolingo style — tactile, responsive
+// ============================================
+
+.btn {
+  font-weight: 600;
+  border-radius: $border-radius;
+  transition: all 0.2s cubic-bezier(0.22, 1, 0.36, 1);
+  position: relative;
+  overflow: hidden;
+
+  &:focus-visible {
+    box-shadow: 0 0 0 3px rgba($cercu-indigo, 0.25);
+  }
+}
+
+// Press effect for all buttons
+.btn-press {
+  &:active:not(:disabled) {
+    transform: scale(0.96);
+    transition-duration: 0.08s;
+  }
+}
+
+.btn-primary {
+  background-color: $cercu-indigo;
+  border-color: $cercu-indigo;
+  box-shadow: 0 2px 4px rgba($cercu-indigo, 0.2);
+
+  &:hover {
+    background-color: $cercu-indigo-dark;
+    border-color: $cercu-indigo-dark;
+    box-shadow: 0 4px 12px rgba($cercu-indigo, 0.3);
+    transform: translateY(-1px);
+  }
+
+  &:active {
+    background-color: darken($cercu-indigo-dark, 5%);
+    transform: translateY(0);
+    box-shadow: 0 1px 2px rgba($cercu-indigo, 0.2);
+  }
+}
+
+.btn-coral {
+  background-color: $cercu-coral;
+  border-color: $cercu-coral;
+  color: white;
+  box-shadow: 0 2px 4px rgba($cercu-coral, 0.2);
+
+  &:hover {
+    background-color: $cercu-coral-dark;
+    border-color: $cercu-coral-dark;
+    color: white;
+    box-shadow: 0 4px 12px rgba($cercu-coral, 0.3);
+    transform: translateY(-1px);
+  }
+}
+
+.btn-outline-primary {
+  color: $cercu-indigo;
+  border-color: $cercu-indigo;
+
+  &:hover {
+    background-color: $cercu-indigo;
+    color: white;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba($cercu-indigo, 0.2);
+  }
+}
+
+// Pill buttons (chips)
+.btn-chip {
+  border-radius: $border-radius-pill;
+  padding: 0.5rem 1.125rem;
+  font-size: $font-size-sm;
+  font-weight: 500;
+  border: 2px solid $neutral-300;
+  background-color: white;
+  color: $neutral-700;
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+
+  &:hover {
+    border-color: $cercu-indigo;
+    color: $cercu-indigo;
+    transform: translateY(-1px);
+    box-shadow: 0 2px 8px rgba($cercu-indigo, 0.1);
+  }
+
+  &.active {
+    background-color: $cercu-indigo;
+    border-color: $cercu-indigo;
+    color: white;
+    box-shadow: 0 2px 8px rgba($cercu-indigo, 0.25);
+  }
+}
+
+// Icon button
+.btn-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  padding: 0;
+  border-radius: $border-radius;
+
+  &:hover {
+    transform: scale(1.05);
+  }
+}
+
+// Large CTA
+.btn-lg-cta {
+  padding: 0.875rem 2rem;
+  font-size: $font-size-lg;
+  border-radius: $border-radius-lg;
+}

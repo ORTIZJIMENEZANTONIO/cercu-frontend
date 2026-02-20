@@ -1,0 +1,37 @@
+{
+  "name": "cercu-frontend",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "nuxt build",
+    "dev": "nuxt dev --port 3001",
+    "generate": "nuxt generate",
+    "preview": "nuxt preview",
+    "postinstall": "nuxt prepare"
+  },
+  "dependencies": {
+    "@nuxtjs/leaflet": "^1.2.0",
+    "@pinia/nuxt": "^0.5.1",
+    "@popperjs/core": "^2.11.8",
+    "@vee-validate/nuxt": "^4.12.4",
+    "@vee-validate/yup": "^4.15.1",
+    "bootstrap": "^5.3.2",
+    "defu": "^6.1.4",
+    "gsap": "^3.12.4",
+    "nuxt": "^3.21.1",
+    "pinia": "^2.1.7",
+    "vee-validate": "^4.12.4",
+    "vue": "^3.5.28",
+    "vue-router": "^4.6.4",
+    "yup": "^1.3.3"
+  },
+  "devDependencies": {
+    "@nuxt/devtools": "latest",
+    "@types/bootstrap": "^5.2.10",
+    "@types/node": "^25.3.0",
+    "nuxt-icon": "^0.6.8",
+    "sass": "^1.70.0",
+    "sass-loader": "^14.0.0",
+    "typescript": "^5.3.3"
+  }
+}

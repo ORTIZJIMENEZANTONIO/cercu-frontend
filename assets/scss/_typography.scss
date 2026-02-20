@@ -1,0 +1,62 @@
+// ============================================
+// CERCU Typography
+// ============================================
+
+// Headings use Sora
+h1, h2, h3, h4, h5, h6,
+.h1, .h2, .h3, .h4, .h5, .h6 {
+  font-family: $headings-font-family;
+  font-weight: $headings-font-weight;
+  color: $neutral-900;
+}
+
+// Body uses Inter
+body {
+  font-family: $font-family-sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+// Display headings
+.display-lg {
+  font-size: 3rem;
+  font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+}
+
+.display-md {
+  font-size: 2.25rem;
+  font-weight: 700;
+  line-height: 1.25;
+  letter-spacing: -0.01em;
+}
+
+// Text utilities
+.text-muted-sm {
+  color: $neutral-500;
+  font-size: $font-size-sm;
+}
+
+.text-brand {
+  color: $cercu-indigo;
+}
+
+.text-coral {
+  color: $cercu-coral;
+}
+
+.fw-semibold {
+  font-weight: 600;
+}
+
+// Links
+a {
+  color: $cercu-indigo;
+  text-decoration: none;
+  transition: color 0.15s ease;
+
+  &:hover {
+    color: $cercu-indigo-dark;
+  }
+}

@@ -1,0 +1,26 @@
+// ============================================
+// CERCU Main Stylesheet
+// ============================================
+
+// 1. Design tokens & variables (must come before Bootstrap)
+@import "variables";
+
+// 2. Bootstrap (with our variable overrides applied)
+@import "bootstrap-imports";
+
+// 3. Custom mixins
+@import "mixins";
+
+// 4. Base styles
+@import "typography";
+@import "transitions";
+
+// 5. Component overrides
+@import "buttons";
+@import "cards";
+@import "forms";
+@import "badges";
+@import "modals";
+
+// 6. Custom utilities
+@import "utilities";

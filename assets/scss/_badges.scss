@@ -1,0 +1,67 @@
+// ============================================
+// CERCU Badge Overrides
+// ============================================
+
+.badge {
+  font-weight: 500;
+  font-size: 0.75rem;
+  padding: 0.25em 0.625em;
+  border-radius: $border-radius-sm;
+}
+
+// Status badges
+.badge-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.375rem;
+  padding: 0.25rem 0.75rem;
+  border-radius: $border-radius-pill;
+  font-size: 0.75rem;
+  font-weight: 600;
+
+  &::before {
+    content: '';
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  &.badge-active {
+    background-color: rgba($success, 0.1);
+    color: darken($success, 10%);
+    &::before { background-color: $success; }
+  }
+
+  &.badge-pending {
+    background-color: rgba($warning, 0.1);
+    color: darken($warning, 15%);
+    &::before { background-color: $warning; }
+  }
+
+  &.badge-inactive {
+    background-color: rgba($neutral-400, 0.15);
+    color: $neutral-600;
+    &::before { background-color: $neutral-400; }
+  }
+
+  &.badge-urgent {
+    background-color: rgba($cercu-coral, 0.1);
+    color: $cercu-coral-dark;
+    &::before { background-color: $cercu-coral; }
+  }
+}
+
+// Urgency tier badges
+.badge-urgency {
+  &.urgency-standard { background-color: rgba($info, 0.1); color: $info; }
+  &.urgency-today { background-color: rgba($warning, 0.1); color: darken($warning, 10%); }
+  &.urgency-immediate { background-color: rgba($danger, 0.1); color: $danger; }
+}
+
+// Pro badges
+.badge-pro {
+  background-color: rgba($cercu-indigo, 0.1);
+  color: $cercu-indigo;
+  font-weight: 600;
+}

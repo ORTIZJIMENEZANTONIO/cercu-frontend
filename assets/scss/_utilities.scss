@@ -1,0 +1,67 @@
+// ============================================
+// CERCU Custom Utilities
+// ============================================
+
+// Background utilities
+.bg-brand {
+  background-color: $cercu-indigo !important;
+}
+
+.bg-brand-light {
+  background-color: rgba($cercu-indigo, 0.08) !important;
+}
+
+.bg-coral {
+  background-color: $cercu-coral !important;
+}
+
+.bg-coral-light {
+  background-color: rgba($cercu-coral, 0.08) !important;
+}
+
+// Section spacing
+.section-padding {
+  padding-top: 3rem;
+  padding-bottom: 3rem;
+  @media (min-width: 768px) {
+    padding-top: 5rem;
+    padding-bottom: 5rem;
+  }
+}
+
+// Container narrow
+.container-narrow {
+  max-width: 720px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+// Sticky header offset
+.offset-header {
+  scroll-margin-top: 80px;
+}
+
+// Hide scrollbar
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+// Aspect ratio helpers
+.aspect-square {
+  aspect-ratio: 1;
+}
+
+.aspect-video {
+  aspect-ratio: 16/9;
+}
+
+// Divider
+.divider {
+  height: 1px;
+  background-color: $neutral-200;
+  border: none;
+}

@@ -1,0 +1,332 @@
+// ============================================
+// CERCU Transitions & Animations
+// Nu/Duolingo inspired — playful, smooth, alive
+// ============================================
+
+// ─── Page transitions ───
+.page-enter-active {
+  transition: opacity 0.35s ease, transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.page-leave-active {
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.page-enter-from {
+  opacity: 0;
+  transform: translateY(12px);
+}
+
+.page-leave-to {
+  opacity: 0;
+  transform: translateY(-8px);
+}
+
+// ─── Layout transitions ───
+.layout-enter-active,
+.layout-leave-active {
+  transition: opacity 0.3s ease;
+}
+
+.layout-enter-from,
+.layout-leave-to {
+  opacity: 0;
+}
+
+// ─── Fade ───
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.25s ease;
+}
+
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
+}
+
+// ─── Slide up (toasts, notifications) ───
+.slide-up-enter-active {
+  transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.4s ease;
+}
+
+.slide-up-leave-active {
+  transition: transform 0.25s ease, opacity 0.25s ease;
+}
+
+.slide-up-enter-from {
+  transform: translateY(20px) scale(0.95);
+  opacity: 0;
+}
+
+.slide-up-leave-to {
+  transform: translateY(-10px) scale(0.95);
+  opacity: 0;
+}
+
+// ─── Slide right (for right-side drawers/overlays) ───
+.slide-right-enter-active {
+  transition: opacity 0.3s ease;
+
+  .mobile-drawer {
+    transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+}
+
+.slide-right-leave-active {
+  transition: opacity 0.25s ease;
+
+  .mobile-drawer {
+    transition: transform 0.25s ease;
+  }
+}
+
+.slide-right-enter-from {
+  opacity: 0;
+
+  .mobile-drawer {
+    transform: translateX(100%);
+  }
+}
+
+.slide-right-leave-to {
+  opacity: 0;
+
+  .mobile-drawer {
+    transform: translateX(100%);
+  }
+}
+
+// ─── Scale (modals, popovers) ───
+.scale-enter-active {
+  transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.35s ease;
+}
+
+.scale-leave-active {
+  transition: transform 0.2s ease, opacity 0.2s ease;
+}
+
+.scale-enter-from {
+  transform: scale(0.85);
+  opacity: 0;
+}
+
+.scale-leave-to {
+  transform: scale(0.95);
+  opacity: 0;
+}
+
+// ─── Pop (chips, badges) ───
+.pop-enter-active {
+  transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.2s ease;
+}
+
+.pop-leave-active {
+  transition: transform 0.2s ease, opacity 0.2s ease;
+}
+
+.pop-enter-from {
+  transform: scale(0);
+  opacity: 0;
+}
+
+.pop-leave-to {
+  transform: scale(0.5);
+  opacity: 0;
+}
+
+// ─── Slide step (form multi-step) ───
+.step-slide-left-enter-active,
+.step-slide-left-leave-active,
+.step-slide-right-enter-active,
+.step-slide-right-leave-active {
+  transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.4s ease;
+}
+
+.step-slide-left-enter-from {
+  transform: translateX(50px);
+  opacity: 0;
+}
+
+.step-slide-left-leave-to {
+  transform: translateX(-50px);
+  opacity: 0;
+}
+
+.step-slide-right-enter-from {
+  transform: translateX(-50px);
+  opacity: 0;
+}
+
+.step-slide-right-leave-to {
+  transform: translateX(50px);
+  opacity: 0;
+}
+
+// ─── Bounce in (success states) ───
+.bounce-in-enter-active {
+  animation: bounceIn 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@keyframes bounceIn {
+  0% { transform: scale(0); opacity: 0; }
+  50% { transform: scale(1.1); }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+// ─── Shimmer (skeletons) ───
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+.shimmer {
+  background: linear-gradient(90deg, $neutral-200 25%, $neutral-100 50%, $neutral-200 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s ease-in-out infinite;
+}
+
+// ─── Pulse glow (active/attention) ───
+@keyframes pulseGlow {
+  0%, 100% { box-shadow: 0 0 0 0 rgba($cercu-indigo, 0.4); }
+  50% { box-shadow: 0 0 0 8px rgba($cercu-indigo, 0); }
+}
+
+.pulse-glow {
+  animation: pulseGlow 2s ease-in-out infinite;
+}
+
+// ─── Float (subtle idle animation) ───
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
+}
+
+.float {
+  animation: float 3s ease-in-out infinite;
+}
+
+// ─── Wiggle (error/attention) ───
+@keyframes wiggle {
+  0%, 100% { transform: translateX(0); }
+  20% { transform: translateX(-4px); }
+  40% { transform: translateX(4px); }
+  60% { transform: translateX(-3px); }
+  80% { transform: translateX(3px); }
+}
+
+.wiggle {
+  animation: wiggle 0.4s ease;
+}
+
+// ─── Spin (loading) ───
+@keyframes spinSmooth {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.spin-smooth {
+  animation: spinSmooth 1s linear infinite;
+}
+
+// ─── Gradient shift (hero bg, special sections) ───
+@keyframes gradientShift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+.gradient-animate {
+  background-size: 200% 200%;
+  animation: gradientShift 6s ease infinite;
+}
+
+// ─── Card interaction classes ───
+.card-interactive {
+  transition: transform 0.25s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.25s ease;
+  cursor: pointer;
+
+  &:hover {
+    transform: translateY(-4px);
+    box-shadow: $box-shadow-xl;
+  }
+
+  &:active {
+    transform: translateY(-1px) scale(0.99);
+    transition-duration: 0.1s;
+  }
+}
+
+// ─── Button press effect ───
+.btn-press {
+  transition: transform 0.15s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.15s ease;
+
+  &:active {
+    transform: scale(0.95);
+  }
+}
+
+// ─── Chip selection bounce ───
+.chip-bounce {
+  transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1),
+    background-color 0.2s ease,
+    border-color 0.2s ease,
+    color 0.2s ease,
+    box-shadow 0.2s ease;
+
+  &.active {
+    animation: chipSelect 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+}
+
+@keyframes chipSelect {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.08); }
+  100% { transform: scale(1); }
+}
+
+// ─── Focus input glow ───
+.input-glow {
+  transition: border-color 0.2s ease, box-shadow 0.3s ease;
+
+  &:focus {
+    border-color: $cercu-indigo-light;
+    box-shadow: 0 0 0 4px rgba($cercu-indigo, 0.12), 0 1px 2px rgba(0, 0, 0, 0.05);
+  }
+}
+
+// ─── Toast slide with bounce ───
+.toast-bounce-enter-active {
+  animation: toastIn 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.toast-bounce-leave-active {
+  animation: toastOut 0.3s ease forwards;
+}
+
+@keyframes toastIn {
+  0% { transform: translateX(100%) scale(0.8); opacity: 0; }
+  100% { transform: translateX(0) scale(1); opacity: 1; }
+}
+
+@keyframes toastOut {
+  0% { transform: translateX(0) scale(1); opacity: 1; }
+  100% { transform: translateX(100%) scale(0.8); opacity: 0; }
+}
+
+// ─── Stagger list helper ───
+.stagger-item {
+  opacity: 0;
+  transform: translateY(20px);
+
+  &.revealed {
+    opacity: 1;
+    transform: translateY(0);
+    transition: opacity 0.5s ease, transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  @for $i from 1 through 12 {
+    &:nth-child(#{$i}).revealed {
+      transition-delay: #{$i * 0.06}s;
+    }
+  }
+}
