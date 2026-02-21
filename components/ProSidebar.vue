@@ -48,7 +48,7 @@ const navItems = [
 const growthItems = [
   { to: '/pro/planes', icon: 'mdi:crown', label: 'Mi Plan', exact: false },
   { to: '/pro/boosts', icon: 'mdi:rocket-launch', label: 'Boosts', exact: false },
-  { to: '/pro/gamificacion', icon: 'mdi:trophy', label: 'Gamificación', exact: false },
+  { to: '/pro/gamificacion', icon: 'mdi:trophy', label: 'Panel', exact: false },
 ]
 </script>
 

@@ -116,15 +116,16 @@ const filteredAchievements = computed(() => {
   return gamStore.achievements;
 });
 
-onMounted(async () => {
+onMounted(() => {
   requestAnimationFrame(() => { mounted.value = true; });
-  await Promise.all([
-    gamStore.fetchDashboard(),
-    gamStore.fetchAchievements(),
-    gamStore.fetchMissions(),
-    gamStore.fetchTrustScore(),
-  ]);
-  trustScore.value = gamStore.trustScore?.score ?? 0;
+  Promise.all([
+    gamStore.fetchDashboard().catch(() => {}),
+    gamStore.fetchAchievements().catch(() => {}),
+    gamStore.fetchMissions().catch(() => {}),
+    gamStore.fetchTrustScore().catch(() => {}),
+  ]).then(() => {
+    trustScore.value = gamStore.trustScore?.score ?? 0;
+  });
 });
 
 useHead({ title: 'Gamificación - CERCU Pro' });

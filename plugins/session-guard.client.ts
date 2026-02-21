@@ -1,6 +1,5 @@
 export default defineNuxtPlugin(() => {
   const authStore = useAuthStore()
-  const router = useRouter()
 
   // Watch the token — when it goes from truthy to null (cookie expired), redirect to home
   let wasAuthenticated = !!authStore.token
@@ -11,7 +10,7 @@ export default defineNuxtPlugin(() => {
       if (wasAuthenticated && !newToken) {
         // Token expired or was cleared — clean up and go home
         authStore.logout()
-        router.push('/')
+        navigateTo('/', { replace: true })
       }
       wasAuthenticated = !!newToken
     },
@@ -22,7 +21,7 @@ export default defineNuxtPlugin(() => {
   setInterval(() => {
     if (wasAuthenticated && !authStore.token) {
       authStore.logout()
-      router.push('/')
+      navigateTo('/', { replace: true })
       wasAuthenticated = false
     }
   }, CHECK_INTERVAL)

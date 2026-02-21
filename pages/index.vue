@@ -125,13 +125,13 @@
         </div>
         <div class="row g-3">
           <div
-            v-for="cat in displayCategories"
+            v-for="(cat, idx) in displayCategories"
             :key="cat.id || cat.slug"
             class="col-6 col-md-4 col-lg-3 category-item"
           >
             <NuxtLink :to="`/categorias/${cat.slug}`" class="text-decoration-none">
               <div class="card category-card h-100 text-center p-4">
-                <div class="category-icon mx-auto mb-3">
+                <div class="category-icon mx-auto mb-3" :class="`category-icon--${catColorClass(idx)}`">
                   <Icon :name="cat.icon || 'mdi:wrench'" size="28" />
                 </div>
                 <h6 class="fw-semibold mb-1">{{ cat.name }}</h6>
@@ -200,11 +200,7 @@
 <script setup lang="ts">
 import gsap from 'gsap'
 
-// Redirect logged-in regular users to their solicitudes dashboard
 const authStore = useAuthStore()
-if (import.meta.client && authStore.isAuthenticated && !authStore.isProfessional && !authStore.isAdmin) {
-  navigateTo('/solicitudes', { replace: true })
-}
 
 const categoriesStore = useCategoriesStore()
 const { countUp } = useAnimations()
@@ -237,7 +233,17 @@ const displayCategories = computed(() =>
   categoriesStore.categories.slice(0, 8)
 )
 
+const catColors = ['coral', 'warning', 'success', 'info', 'indigo', 'danger', 'teal', 'purple']
+function catColorClass(idx: number) {
+  return catColors[idx % catColors.length]
+}
+
 onMounted(() => {
+  // Redirect logged-in regular users to solicitudes dashboard
+  if (authStore.isAuthenticated && !authStore.isProfessional && !authStore.isAdmin) {
+    return navigateTo('/solicitudes', { replace: true })
+  }
+
   // Trigger hero animations immediately
   requestAnimationFrame(() => {
     mounted.value = true
@@ -732,21 +738,21 @@ useHead({
 }
 
 .category-card {
-  background: $neu-bg;
-  border: none;
+  background: white;
+  border: 1px solid $neutral-200;
   border-radius: $border-radius-lg;
-  box-shadow: $neu-shadow-md;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
   transition: transform 0.25s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.25s ease;
   cursor: pointer;
 
   &:hover {
     transform: translateY(-4px);
-    box-shadow: $neu-shadow-xl;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
   }
 
   &:active {
     transform: translateY(0);
-    box-shadow: $neu-inset-sm;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
     transition-duration: 0.1s;
   }
 }
@@ -758,20 +764,27 @@ useHead({
   align-items: center;
   justify-content: center;
   border-radius: 14px;
-  background: $neu-bg;
-  box-shadow: $neu-shadow-sm;
+  background: rgba($cercu-indigo, 0.08);
   color: $cercu-indigo;
-  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.3s ease;
+  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), background 0.3s ease;
+
+  &--coral { background: rgba($cercu-coral, 0.1); color: $cercu-coral; }
+  &--warning { background: rgba($warning, 0.1); color: $warning; }
+  &--success { background: rgba($success, 0.1); color: $success; }
+  &--info { background: rgba($info, 0.1); color: $info; }
+  &--indigo { background: rgba($cercu-indigo, 0.08); color: $cercu-indigo; }
+  &--danger { background: rgba($danger, 0.1); color: $danger; }
+  &--teal { background: rgba(#14B8A6, 0.1); color: #14B8A6; }
+  &--purple { background: rgba(#8B5CF6, 0.1); color: #8B5CF6; }
 }
 
 .category-card:hover .category-icon {
   transform: scale(1.12) rotate(5deg);
-  box-shadow: $neu-shadow-md;
 }
 
 // ─── How It Works ───
 .how-section {
-  background: $neu-bg;
+  background: #F7F7FB;
 }
 
 .how-number {
@@ -792,8 +805,9 @@ useHead({
   width: 68px;
   height: 68px;
   border-radius: 50%;
-  background: $neu-bg;
-  box-shadow: $neu-shadow-md;
+  background: white;
+  border: 1px solid $neutral-200;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -803,7 +817,7 @@ useHead({
 
 .how-step:hover .how-icon-circle {
   transform: scale(1.1) rotate(5deg);
-  box-shadow: $neu-shadow-lg;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
 }
 
 // ─── Trust Signals ───
