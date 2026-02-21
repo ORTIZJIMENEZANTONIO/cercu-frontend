@@ -8,9 +8,32 @@ export const useLeadsStore = defineStore('leads', {
       pending: 0,
       taken: 0,
     },
+    // User-side leads (solicitudes)
+    userLeads: [] as any[],
+    userLeadsLoading: false,
   }),
 
   actions: {
+    async fetchUserLeads() {
+      this.userLeadsLoading = true;
+      try {
+        const authStore = useAuthStore();
+        const config = useRuntimeConfig();
+        const data: any = await $fetch(`${config.public.apiBase}/users/leads`, {
+          headers: { Authorization: `Bearer ${authStore.token}` },
+        });
+        this.userLeads = data.data || [];
+      } catch (e: any) {
+        if (e?.response?.status === 404 || e?.status === 404 || e?.statusCode === 404) {
+          this.userLeads = [];
+          return;
+        }
+        this.userLeads = [];
+      } finally {
+        this.userLeadsLoading = false;
+      }
+    },
+
     async fetchProLeads() {
       this.loading = true;
       try {

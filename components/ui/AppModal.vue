@@ -63,6 +63,7 @@ defineEmits(['update:modelValue'])
 
 .modal-content {
   border: none;
-  box-shadow: $box-shadow-xl;
+  background: $neu-bg;
+  box-shadow: $neu-shadow-xl;
 }
 </style>

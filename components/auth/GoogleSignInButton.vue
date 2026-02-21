@@ -78,19 +78,20 @@ async function handleClick() {
   font-weight: 500;
   font-family: 'Inter', sans-serif;
   color: $neutral-700;
-  background: white;
-  border: 1px solid $neutral-200;
+  background: $neu-bg;
+  border: none;
   border-radius: 12px;
-  transition: all 0.2s ease;
+  box-shadow: $neu-shadow-md;
+  transition: box-shadow 0.2s ease, transform 0.2s ease;
 
   &:hover:not(:disabled) {
-    background: $neutral-50;
-    border-color: $neutral-300;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+    transform: translateY(-1px);
+    box-shadow: $neu-shadow-lg;
   }
 
   &:active:not(:disabled) {
-    transform: scale(0.98);
+    transform: translateY(0);
+    box-shadow: $neu-inset-sm;
   }
 
   &:disabled {

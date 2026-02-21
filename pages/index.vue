@@ -200,6 +200,12 @@
 <script setup lang="ts">
 import gsap from 'gsap'
 
+// Redirect logged-in regular users to their solicitudes dashboard
+const authStore = useAuthStore()
+if (import.meta.client && authStore.isAuthenticated && !authStore.isProfessional && !authStore.isAdmin) {
+  navigateTo('/solicitudes', { replace: true })
+}
+
 const categoriesStore = useCategoriesStore()
 const { countUp } = useAnimations()
 const { revealChildren, reveal } = useScrollReveal()
@@ -633,13 +639,13 @@ useHead({
 
 .map-label {
   position: absolute;
-  background: white;
+  background: $neu-bg;
   border-radius: 8px;
   padding: 0.25rem 0.625rem;
   font-size: 0.7rem;
   font-weight: 600;
   color: $neutral-800;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
+  box-shadow: $neu-shadow-md;
   display: flex;
   align-items: center;
   gap: 0.25rem;
@@ -664,13 +670,13 @@ useHead({
 // ─── Hero Floating Stats ───
 .hero-stat {
   position: absolute;
-  background: white;
+  background: $neu-bg;
   border-radius: 14px;
   padding: 0.625rem 0.875rem;
   display: flex;
   align-items: center;
   gap: 0.625rem;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+  box-shadow: $neu-shadow-lg;
   z-index: 5;
 
   strong {
@@ -707,14 +713,14 @@ useHead({
   width: 36px;
   height: 36px;
   border-radius: 10px;
-  background: rgba($cercu-indigo, 0.1);
+  background: $neu-bg;
+  box-shadow: $neu-shadow-sm;
   color: $cercu-indigo;
   display: flex;
   align-items: center;
   justify-content: center;
 
   &--coral {
-    background: rgba($cercu-coral, 0.1);
     color: $cercu-coral;
   }
 }
@@ -726,19 +732,21 @@ useHead({
 }
 
 .category-card {
-  border: 1px solid $neutral-200;
+  background: $neu-bg;
+  border: none;
   border-radius: $border-radius-lg;
-  transition: transform 0.25s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.25s ease, border-color 0.25s ease;
+  box-shadow: $neu-shadow-md;
+  transition: transform 0.25s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.25s ease;
   cursor: pointer;
 
   &:hover {
     transform: translateY(-4px);
-    box-shadow: $box-shadow-xl;
-    border-color: rgba($cercu-indigo, 0.3);
+    box-shadow: $neu-shadow-xl;
   }
 
   &:active {
-    transform: translateY(-1px);
+    transform: translateY(0);
+    box-shadow: $neu-inset-sm;
     transition-duration: 0.1s;
   }
 }
@@ -750,19 +758,20 @@ useHead({
   align-items: center;
   justify-content: center;
   border-radius: 14px;
-  background: linear-gradient(135deg, rgba($cercu-indigo, 0.08) 0%, rgba($cercu-indigo, 0.15) 100%);
+  background: $neu-bg;
+  box-shadow: $neu-shadow-sm;
   color: $cercu-indigo;
-  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), background 0.3s ease;
+  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.3s ease;
 }
 
 .category-card:hover .category-icon {
   transform: scale(1.12) rotate(5deg);
-  background: linear-gradient(135deg, rgba($cercu-indigo, 0.12) 0%, rgba($cercu-indigo, 0.22) 100%);
+  box-shadow: $neu-shadow-md;
 }
 
 // ─── How It Works ───
 .how-section {
-  background: linear-gradient(180deg, white 0%, $neutral-50 100%);
+  background: $neu-bg;
 }
 
 .how-number {
@@ -783,17 +792,18 @@ useHead({
   width: 68px;
   height: 68px;
   border-radius: 50%;
-  background: linear-gradient(135deg, rgba($cercu-indigo, 0.06) 0%, rgba($cercu-indigo, 0.12) 100%);
+  background: $neu-bg;
+  box-shadow: $neu-shadow-md;
   display: flex;
   align-items: center;
   justify-content: center;
   color: $cercu-indigo;
-  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), background 0.3s ease;
+  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.3s ease;
 }
 
 .how-step:hover .how-icon-circle {
   transform: scale(1.1) rotate(5deg);
-  background: linear-gradient(135deg, rgba($cercu-indigo, 0.1) 0%, rgba($cercu-indigo, 0.2) 100%);
+  box-shadow: $neu-shadow-lg;
 }
 
 // ─── Trust Signals ───

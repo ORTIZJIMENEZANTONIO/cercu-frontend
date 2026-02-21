@@ -1,6 +1,5 @@
 // ============================================
-// CERCU Button Overrides
-// Nu/Duolingo style — tactile, responsive
+// CERCU Button Overrides — Neumorphism
 // ============================================
 
 .btn {
@@ -10,9 +9,7 @@
   position: relative;
   overflow: hidden;
 
-  &:focus-visible {
-    box-shadow: 0 0 0 3px rgba($cercu-indigo, 0.25);
-  }
+  @include neu-focus-ring;
 }
 
 // Press effect for all buttons
@@ -24,80 +21,81 @@
 }
 
 .btn-primary {
-  background-color: $cercu-indigo;
-  border-color: $cercu-indigo;
-  box-shadow: 0 2px 4px rgba($cercu-indigo, 0.2);
+  @include neu-raised-colored(
+    $cercu-indigo,
+    rgba(lighten($cercu-indigo, 20%), 0.4),
+    rgba(darken($cercu-indigo, 15%), 0.5)
+  );
+  color: white;
 
   &:hover {
     background-color: $cercu-indigo-dark;
-    border-color: $cercu-indigo-dark;
-    box-shadow: 0 4px 12px rgba($cercu-indigo, 0.3);
-    transform: translateY(-1px);
+    color: white;
   }
 
   &:active {
     background-color: darken($cercu-indigo-dark, 5%);
-    transform: translateY(0);
-    box-shadow: 0 1px 2px rgba($cercu-indigo, 0.2);
   }
 }
 
 .btn-coral {
-  background-color: $cercu-coral;
-  border-color: $cercu-coral;
+  @include neu-raised-colored(
+    $cercu-coral,
+    rgba(lighten($cercu-coral, 20%), 0.4),
+    rgba(darken($cercu-coral, 20%), 0.5)
+  );
   color: white;
-  box-shadow: 0 2px 4px rgba($cercu-coral, 0.2);
 
   &:hover {
     background-color: $cercu-coral-dark;
-    border-color: $cercu-coral-dark;
     color: white;
-    box-shadow: 0 4px 12px rgba($cercu-coral, 0.3);
-    transform: translateY(-1px);
   }
 }
 
 .btn-outline-primary {
+  @include neu-raised('sm');
   color: $cercu-indigo;
-  border-color: $cercu-indigo;
+  background: $neu-bg;
 
   &:hover {
     background-color: $cercu-indigo;
     color: white;
     transform: translateY(-1px);
-    box-shadow: 0 4px 12px rgba($cercu-indigo, 0.2);
+    box-shadow: 4px 4px 10px rgba(darken($cercu-indigo, 15%), 0.4), -4px -4px 10px rgba(lighten($cercu-indigo, 20%), 0.3);
   }
 }
 
 // Pill buttons (chips)
 .btn-chip {
+  @include neu-raised('sm');
   border-radius: $border-radius-pill;
   padding: 0.5rem 1.125rem;
   font-size: $font-size-sm;
   font-weight: 500;
-  border: 2px solid $neutral-300;
-  background-color: white;
+  border: none;
   color: $neutral-700;
   cursor: pointer;
   transition: all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
 
   &:hover {
-    border-color: $cercu-indigo;
     color: $cercu-indigo;
     transform: translateY(-1px);
-    box-shadow: 0 2px 8px rgba($cercu-indigo, 0.1);
+    box-shadow: $neu-shadow-md;
   }
 
   &.active {
-    background-color: $cercu-indigo;
-    border-color: $cercu-indigo;
+    @include neu-raised-colored(
+      $cercu-indigo,
+      rgba(lighten($cercu-indigo, 20%), 0.4),
+      rgba(darken($cercu-indigo, 15%), 0.5)
+    );
     color: white;
-    box-shadow: 0 2px 8px rgba($cercu-indigo, 0.25);
   }
 }
 
 // Icon button
 .btn-icon {
+  @include neu-raised('sm');
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -105,15 +103,23 @@
   height: 40px;
   padding: 0;
   border-radius: $border-radius;
+  border: none;
 
   &:hover {
-    transform: scale(1.05);
+    transform: translateY(-1px);
+    box-shadow: $neu-shadow-md;
+  }
+
+  &:active {
+    box-shadow: $neu-inset-sm;
   }
 }
 
 // Large CTA
 .btn-lg-cta {
+  @include neu-raised('md');
   padding: 0.875rem 2rem;
   font-size: $font-size-lg;
   border-radius: $border-radius-lg;
+  border: none;
 }

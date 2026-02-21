@@ -198,6 +198,52 @@ export function useAnimations() {
     }
   }
 
+  // ─── Gamification animations ───
+
+  function xpFloat(container: Element, amount: number, opts?: { color?: string }) {
+    const el = document.createElement('div')
+    el.textContent = `+${amount} XP`
+    el.style.cssText = `
+      position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+      font-family: 'Sora', sans-serif; font-weight: 700; font-size: 1.25rem;
+      color: ${opts?.color ?? '#3730A3'}; pointer-events: none; z-index: 100;
+      text-shadow: 0 1px 4px rgba(55, 48, 163, 0.3);
+    `
+    container.appendChild(el)
+
+    const tl = gsap.timeline()
+    tl.fromTo(el,
+      { opacity: 0, y: 0, scale: 0.5 },
+      { opacity: 1, y: -20, scale: 1.2, duration: 0.4, ease: 'back.out(1.7)' }
+    )
+    tl.to(el, { y: -60, opacity: 0, duration: 0.6, ease: 'power2.in', onComplete: () => el.remove() })
+    return tl
+  }
+
+  function levelUpCelebration(container: Element) {
+    const tl = gsap.timeline()
+    tl.to(container, { scale: 1.1, duration: 0.2, ease: 'power2.out' })
+    tl.to(container, { scale: 1, duration: 0.3, ease: 'elastic.out(1, 0.4)' })
+    celebrationBurst(container)
+    return tl
+  }
+
+  function progressFill(el: Element | string, targetPercent: number, opts?: { duration?: number; delay?: number }) {
+    return gsap.fromTo(el,
+      { width: '0%' },
+      { width: `${targetPercent}%`, duration: opts?.duration ?? 1.2, delay: opts?.delay ?? 0, ease: 'power2.out' }
+    )
+  }
+
+  function gaugeArc(el: SVGElement | string, targetPercent: number, opts?: { duration?: number; delay?: number }) {
+    const circumference = 283 // approx for r=45 semicircle
+    const offset = circumference - (targetPercent / 100) * circumference
+    return gsap.fromTo(el,
+      { strokeDashoffset: circumference },
+      { strokeDashoffset: offset, duration: opts?.duration ?? 1.5, delay: opts?.delay ?? 0, ease: 'power2.out' }
+    )
+  }
+
   return {
     fadeInUp, fadeInDown, fadeInLeft, fadeInRight,
     scaleIn, staggerIn, staggerScale,
@@ -206,5 +252,6 @@ export function useAnimations() {
     slideOutLeft, slideInRight, slideOutRight, slideInLeft,
     celebrationBurst, successCheck, revealText,
     hoverLift,
+    xpFloat, levelUpCelebration, progressFill, gaugeArc,
   }
 }

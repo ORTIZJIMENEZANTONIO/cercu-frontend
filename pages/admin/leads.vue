@@ -32,10 +32,11 @@
                 <tr>
                   <SortableHeader label="ID" sort-key="id" :active="sortKey === 'id'" :dir="sortDir" @sort="toggleSort" />
                   <SortableHeader label="Categoria" sort-key="category.name" :active="sortKey === 'category.name'" :dir="sortDir" @sort="toggleSort" />
-                  <SortableHeader label="Usuario" sort-key="user.phone" :active="sortKey === 'user.phone'" :dir="sortDir" extra-class="d-none d-sm-table-cell" @sort="toggleSort" />
-                  <SortableHeader label="Urgencia" sort-key="urgencyTier" :active="sortKey === 'urgencyTier'" :dir="sortDir" @sort="toggleSort" />
+                  <SortableHeader label="Solicitante" sort-key="user.name" :active="sortKey === 'user.name'" :dir="sortDir" @sort="toggleSort" />
+                  <SortableHeader label="Profesional" sort-key="takenByPro" :active="sortKey === 'takenByPro'" :dir="sortDir" extra-class="d-none d-md-table-cell" @sort="toggleSort" />
+                  <SortableHeader label="Urgencia" sort-key="urgencyOrder" :active="sortKey === 'urgencyOrder'" :dir="sortDir" @sort="toggleSort" />
                   <SortableHeader label="Estado" sort-key="status" :active="sortKey === 'status'" :dir="sortDir" @sort="toggleSort" />
-                  <SortableHeader label="Precio" sort-key="priceMXN" :active="sortKey === 'priceMXN'" :dir="sortDir" extra-class="d-none d-md-table-cell" @sort="toggleSort" />
+                  <SortableHeader label="Precio" sort-key="priceMXN" :active="sortKey === 'priceMXN'" :dir="sortDir" extra-class="d-none d-lg-table-cell" @sort="toggleSort" />
                   <SortableHeader label="Fecha" sort-key="createdAt" :active="sortKey === 'createdAt'" :dir="sortDir" extra-class="d-none d-lg-table-cell" @sort="toggleSort" />
                   <th>Acciones</th>
                 </tr>
@@ -44,7 +45,21 @@
                 <tr v-for="lead in sortedLeads" :key="lead.id">
                   <td class="text-muted">#{{ lead.id }}</td>
                   <td class="fw-500">{{ lead.category?.name }}</td>
-                  <td class="text-muted d-none d-sm-table-cell">{{ lead.user?.phone }}</td>
+                  <td>
+                    <div class="cell-user">
+                      <span class="fw-500">{{ lead.user?.name || '-' }}</span>
+                      <span class="text-muted small">{{ lead.user?.phone }}</span>
+                    </div>
+                  </td>
+                  <td class="d-none d-md-table-cell">
+                    <template v-if="lead.takenByProfile">
+                      <div class="cell-user">
+                        <span class="fw-500">{{ lead.takenByProfile.user?.name || lead.takenByProfile.businessName || '-' }}</span>
+                        <span class="text-muted small">{{ lead.takenByProfile.user?.phone }}</span>
+                      </div>
+                    </template>
+                    <span v-else class="text-muted">—</span>
+                  </td>
                   <td>
                     <span class="urgency-badge" :class="`urgency-badge--${lead.urgencyTier}`">
                       {{ lead.urgencyTier }}
@@ -87,8 +102,18 @@ const toast = useToast()
 const mounted = ref(false)
 const statusFilter = ref('')
 
-const leadsRef = computed(() => adminStore.leads)
+const urgencyOrder: Record<string, number> = { immediate: 0, today: 1, standard: 2 }
+
+const leadsRef = computed(() => adminStore.leads.map((l: any) => ({
+  ...l,
+  urgencyOrder: urgencyOrder[l.urgencyTier] ?? 3,
+  takenByPro: l.takenByProfile?.businessName || l.takenByProfile?.user?.name || '',
+})))
 const { sortKey, sortDir, toggleSort, sorted: sortedLeads } = useTableSort(leadsRef)
+
+// Default sort by urgency (immediate first)
+sortKey.value = 'urgencyOrder'
+sortDir.value = 'asc'
 
 onMounted(() => {
   requestAnimationFrame(() => {
@@ -142,16 +167,17 @@ async function cancelLead(lead: any) {
 
 .page-subtitle {
   font-size: 0.875rem;
-  color: $neutral-500;
+  color: $neutral-600;
   margin-bottom: 0;
 }
 
 // ─── Content Card ───
 .content-card {
   background: white;
-  border: 1px solid $neutral-100;
+  border: 1px solid $neutral-200;
   border-radius: 16px;
   padding: 1.25rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
   opacity: 0;
   transform: translateY(16px);
   transition: opacity 0.5s ease, transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
@@ -179,11 +205,12 @@ async function cancelLead(lead: any) {
   background: white;
   color: $neutral-800;
   min-width: 150px;
-  transition: border-color 0.2s ease;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
 
   &:focus {
     outline: none;
-    border-color: $cercu-indigo;
+    border-color: $cercu-indigo-light;
+    box-shadow: 0 0 0 3px rgba($cercu-indigo, 0.12);
   }
 }
 
@@ -201,15 +228,19 @@ async function cancelLead(lead: any) {
 
   th {
     font-weight: 600;
-    color: $neutral-500;
+    color: $neutral-600;
     text-transform: uppercase;
     letter-spacing: 0.03em;
     font-size: 0.7rem;
-    border-bottom: 1px solid $neutral-100;
+    border-bottom: 2px solid $neutral-200;
+  }
+
+  td {
+    color: $neutral-700;
   }
 
   tbody tr {
-    border-bottom: 1px solid $neutral-50;
+    border-bottom: 1px solid $neutral-100;
     transition: background 0.15s ease;
 
     &:hover {
@@ -224,7 +255,17 @@ async function cancelLead(lead: any) {
 
 .fw-500 {
   font-weight: 500;
-  color: $neutral-800;
+  color: $neutral-900;
+}
+
+.cell-user {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.3;
+
+  .small {
+    font-size: 0.7rem;
+  }
 }
 
 .empty-table {
@@ -262,17 +303,22 @@ async function cancelLead(lead: any) {
   font-size: 0.75rem;
   font-weight: 500;
   border-radius: 8px;
-  border: 1px solid;
-  transition: background 0.2s ease;
+  border: 1px solid $neutral-200;
+  background: white;
+  transition: background 0.2s ease, border-color 0.2s ease;
+
+  &:hover {
+    background: $neutral-50;
+  }
+
+  &:active {
+    background: $neutral-100;
+  }
 
   &--danger {
     color: $danger;
-    border-color: rgba($danger, 0.2);
-    background: transparent;
-
-    &:hover {
-      background: rgba($danger, 0.06);
-    }
+    border-color: rgba($danger, 0.3);
+    &:hover { background: rgba($danger, 0.04); }
   }
 }
 </style>

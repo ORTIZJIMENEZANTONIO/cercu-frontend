@@ -25,7 +25,7 @@
       </div>
 
       <div class="confirm-actions" :class="{ 'anim-in': mounted }">
-        <NuxtLink to="/" class="btn btn-outline-primary btn-press">Volver al inicio</NuxtLink>
+        <NuxtLink to="/solicitudes" class="btn btn-outline-primary btn-press">Ver mis solicitudes</NuxtLink>
         <NuxtLink to="/solicitar" class="btn btn-primary btn-press">Solicitar otro servicio</NuxtLink>
       </div>
     </div>

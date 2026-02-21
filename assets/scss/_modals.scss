@@ -1,15 +1,16 @@
 // ============================================
-// CERCU Modal Overrides
+// CERCU Modal Overrides — Neumorphism
 // ============================================
 
 .modal-content {
+  @include neu-raised('xl');
   border: none;
   border-radius: $border-radius-lg;
-  box-shadow: $box-shadow-xl;
 }
 
 .modal-header {
-  border-bottom: 1px solid $neutral-200;
+  border-bottom: none;
+  box-shadow: inset 0 -2px 4px $neu-shadow-dark;
   padding: 1.25rem 1.5rem;
 
   .modal-title {
@@ -24,7 +25,8 @@
 }
 
 .modal-footer {
-  border-top: 1px solid $neutral-200;
+  border-top: none;
+  box-shadow: inset 0 2px 4px $neu-shadow-dark;
   padding: 1rem 1.5rem;
 }
 
@@ -33,27 +35,19 @@
   text-align: center;
 
   .modal-confirm-icon {
-    width: 64px;
-    height: 64px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    @include neu-icon-container(64px, 50%);
     margin: 0 auto 1rem;
     font-size: 1.75rem;
 
     &.icon-warning {
-      background-color: rgba($warning, 0.1);
       color: $warning;
     }
 
     &.icon-danger {
-      background-color: rgba($danger, 0.1);
       color: $danger;
     }
 
     &.icon-success {
-      background-color: rgba($success, 0.1);
       color: $success;
     }
   }

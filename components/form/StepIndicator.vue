@@ -54,30 +54,33 @@ watch(() => props.currentStep, (newStep) => {
   justify-content: center;
   font-size: 0.8rem;
   font-weight: 700;
-  background-color: $neutral-200;
+  background: $neu-bg;
   color: $neutral-500;
+  box-shadow: $neu-shadow-sm;
   transition: all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
   position: relative;
 
   &.step-active {
-    background-color: $cercu-indigo;
+    background: $cercu-indigo;
     color: white;
-    box-shadow: 0 0 0 4px rgba($cercu-indigo, 0.15);
+    box-shadow: 3px 3px 8px rgba(darken($cercu-indigo, 15%), 0.5), -3px -3px 8px rgba(lighten($cercu-indigo, 20%), 0.3);
   }
 
   &.step-completed {
-    background-color: $success;
+    background: $success;
     color: white;
+    box-shadow: 3px 3px 8px rgba(darken($success, 15%), 0.4), -3px -3px 8px rgba(lighten($success, 20%), 0.3);
   }
 }
 
 .step-line {
   width: 48px;
   height: 3px;
-  background-color: $neutral-200;
+  background: $neu-bg;
   border-radius: 2px;
   overflow: hidden;
   position: relative;
+  box-shadow: $neu-inset-sm;
 }
 
 .step-line-fill {

@@ -24,7 +24,7 @@
   flex: 1;
   min-height: calc(100vh - 56px);
   min-height: calc(100dvh - 56px);
-  background: $neutral-50;
+  background: #F7F7FB;
   padding: 1.25rem;
 
   @media (min-width: 768px) {

@@ -28,6 +28,15 @@ export const useSearchStore = defineStore('search', {
       this.viewMode = this.viewMode === 'list' ? 'map' : 'list';
     },
 
+    normalizeText(text: string): string {
+      return text
+        .toLowerCase()
+        .normalize('NFD')
+        .replace(/[\u0300-\u036f]/g, '')
+        .replace(/\s+/g, ' ')
+        .trim();
+    },
+
     async search() {
       this.loading = true;
       try {
@@ -36,11 +45,11 @@ export const useSearchStore = defineStore('search', {
 
         let filtered = [...categoriesStore.categories];
         if (this.query) {
-          const q = this.query.toLowerCase();
+          const q = this.normalizeText(this.query);
           filtered = filtered.filter(
             (c: any) =>
-              c.name.toLowerCase().includes(q) ||
-              c.chips?.some((ch: any) => ch.label.toLowerCase().includes(q))
+              this.normalizeText(c.name).includes(q) ||
+              c.chips?.some((ch: any) => this.normalizeText(ch.label).includes(q))
           );
         }
         if (this.categorySlug) {

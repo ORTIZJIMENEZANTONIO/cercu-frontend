@@ -21,10 +21,11 @@ defineProps<{
 
 <style lang="scss" scoped>
 .skeleton {
-  background: linear-gradient(90deg, $neutral-200 25%, $neutral-100 50%, $neutral-200 75%);
+  background: linear-gradient(90deg, $neu-bg 25%, $neu-bg-light 50%, $neu-bg 75%);
   background-size: 200% 100%;
   animation: shimmer 1.5s ease-in-out infinite;
   border-radius: $border-radius-sm;
+  box-shadow: $neu-inset-sm;
 
   &-text {
     height: 1rem;

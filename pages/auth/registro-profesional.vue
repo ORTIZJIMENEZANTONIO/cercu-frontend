@@ -229,9 +229,10 @@ onUnmounted(() => clearInterval(cooldownTimer))
 
 <style lang="scss" scoped>
 .auth-card {
-  border: 1px solid $neutral-100;
+  background: $neu-bg;
+  border: none;
   border-radius: 16px;
-  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.06);
+  box-shadow: $neu-shadow-lg;
   opacity: 0;
   transform: translateY(20px);
   transition: opacity 0.5s ease, transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
@@ -246,7 +247,8 @@ onUnmounted(() => clearInterval(cooldownTimer))
   width: 56px;
   height: 56px;
   border-radius: 50%;
-  background-color: rgba($cercu-indigo, 0.08);
+  background: $neu-bg;
+  box-shadow: $neu-shadow-sm;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -267,8 +269,9 @@ onUnmounted(() => clearInterval(cooldownTimer))
   &::after {
     content: '';
     flex: 1;
-    height: 1px;
-    background: $neutral-200;
+    height: 2px;
+    background: none;
+    box-shadow: inset 0 1px 2px $neu-shadow-dark, inset 0 -1px 2px $neu-shadow-light;
   }
 }
 
@@ -293,9 +296,10 @@ onUnmounted(() => clearInterval(cooldownTimer))
   align-items: center;
   gap: 0.75rem;
   padding: 0.75rem;
-  background: white;
-  border: 1px solid $neutral-100;
+  background: $neu-bg;
+  border: none;
   border-radius: 12px;
+  box-shadow: $neu-shadow-sm;
 
   strong {
     display: block;
@@ -314,7 +318,8 @@ onUnmounted(() => clearInterval(cooldownTimer))
   width: 36px;
   height: 36px;
   border-radius: 10px;
-  background: rgba($cercu-indigo, 0.08);
+  background: $neu-bg;
+  box-shadow: $neu-shadow-sm;
   color: $cercu-indigo;
   display: flex;
   align-items: center;

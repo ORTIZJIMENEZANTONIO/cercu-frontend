@@ -11,18 +11,26 @@
         </NuxtLink>
 
         <!-- Desktop nav -->
-        <div class="header-links d-none d-md-flex">
-          <NuxtLink to="/categorias" class="header-link">Categorias</NuxtLink>
-          <NuxtLink to="/buscar" class="header-link">Buscar</NuxtLink>
+        <div v-if="!authStore.isProfessional && !authStore.isAdmin" class="header-links d-none d-md-flex">
+          <template v-if="authStore.isAuthenticated">
+            <NuxtLink to="/solicitudes" class="header-link">
+              <Icon name="mdi:clipboard-text-clock" size="16" class="me-1" />
+              Mis solicitudes
+            </NuxtLink>
+            <NuxtLink to="/solicitar" class="header-link">
+              <Icon name="mdi:plus-circle" size="16" class="me-1" />
+              Solicitar
+            </NuxtLink>
+          </template>
+          <template v-else>
+            <NuxtLink to="/categorias" class="header-link">Categorias</NuxtLink>
+            <NuxtLink to="/buscar" class="header-link">Buscar</NuxtLink>
+          </template>
         </div>
 
         <!-- Desktop actions -->
         <div class="header-actions d-none d-md-flex">
           <template v-if="authStore.isAuthenticated">
-            <NuxtLink to="/solicitar" class="header-link">
-              <Icon name="mdi:plus-circle" size="16" class="me-1" />
-              Solicitar
-            </NuxtLink>
             <NuxtLink v-if="authStore.isProfessional" to="/pro" class="header-link">
               <Icon name="mdi:briefcase" size="16" class="me-1" />
               Pro
@@ -71,9 +79,9 @@
           </template>
           <template v-else>
             <NuxtLink to="/auth/login" class="btn-header-ghost">Iniciar sesion</NuxtLink>
-            <NuxtLink to="/solicitar" class="btn-header-solid">
-              <Icon name="mdi:plus" size="16" class="me-1" />
-              Solicitar
+            <NuxtLink to="/auth/registro" class="btn-header-solid">
+              <Icon name="mdi:account-plus" size="16" class="me-1" />
+              Registrate
             </NuxtLink>
           </template>
         </div>
@@ -102,18 +110,32 @@
           </div>
 
           <nav class="mobile-nav">
-            <NuxtLink to="/categorias" class="mobile-nav-link" @click="mobileOpen = false">
-              <Icon name="mdi:view-grid" size="20" />
-              Categorias
-            </NuxtLink>
-            <NuxtLink to="/buscar" class="mobile-nav-link" @click="mobileOpen = false">
-              <Icon name="mdi:magnify" size="20" />
-              Buscar
-            </NuxtLink>
-            <NuxtLink to="/solicitar" class="mobile-nav-link mobile-nav-link--highlight" @click="mobileOpen = false">
-              <Icon name="mdi:plus-circle" size="20" />
-              Solicitar servicio
-            </NuxtLink>
+            <template v-if="!authStore.isProfessional && !authStore.isAdmin">
+              <template v-if="authStore.isAuthenticated">
+                <NuxtLink to="/solicitudes" class="mobile-nav-link mobile-nav-link--highlight" @click="mobileOpen = false">
+                  <Icon name="mdi:clipboard-text-clock" size="20" />
+                  Mis solicitudes
+                </NuxtLink>
+                <NuxtLink to="/solicitar" class="mobile-nav-link" @click="mobileOpen = false">
+                  <Icon name="mdi:plus-circle" size="20" />
+                  Solicitar servicio
+                </NuxtLink>
+              </template>
+              <template v-else>
+                <NuxtLink to="/categorias" class="mobile-nav-link" @click="mobileOpen = false">
+                  <Icon name="mdi:view-grid" size="20" />
+                  Categorias
+                </NuxtLink>
+                <NuxtLink to="/buscar" class="mobile-nav-link" @click="mobileOpen = false">
+                  <Icon name="mdi:magnify" size="20" />
+                  Buscar
+                </NuxtLink>
+                <NuxtLink to="/solicitar" class="mobile-nav-link mobile-nav-link--highlight" @click="mobileOpen = false">
+                  <Icon name="mdi:plus-circle" size="20" />
+                  Solicitar servicio
+                </NuxtLink>
+              </template>
+            </template>
 
             <template v-if="authStore.isAuthenticated">
               <div class="mobile-nav-divider" />
@@ -204,10 +226,8 @@ watch(mobileOpen, (open) => {
   position: sticky;
   top: 0;
   z-index: 1030;
-  background: rgba(white, 0.92);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border-bottom: 1px solid $neutral-200;
+  background: $neu-bg;
+  box-shadow: $neu-shadow-md;
 }
 
 .header-inner {
@@ -238,6 +258,7 @@ watch(mobileOpen, (open) => {
   display: flex;
   align-items: center;
   justify-content: center;
+  box-shadow: $neu-shadow-sm;
 }
 
 .header-logo-text {
@@ -265,11 +286,11 @@ watch(mobileOpen, (open) => {
   color: $neutral-600;
   text-decoration: none;
   border-radius: $border-radius;
-  transition: color 0.2s ease, background 0.2s ease;
+  transition: color 0.2s ease, box-shadow 0.2s ease;
 
   &:hover {
     color: $cercu-indigo;
-    background: rgba($cercu-indigo, 0.04);
+    box-shadow: $neu-inset-sm;
   }
 
   &.router-link-active {
@@ -294,11 +315,13 @@ watch(mobileOpen, (open) => {
   color: $neutral-700;
   text-decoration: none;
   border-radius: $border-radius;
-  transition: color 0.2s ease, background 0.2s ease;
+  box-shadow: $neu-shadow-sm;
+  transition: color 0.2s ease, box-shadow 0.2s ease, transform 0.15s ease;
 
   &:hover {
     color: $cercu-indigo;
-    background: rgba($cercu-indigo, 0.04);
+    transform: translateY(-1px);
+    box-shadow: $neu-shadow-md;
   }
 }
 
@@ -312,16 +335,18 @@ watch(mobileOpen, (open) => {
   text-decoration: none;
   background: $cercu-indigo;
   border-radius: $border-radius;
-  transition: background 0.2s ease, transform 0.15s ease;
+  box-shadow: 4px 4px 10px rgba(darken($cercu-indigo, 15%), 0.5), -4px -4px 10px rgba(lighten($cercu-indigo, 20%), 0.4);
+  transition: box-shadow 0.2s ease, transform 0.15s ease;
 
   &:hover {
-    background: $cercu-indigo-dark;
     color: white;
     transform: translateY(-1px);
+    box-shadow: 6px 6px 14px rgba(darken($cercu-indigo, 15%), 0.5), -6px -6px 14px rgba(lighten($cercu-indigo, 20%), 0.4);
   }
 
   &:active {
-    transform: scale(0.97);
+    transform: translateY(0);
+    box-shadow: inset 3px 3px 6px rgba(darken($cercu-indigo, 15%), 0.5), inset -3px -3px 6px rgba(lighten($cercu-indigo, 20%), 0.4);
   }
 }
 
@@ -335,10 +360,10 @@ watch(mobileOpen, (open) => {
   border: none;
   cursor: pointer;
   border-radius: 999px;
-  transition: background 0.2s ease;
+  transition: box-shadow 0.2s ease;
 
   &:hover {
-    background: $neutral-100;
+    box-shadow: $neu-inset-sm;
   }
 }
 
@@ -353,6 +378,7 @@ watch(mobileOpen, (open) => {
   justify-content: center;
   font-size: 0.8rem;
   font-weight: 700;
+  box-shadow: $neu-shadow-sm;
 }
 
 .header-dropdown {
@@ -361,10 +387,10 @@ watch(mobileOpen, (open) => {
   right: 0;
   margin-top: 0.5rem;
   width: 220px;
-  background: white;
+  background: $neu-bg;
   border-radius: 12px;
-  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.12);
-  border: 1px solid $neutral-200;
+  box-shadow: $neu-shadow-xl;
+  border: none;
   overflow: hidden;
   z-index: 1040;
 }
@@ -385,8 +411,9 @@ watch(mobileOpen, (open) => {
 }
 
 .header-dropdown-divider {
-  height: 1px;
-  background: $neutral-100;
+  height: 2px;
+  background: none;
+  box-shadow: inset 0 1px 2px $neu-shadow-dark, inset 0 -1px 2px $neu-shadow-light;
 }
 
 .header-dropdown-item {
@@ -401,15 +428,15 @@ watch(mobileOpen, (open) => {
   background: none;
   border: none;
   cursor: pointer;
-  transition: background 0.15s ease;
+  transition: box-shadow 0.15s ease;
 
   &:hover {
-    background: $neutral-50;
+    box-shadow: $neu-inset-sm;
   }
 
   &--danger {
     color: $danger;
-    &:hover { background: rgba($danger, 0.04); }
+    &:hover { box-shadow: $neu-inset-sm; }
   }
 }
 
@@ -458,8 +485,8 @@ watch(mobileOpen, (open) => {
   width: 300px;
   max-width: 85vw;
   height: 100%;
-  background: white;
-  box-shadow: -8px 0 30px rgba(0, 0, 0, 0.1);
+  background: $neu-bg;
+  box-shadow: $neu-shadow-xl;
   display: flex;
   flex-direction: column;
   overflow-y: auto;
@@ -470,7 +497,7 @@ watch(mobileOpen, (open) => {
   align-items: center;
   justify-content: space-between;
   padding: 1rem 1.25rem;
-  border-bottom: 1px solid $neutral-100;
+  box-shadow: inset 0 -2px 4px $neu-shadow-dark;
 }
 
 .mobile-close {
@@ -479,13 +506,15 @@ watch(mobileOpen, (open) => {
   display: flex;
   align-items: center;
   justify-content: center;
-  background: none;
+  background: $neu-bg;
   border: none;
   border-radius: $border-radius;
   color: $neutral-500;
   cursor: pointer;
+  box-shadow: $neu-shadow-sm;
+  transition: box-shadow 0.15s ease;
 
-  &:hover { background: $neutral-100; }
+  &:hover { box-shadow: $neu-inset-sm; }
 }
 
 .mobile-nav {
@@ -510,28 +539,29 @@ watch(mobileOpen, (open) => {
   width: 100%;
   text-align: left;
   cursor: pointer;
-  transition: background 0.2s ease, color 0.2s ease;
+  transition: box-shadow 0.2s ease, color 0.2s ease;
 
   &:hover {
-    background: $neutral-50;
+    box-shadow: $neu-inset-sm;
     color: $cercu-indigo;
   }
 
   &--highlight {
     color: $cercu-indigo;
     font-weight: 600;
-    background: rgba($cercu-indigo, 0.04);
+    box-shadow: $neu-shadow-sm;
   }
 
   &--danger {
     color: $danger;
-    &:hover { background: rgba($danger, 0.04); }
+    &:hover { box-shadow: $neu-inset-sm; }
   }
 }
 
 .mobile-nav-divider {
-  height: 1px;
-  background: $neutral-100;
+  height: 2px;
+  background: none;
+  box-shadow: inset 0 1px 2px $neu-shadow-dark, inset 0 -1px 2px $neu-shadow-light;
   margin: 0.5rem 1rem;
 }
 </style>

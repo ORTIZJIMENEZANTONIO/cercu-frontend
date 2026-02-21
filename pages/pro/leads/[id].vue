@@ -146,7 +146,18 @@ async function handleTake() {
       if (contactCard.value) celebrationBurst(contactCard.value)
     })
   } catch (e: any) {
-    toast.error(e?.data?.error?.message || 'Error al tomar lead')
+    const msg = e?.data?.error?.message
+    if (msg === 'Insufficient wallet balance') {
+      toast.error('Saldo insuficiente en tu wallet. Recarga para tomar este lead.')
+    } else if (msg === 'Profile onboarding not complete') {
+      toast.error('Tu perfil aún no ha sido aprobado. Completa tu onboarding primero.')
+    } else if (msg === 'Wallet is frozen') {
+      toast.error('Tu wallet está congelada. Contacta soporte.')
+    } else if (msg === 'Lead is no longer available') {
+      toast.error('Este lead ya no está disponible.')
+    } else {
+      toast.error(msg || 'Error al tomar lead')
+    }
   } finally {
     taking.value = false
   }
@@ -161,6 +172,9 @@ async function handleDecline() {
 
 <style lang="scss" scoped>
 .main-card {
+  background: white;
+  border: 1px solid $neutral-200;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
   opacity: 0;
   transform: translateY(16px);
   transition: opacity 0.5s ease, transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
@@ -175,6 +189,8 @@ async function handleDecline() {
   width: 100px;
   height: 100px;
   object-fit: cover;
+  border-radius: 10px;
+  border: 1px solid $neutral-200;
   transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
   cursor: pointer;
 

@@ -8,19 +8,22 @@
 // 2. Bootstrap (with our variable overrides applied)
 @import "bootstrap-imports";
 
-// 3. Custom mixins
+// 3. Neumorphism design system (before mixins, since mixins delegate to neu-*)
+@import "neumorphism";
+
+// 4. Custom mixins
 @import "mixins";
 
-// 4. Base styles
+// 5. Base styles
 @import "typography";
 @import "transitions";
 
-// 5. Component overrides
+// 6. Component overrides
 @import "buttons";
 @import "cards";
 @import "forms";
 @import "badges";
 @import "modals";
 
-// 6. Custom utilities
+// 7. Custom utilities
 @import "utilities";

@@ -1,0 +1,31 @@
+// ============================================
+// CERCU Neumorphism Utility Classes
+// Variables are in _variables.scss, mixins in _mixins.scss
+// ============================================
+
+.neu-raised {
+  @include neu-raised('md');
+}
+
+.neu-raised-sm {
+  @include neu-raised('sm');
+}
+
+.neu-raised-lg {
+  @include neu-raised('lg');
+}
+
+.neu-pressed {
+  @include neu-pressed('md');
+}
+
+.neu-flat {
+  @include neu-flat;
+}
+
+.neu-interactive {
+  @include neu-raised('md');
+  @include neu-hover-lift;
+  @include neu-active-press;
+  cursor: pointer;
+}

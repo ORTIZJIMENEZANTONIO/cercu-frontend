@@ -137,7 +137,7 @@ onMounted(() => {
 
 function handleGoogleSuccess({ user, isNewUser }: { credential: string; user: any; isNewUser: boolean }) {
   toast.success('Cuenta creada con Google')
-  navigateTo('/solicitar')
+  navigateTo('/solicitudes')
 }
 
 function handleGoogleError(err: Error) {
@@ -176,7 +176,7 @@ async function verify() {
   try {
     await authStore.login(`+52${phone.value}`, otpCode.value, name.value, email.value, dateOfBirth.value)
     toast.success('Cuenta creada')
-    navigateTo('/solicitar')
+    navigateTo('/solicitudes')
   } catch (e: any) {
     otpError.value = e?.data?.error?.message || 'Codigo incorrecto'
     if (cardEl.value) wiggle(cardEl.value)
@@ -199,9 +199,10 @@ onUnmounted(() => clearInterval(cooldownTimer))
 
 <style lang="scss" scoped>
 .auth-card {
-  border: 1px solid $neutral-100;
+  background: $neu-bg;
+  border: none;
   border-radius: 16px;
-  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.06);
+  box-shadow: $neu-shadow-lg;
   opacity: 0;
   transform: translateY(20px);
   transition: opacity 0.5s ease, transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
@@ -216,7 +217,8 @@ onUnmounted(() => clearInterval(cooldownTimer))
   width: 56px;
   height: 56px;
   border-radius: 50%;
-  background-color: rgba($cercu-indigo, 0.08);
+  background: $neu-bg;
+  box-shadow: $neu-shadow-sm;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -237,8 +239,9 @@ onUnmounted(() => clearInterval(cooldownTimer))
   &::after {
     content: '';
     flex: 1;
-    height: 1px;
-    background: $neutral-200;
+    height: 2px;
+    background: none;
+    box-shadow: inset 0 1px 2px $neu-shadow-dark, inset 0 -1px 2px $neu-shadow-light;
   }
 }
 </style>

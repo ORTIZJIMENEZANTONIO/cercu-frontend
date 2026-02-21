@@ -59,9 +59,10 @@
   aspect-ratio: 16/9;
 }
 
-// Divider
+// Divider — neumorphism inset line
 .divider {
-  height: 1px;
-  background-color: $neutral-200;
+  height: 2px;
+  background: none;
   border: none;
+  box-shadow: inset 0 1px 2px $neu-shadow-dark, inset 0 -1px 2px $neu-shadow-light;
 }

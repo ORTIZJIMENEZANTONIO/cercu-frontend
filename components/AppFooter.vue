@@ -2,8 +2,8 @@
   <footer class="app-footer">
     <div class="container">
       <div class="footer-top">
-        <div class="row g-4">
-          <div class="col-12 col-md-4">
+        <div class="footer-grid">
+          <div class="footer-brand">
             <NuxtLink to="/" class="footer-logo">
               <div class="footer-logo-mark">
                 <Icon name="mdi:map-marker-check" size="16" />
@@ -15,7 +15,7 @@
               a domicilio en CDMX y Estado de Mexico.
             </p>
           </div>
-          <div class="col-6 col-md-2">
+          <div class="footer-col">
             <h6 class="footer-heading">Servicios</h6>
             <ul class="footer-links">
               <li><NuxtLink to="/categorias">Categorias</NuxtLink></li>
@@ -23,14 +23,14 @@
               <li><NuxtLink to="/solicitar">Solicitar</NuxtLink></li>
             </ul>
           </div>
-          <div class="col-6 col-md-2">
+          <div class="footer-col">
             <h6 class="footer-heading">Profesionales</h6>
             <ul class="footer-links">
               <li><NuxtLink to="/auth/registro-profesional">Registrate</NuxtLink></li>
               <li><NuxtLink to="/pro">Dashboard</NuxtLink></li>
             </ul>
           </div>
-          <div class="col-6 col-md-2">
+          <div class="footer-col">
             <h6 class="footer-heading">Legal</h6>
             <ul class="footer-links">
               <li><NuxtLink to="/terminos">Terminos</NuxtLink></li>
@@ -59,6 +59,29 @@
   @media (min-width: 768px) {
     padding: 3.5rem 0 2.5rem;
   }
+}
+
+.footer-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem 1.5rem;
+
+  @media (min-width: 768px) {
+    grid-template-columns: 2fr 1fr 1fr 1fr;
+    gap: 2rem;
+  }
+}
+
+.footer-brand {
+  grid-column: 1 / -1;
+
+  @media (min-width: 768px) {
+    grid-column: auto;
+  }
+}
+
+.footer-col {
+  // columns auto-align in grid
 }
 
 .footer-logo {

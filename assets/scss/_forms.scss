@@ -1,23 +1,23 @@
 // ============================================
-// CERCU Form Overrides
+// CERCU Form Overrides — Neumorphism
 // ============================================
 
 .form-control,
 .form-select {
-  border-color: $neutral-300;
+  @include neu-pressed('md');
+  border: none;
   border-radius: $border-radius;
   padding: $input-padding-y $input-padding-x;
-  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+  transition: box-shadow 0.2s ease;
 
   &:focus {
-    border-color: $cercu-indigo-light;
-    box-shadow: 0 0 0 3px rgba($cercu-indigo, 0.15);
+    @include neu-focus-ring-inset;
   }
 
   &.is-invalid {
-    border-color: $danger;
+    box-shadow: $neu-inset-md, 0 0 0 3px rgba($danger, 0.2);
     &:focus {
-      box-shadow: 0 0 0 3px rgba($danger, 0.15);
+      box-shadow: $neu-inset-md, 0 0 0 3px rgba($danger, 0.25);
     }
   }
 }
@@ -40,16 +40,15 @@
 
 // Search input
 .search-input {
-  background-color: white;
-  border: 2px solid $neutral-200;
+  @include neu-pressed('md');
+  border: none;
   border-radius: $border-radius-pill;
   padding: 0.75rem 1.25rem 0.75rem 3rem;
   font-size: $font-size-lg;
-  transition: all 0.2s ease;
+  transition: box-shadow 0.2s ease;
 
   &:focus {
-    border-color: $cercu-indigo;
-    box-shadow: $box-shadow-lg;
+    box-shadow: $neu-inset-md, 0 0 0 3px rgba($cercu-indigo, 0.2);
   }
 }
 
@@ -60,18 +59,18 @@
   justify-content: center;
 
   .otp-digit {
+    @include neu-pressed('sm');
     width: 48px;
     height: 56px;
     text-align: center;
     font-size: 1.5rem;
     font-weight: 600;
-    border: 2px solid $neutral-300;
+    border: none;
     border-radius: $border-radius;
-    transition: border-color 0.15s ease;
+    transition: box-shadow 0.15s ease;
 
     &:focus {
-      border-color: $cercu-indigo;
-      box-shadow: 0 0 0 3px rgba($cercu-indigo, 0.15);
+      box-shadow: $neu-inset-sm, 0 0 0 3px rgba($cercu-indigo, 0.2);
       outline: none;
     }
   }

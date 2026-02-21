@@ -42,6 +42,11 @@
               Subir foto
             </AppButton>
             <p class="text-muted small mt-2 mb-0">JPG, PNG o WebP. Max 5MB</p>
+
+            <!-- Trust Score -->
+            <div v-if="trustScore !== null" class="mt-3 pt-3 border-top">
+              <TrustGauge :score="trustScore" :animate="mounted" />
+            </div>
           </div>
         </div>
 
@@ -98,9 +103,11 @@
 definePageMeta({ middleware: ['auth'] })
 
 const authStore = useAuthStore()
+const gamStore = useGamificationStore()
 const toast = useToast()
 const config = useRuntimeConfig()
 const mounted = ref(false)
+const trustScore = ref<number | null>(null)
 const saving = ref(false)
 const uploadingPic = ref(false)
 const selectedFile = ref<File | null>(null)
@@ -123,7 +130,6 @@ const fullPictureUrl = computed(() => {
   const pic = authStore.user?.profilePicture
   if (!pic) return ''
   if (pic.startsWith('http')) return pic
-  // Remove /api/v1 from apiBase to get the server origin
   const origin = (config.public.apiBase as string).replace(/\/api\/v1$/, '')
   return `${origin}${pic}`
 })
@@ -136,6 +142,10 @@ onMounted(async () => {
     form.email = authStore.user.email || ''
     form.dateOfBirth = authStore.user.dateOfBirth || ''
   }
+  try {
+    await gamStore.fetchTrustScore()
+    trustScore.value = gamStore.trustScore?.score ?? null
+  } catch { /* Trust score not available */ }
 })
 
 async function saveProfile() {
@@ -205,7 +215,7 @@ useHead({ title: 'Mi cuenta - CERCU' })
 <style lang="scss" scoped>
 .cuenta-page {
   min-height: 100vh;
-  background: $neutral-50;
+  background: $neu-bg;
 }
 
 .page-header {
@@ -235,10 +245,11 @@ useHead({ title: 'Mi cuenta - CERCU' })
 }
 
 .content-card {
-  background: white;
-  border: 1px solid $neutral-100;
+  background: $neu-bg;
+  border: none;
   border-radius: 16px;
   padding: 1.25rem;
+  box-shadow: $neu-shadow-md;
   opacity: 0;
   transform: translateY(16px);
   transition: opacity 0.5s ease, transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
@@ -274,11 +285,11 @@ useHead({ title: 'Mi cuenta - CERCU' })
   position: relative;
   cursor: pointer;
   overflow: hidden;
-  border: 3px solid $neutral-100;
-  transition: border-color 0.2s ease;
+  box-shadow: $neu-shadow-sm;
+  transition: box-shadow 0.2s ease;
 
   &:hover {
-    border-color: $cercu-indigo;
+    box-shadow: $neu-shadow-lg;
 
     .avatar-overlay {
       opacity: 1;
@@ -298,7 +309,7 @@ useHead({ title: 'Mi cuenta - CERCU' })
   display: flex;
   align-items: center;
   justify-content: center;
-  background: $neutral-100;
+  background: $neu-bg-dark;
   color: $neutral-400;
 }
 
@@ -313,4 +324,5 @@ useHead({ title: 'Mi cuenta - CERCU' })
   opacity: 0;
   transition: opacity 0.2s ease;
 }
+
 </style>

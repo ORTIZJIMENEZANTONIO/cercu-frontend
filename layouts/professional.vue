@@ -7,8 +7,17 @@
         <slot />
       </main>
     </div>
+    <XpGainToast
+      :amount="xpEvents.currentXp.value?.amount || 0"
+      :visible="xpEvents.visible.value"
+      @done="xpEvents.onDone"
+    />
   </div>
 </template>
+
+<script setup lang="ts">
+const xpEvents = useXpEvents();
+</script>
 
 <style lang="scss" scoped>
 .layout-professional {
@@ -24,7 +33,7 @@
   flex: 1;
   min-height: calc(100vh - 56px);
   min-height: calc(100dvh - 56px);
-  background: $neutral-50;
+  background: #F7F7FB;
   padding: 1.25rem;
 
   @media (min-width: 768px) {

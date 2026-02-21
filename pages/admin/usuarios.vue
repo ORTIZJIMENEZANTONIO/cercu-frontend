@@ -38,6 +38,7 @@
             <table class="data-table">
               <thead>
                 <tr>
+                  <SortableHeader label="ID" sort-key="id" :active="sortKey === 'id'" :dir="sortDir" @sort="toggleSort" />
                   <SortableHeader label="Nombre" sort-key="name" :active="sortKey === 'name'" :dir="sortDir" @sort="toggleSort" />
                   <SortableHeader label="Telefono" sort-key="phone" :active="sortKey === 'phone'" :dir="sortDir" @sort="toggleSort" />
                   <SortableHeader label="Rol" sort-key="role" :active="sortKey === 'role'" :dir="sortDir" @sort="toggleSort" />
@@ -48,6 +49,7 @@
               </thead>
               <tbody>
                 <tr v-for="user in sortedUsers" :key="user.id">
+                  <td class="text-muted" style="font-size:0.7rem">{{ user.id.slice(0, 8) }}</td>
                   <td class="fw-500">{{ user.name || '-' }}</td>
                   <td class="text-muted">{{ user.phone }}</td>
                   <td>
@@ -252,16 +254,17 @@ async function handleUnblock(user: any) {
 
 .page-subtitle {
   font-size: 0.875rem;
-  color: $neutral-500;
+  color: $neutral-600;
   margin-bottom: 0;
 }
 
 // ─── Content Card ───
 .content-card {
   background: white;
-  border: 1px solid $neutral-100;
+  border: 1px solid $neutral-200;
   border-radius: 16px;
   padding: 1.25rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
   opacity: 0;
   transform: translateY(16px);
   transition: opacity 0.5s ease, transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
@@ -318,8 +321,8 @@ async function handleUnblock(user: any) {
 
   &:focus {
     outline: none;
-    border-color: $cercu-indigo;
-    box-shadow: 0 0 0 3px rgba($cercu-indigo, 0.08);
+    border-color: $cercu-indigo-light;
+    box-shadow: 0 0 0 3px rgba($cercu-indigo, 0.12);
   }
 }
 
@@ -331,11 +334,12 @@ async function handleUnblock(user: any) {
   background: white;
   color: $neutral-800;
   min-width: 140px;
-  transition: border-color 0.2s ease;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
 
   &:focus {
     outline: none;
-    border-color: $cercu-indigo;
+    border-color: $cercu-indigo-light;
+    box-shadow: 0 0 0 3px rgba($cercu-indigo, 0.12);
   }
 }
 
@@ -353,15 +357,19 @@ async function handleUnblock(user: any) {
 
   th {
     font-weight: 600;
-    color: $neutral-500;
+    color: $neutral-600;
     text-transform: uppercase;
     letter-spacing: 0.03em;
     font-size: 0.7rem;
-    border-bottom: 1px solid $neutral-100;
+    border-bottom: 2px solid $neutral-200;
+  }
+
+  td {
+    color: $neutral-700;
   }
 
   tbody tr {
-    border-bottom: 1px solid $neutral-50;
+    border-bottom: 1px solid $neutral-100;
     transition: background 0.15s ease;
 
     &:hover {
@@ -376,7 +384,7 @@ async function handleUnblock(user: any) {
 
 .fw-500 {
   font-weight: 500;
-  color: $neutral-800;
+  color: $neutral-900;
 }
 
 .empty-table {
@@ -422,38 +430,23 @@ async function handleUnblock(user: any) {
   font-size: 0.75rem;
   font-weight: 500;
   border-radius: 8px;
-  border: 1px solid;
-  transition: background 0.2s ease;
+  border: 1px solid $neutral-200;
+  background: white;
+  transition: background 0.2s ease, transform 0.15s ease;
 
-  &--danger {
-    color: $danger;
-    border-color: rgba($danger, 0.2);
-    background: transparent;
-
-    &:hover {
-      background: rgba($danger, 0.06);
-    }
+  &:hover {
+    transform: translateY(-1px);
+    background: $neutral-50;
   }
 
-  &--success {
-    color: $success;
-    border-color: rgba($success, 0.2);
-    background: transparent;
-
-    &:hover {
-      background: rgba($success, 0.06);
-    }
+  &:active {
+    background: $neutral-100;
+    transform: translateY(0);
   }
 
-  &--primary {
-    color: $cercu-indigo;
-    border-color: rgba($cercu-indigo, 0.2);
-    background: transparent;
-
-    &:hover {
-      background: rgba($cercu-indigo, 0.06);
-    }
-  }
+  &--danger { color: $danger; border-color: rgba($danger, 0.3); }
+  &--success { color: $success; border-color: rgba($success, 0.3); }
+  &--primary { color: $cercu-indigo; border-color: rgba($cercu-indigo, 0.3); }
 }
 
 // ─── Modal ───
@@ -494,8 +487,8 @@ async function handleUnblock(user: any) {
 }
 
 .btn-close-modal {
-  background: none;
-  border: none;
+  background: white;
+  border: 1px solid $neutral-200;
   color: $neutral-400;
   cursor: pointer;
   padding: 0.25rem;
@@ -503,7 +496,7 @@ async function handleUnblock(user: any) {
   transition: background 0.15s ease;
 
   &:hover {
-    background: $neutral-100;
+    box-shadow: $neu-inset-sm;
     color: $neutral-700;
   }
 }

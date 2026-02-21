@@ -1,14 +1,14 @@
 export const useAuthStore = defineStore('auth', () => {
   const token = useCookie<string | null>('cercu_token', {
-    maxAge: 60 * 60 * 24 * 7,
+    maxAge: 60 * 40,
     path: '/',
   })
   const refreshToken = useCookie<string | null>('cercu_refresh', {
-    maxAge: 60 * 60 * 24 * 7,
+    maxAge: 60 * 40,
     path: '/',
   })
   const user = useCookie<any>('cercu_user', {
-    maxAge: 60 * 60 * 24 * 7,
+    maxAge: 60 * 40,
     path: '/',
   })
 

@@ -15,21 +15,6 @@
   overflow: hidden;
 }
 
-@mixin card-hover-lift {
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
-  &:hover {
-    transform: translateY(-2px);
-    box-shadow: $box-shadow-lg;
-  }
-}
-
-@mixin focus-ring($color: $cercu-indigo) {
-  &:focus-visible {
-    outline: none;
-    box-shadow: 0 0 0 3px rgba($color, 0.25);
-  }
-}
-
 @mixin responsive-padding {
   padding-left: 1rem;
   padding-right: 1rem;
@@ -43,8 +28,108 @@
   }
 }
 
+// ─── Neumorphism Mixins ───
+
+@mixin neu-raised($intensity: 'md') {
+  background: $neu-bg;
+  border: none;
+  @if $intensity == 'sm' {
+    box-shadow: $neu-shadow-sm;
+  } @else if $intensity == 'md' {
+    box-shadow: $neu-shadow-md;
+  } @else if $intensity == 'lg' {
+    box-shadow: $neu-shadow-lg;
+  } @else if $intensity == 'xl' {
+    box-shadow: $neu-shadow-xl;
+  }
+}
+
+@mixin neu-pressed($intensity: 'md') {
+  background: $neu-bg;
+  border: none;
+  @if $intensity == 'sm' {
+    box-shadow: $neu-inset-sm;
+  } @else if $intensity == 'md' {
+    box-shadow: $neu-inset-md;
+  } @else if $intensity == 'lg' {
+    box-shadow: $neu-inset-lg;
+  }
+}
+
+@mixin neu-flat {
+  background: $neu-bg;
+  border: none;
+  box-shadow: none;
+}
+
+@mixin neu-hover-lift {
+  transition: transform 0.25s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.25s ease;
+  &:hover {
+    transform: translateY(-3px);
+    box-shadow: $neu-shadow-lg;
+  }
+}
+
+@mixin neu-active-press {
+  &:active {
+    transform: translateY(0) scale(0.99);
+    box-shadow: $neu-inset-sm;
+    transition-duration: 0.1s;
+  }
+}
+
+@mixin neu-raised-colored($bg, $light-shadow, $dark-shadow) {
+  background: $bg;
+  border: none;
+  box-shadow: 4px 4px 10px $dark-shadow, -4px -4px 10px $light-shadow;
+
+  &:hover {
+    box-shadow: 6px 6px 14px $dark-shadow, -6px -6px 14px $light-shadow;
+    transform: translateY(-1px);
+  }
+
+  &:active {
+    box-shadow: inset 3px 3px 6px $dark-shadow, inset -3px -3px 6px $light-shadow;
+    transform: translateY(0);
+  }
+}
+
+@mixin neu-focus-ring($color: $cercu-indigo) {
+  &:focus-visible {
+    outline: none;
+    box-shadow: $neu-shadow-md, 0 0 0 3px rgba($color, 0.25);
+  }
+}
+
+@mixin neu-focus-ring-inset($color: $cercu-indigo) {
+  &:focus-visible,
+  &:focus {
+    outline: none;
+    box-shadow: $neu-inset-md, 0 0 0 3px rgba($color, 0.2);
+  }
+}
+
+@mixin neu-icon-container($size: 52px, $radius: 14px) {
+  width: $size;
+  height: $size;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: $radius;
+  background: $neu-bg;
+  box-shadow: $neu-shadow-sm;
+}
+
+// ─── Legacy Aliases ───
+
+@mixin card-hover-lift {
+  @include neu-hover-lift;
+}
+
+@mixin focus-ring($color: $cercu-indigo) {
+  @include neu-focus-ring($color);
+}
+
 @mixin glass-effect {
-  background: rgba(255, 255, 255, 0.85);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
+  @include neu-raised('md');
 }
