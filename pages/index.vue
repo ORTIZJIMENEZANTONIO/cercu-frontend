@@ -154,33 +154,36 @@
     </section>
 
     <!-- Categories Grid -->
-    <section ref="categoriesSection" class="section-padding">
+    <section ref="categoriesSection" class="section-padding categories-section">
       <div class="container">
-        <div class="section-header mb-4">
-          <h2 ref="categoriesTitle" class="h3 fw-bold mb-1">
-            Servicios populares
-          </h2>
-          <p class="text-muted mb-0">Selecciona una categoria para empezar</p>
+        <div class="section-heading">
+          <div ref="categoriesTitle" class="section-label-pill">
+            <span class="section-label-dot" />
+            <span>Explora</span>
+          </div>
+          <h2 class="section-title">Servicios populares</h2>
+          <p class="section-subtitle">Selecciona una categoria para empezar</p>
         </div>
-        <div class="row g-3">
+        <div class="categories-grid">
           <div
             v-for="(cat, idx) in displayCategories"
             :key="cat.id || cat.slug"
-            class="col-6 col-md-4 col-lg-3 category-item"
+            class="category-item"
           >
             <NuxtLink
               :to="`/categorias/${cat.slug}`"
               class="text-decoration-none"
             >
-              <div class="card category-card h-100 text-center p-4">
+              <div class="category-card">
+                <div class="category-card-glow" aria-hidden="true" />
                 <div
-                  class="category-icon mx-auto mb-3"
+                  class="category-icon"
                   :class="`category-icon--${catColorClass(idx)}`"
                 >
                   <Icon :name="cat.icon || 'mdi:wrench'" size="28" />
                 </div>
-                <h6 class="fw-semibold mb-1">{{ cat.name }}</h6>
-                <span class="small text-muted"
+                <h6 class="category-name">{{ cat.name }}</h6>
+                <span class="category-count"
                   >{{ cat.chips?.length || 0 }} servicios</span
                 >
               </div>
@@ -191,9 +194,9 @@
           v-if="categoriesStore.categories.length > 8"
           class="text-center mt-4"
         >
-          <NuxtLink to="/categorias" class="btn btn-outline-primary btn-press">
+          <NuxtLink to="/categorias" class="btn-see-all">
             Ver todas las categorias
-            <Icon name="mdi:arrow-right" class="ms-1" size="16" />
+            <Icon name="mdi:arrow-right" class="ms-1 see-all-arrow" size="16" />
           </NuxtLink>
         </div>
       </div>
@@ -202,36 +205,64 @@
     <!-- How It Works -->
     <section ref="howSection" class="section-padding how-section">
       <div class="container">
-        <h2 class="h3 fw-bold text-center mb-2">Como funciona</h2>
-        <p class="text-center text-muted mb-5">En 3 simples pasos</p>
-        <div class="row g-4">
+        <div class="section-heading">
+          <div class="section-label-pill">
+            <span class="section-label-dot" />
+            <span>Asi de facil</span>
+          </div>
+          <h2 class="section-title">Como funciona</h2>
+          <p class="section-subtitle">Resuelve tu problema en 3 pasos</p>
+        </div>
+
+        <div class="how-timeline">
+          <!-- Connector line (desktop) -->
+          <div class="how-connector" aria-hidden="true">
+            <div class="how-connector-line" />
+          </div>
+
           <div
             v-for="(step, i) in howItWorks"
             :key="i"
-            class="col-md-4 text-center how-step"
+            class="how-step"
           >
-            <div class="mb-3">
-              <div class="how-number">{{ i + 1 }}</div>
-              <div class="how-icon-circle mx-auto">
-                <Icon :name="step.icon" size="28" />
+            <div class="how-card" :class="`how-card--${step.color}`">
+              <div class="how-card-number">{{ i + 1 }}</div>
+              <div class="how-card-icon">
+                <Icon :name="step.icon" size="30" />
+              </div>
+              <div class="how-card-glow" aria-hidden="true" />
+              <h5 class="how-card-title">{{ step.title }}</h5>
+              <p class="how-card-desc">{{ step.desc }}</p>
+              <div class="how-card-detail">
+                <Icon :name="step.detailIcon" size="14" />
+                <span>{{ step.detail }}</span>
               </div>
             </div>
-            <h5 class="fw-semibold">{{ step.title }}</h5>
-            <p class="text-muted small">{{ step.desc }}</p>
           </div>
         </div>
       </div>
     </section>
 
     <!-- Trust Signals -->
-    <section ref="trustSection" class="trust-section">
+    <section ref="trustSection" class="section-padding trust-section">
       <div class="container">
-        <div class="row g-4 text-center">
+        <div class="section-heading">
+          <div class="section-label-pill section-label-pill--light">
+            <span class="section-label-dot section-label-dot--light" />
+            <span>Confianza</span>
+          </div>
+          <h2 class="section-title section-title--light">Por que elegirnos</h2>
+          <p class="section-subtitle section-subtitle--light">Datos que respaldan nuestro servicio</p>
+        </div>
+        <div class="trust-grid">
           <div
             v-for="(stat, i) in trustStats"
             :key="i"
-            class="col-6 col-md-3 trust-stat"
+            class="trust-card"
           >
+            <div class="trust-card-icon">
+              <Icon :name="stat.icon" size="22" />
+            </div>
             <h3 ref="trustNumbers" class="trust-number">{{ stat.display }}</h3>
             <p class="trust-label">{{ stat.label }}</p>
           </div>
@@ -240,19 +271,25 @@
     </section>
 
     <!-- CTA Final -->
-    <section class="section-padding text-center">
+    <section class="section-padding cta-section">
       <div class="container">
         <div class="cta-box">
-          <h2 class="h3 fw-bold text-white mb-3">
+          <div class="cta-box-glow cta-box-glow--1" aria-hidden="true" />
+          <div class="cta-box-glow cta-box-glow--2" aria-hidden="true" />
+          <div class="cta-label">
+            <Icon name="mdi:rocket-launch-outline" size="14" />
+            <span>Comienza gratis</span>
+          </div>
+          <h2 class="cta-title">
             Listo para resolver tu problema?
           </h2>
-          <p class="text-white-75 mb-4">
+          <p class="cta-desc">
             Describe lo que necesitas y encuentra profesionales verificados
             cerca de ti.
           </p>
-          <NuxtLink to="/solicitar" class="btn btn-cta-light btn-press">
+          <NuxtLink to="/solicitar" class="btn-cta-light btn-press">
             Solicitar servicio gratis
-            <Icon name="mdi:arrow-right" class="ms-2" size="18" />
+            <Icon name="mdi:arrow-right" class="ms-2 cta-arrow" size="18" />
           </NuxtLink>
         </div>
       </div>
@@ -281,19 +318,28 @@ const trustNumbers = ref<HTMLElement[]>([]);
 
 const howItWorks = [
   {
-    icon: "mdi:clipboard-text",
+    icon: "mdi:clipboard-text-outline",
     title: "Describe tu necesidad",
     desc: "Selecciona el servicio, describe el problema y sube fotos si quieres.",
+    detail: "Menos de 2 min",
+    detailIcon: "mdi:timer-outline",
+    color: "indigo",
   },
   {
-    icon: "mdi:map-marker-radius",
+    icon: "mdi:map-marker-radius-outline",
     title: "Encontramos profesionales",
     desc: "Buscamos los mejores profesionales verificados cerca de tu ubicacion.",
+    detail: "Verificados con ID",
+    detailIcon: "mdi:shield-check-outline",
+    color: "coral",
   },
   {
-    icon: "mdi:handshake",
+    icon: "mdi:handshake-outline",
     title: "Agenda y resuelve",
     desc: "El profesional te contacta, coordinan la visita y resuelven tu problema.",
+    detail: "Tu eliges el horario",
+    detailIcon: "mdi:calendar-check-outline",
+    color: "success",
   },
 ];
 
@@ -304,6 +350,7 @@ const trustStats = [
     label: "Profesionales verificados",
     prefix: "",
     suffix: "+",
+    icon: "mdi:shield-check-outline",
   },
   {
     value: 12,
@@ -311,27 +358,19 @@ const trustStats = [
     label: "Categorias de servicio",
     prefix: "",
     suffix: "",
+    icon: "mdi:view-grid-outline",
   },
-  { value: 0, display: "CDMX", label: "y Estado de Mexico", isText: true },
-  { value: 0, display: "24/7", label: "Emergencias disponibles", isText: true },
+  { value: 0, display: "CDMX", label: "y Estado de Mexico", isText: true, icon: "mdi:map-marker-outline" },
+  { value: 0, display: "24/7", label: "Emergencias disponibles", isText: true, icon: "mdi:clock-alert-outline" },
 ];
 
 const displayCategories = computed(() =>
   categoriesStore.categories.slice(0, 8)
 );
 
-const catColors = [
-  "coral",
-  "warning",
-  "success",
-  "info",
-  "indigo",
-  "danger",
-  "teal",
-  "purple",
-];
+const { getColorByIndex } = useCategoryColor();
 function catColorClass(idx: number) {
-  return catColors[idx % catColors.length];
+  return getColorByIndex(idx);
 }
 
 onMounted(() => {
@@ -793,22 +832,22 @@ useHead({
   width: 100%;
   padding: 0.875rem 1rem 0.875rem 2.75rem;
   font-size: 1rem;
-  border: 2px solid rgba(white, 0.2);
-  border-radius: $border-radius-lg;
-  background: rgba(white, 0.1);
+  border: 1px solid rgba(white, 0.18);
+  border-radius: 999px;
+  background: rgba(white, 0.08);
   color: white;
-  backdrop-filter: blur(4px);
+  backdrop-filter: blur(8px);
   transition: border-color 0.3s ease, background 0.3s ease, box-shadow 0.3s ease;
 
   &::placeholder {
-    color: rgba(white, 0.5);
+    color: rgba(white, 0.45);
   }
 
   &:focus {
     outline: none;
-    border-color: rgba(white, 0.5);
-    background: rgba(white, 0.15);
-    box-shadow: 0 0 0 4px rgba(white, 0.08);
+    border-color: rgba(white, 0.4);
+    background: rgba(white, 0.14);
+    box-shadow: 0 0 0 4px rgba(white, 0.06);
   }
 }
 
@@ -834,16 +873,16 @@ useHead({
   padding: 0.8rem 1.75rem;
   font-weight: 600;
   font-size: 1rem;
-  border-radius: $border-radius-lg;
+  border-radius: 999px;
   background: white;
   color: $cercu-indigo;
   border: none;
   box-shadow: 0 4px 14px rgba(0, 0, 0, 0.15);
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
 
   &:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+    transform: translateY(-3px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
     color: $cercu-indigo-dark;
   }
 
@@ -862,16 +901,18 @@ useHead({
   padding: 0.8rem 1.75rem;
   font-weight: 600;
   font-size: 1rem;
-  border-radius: $border-radius-lg;
-  background: transparent;
+  border-radius: 999px;
+  background: rgba(white, 0.08);
   color: white;
-  border: 2px solid rgba(white, 0.3);
-  transition: background 0.2s ease, border-color 0.2s ease;
+  border: 1px solid rgba(white, 0.2);
+  backdrop-filter: blur(4px);
+  transition: background 0.25s ease, border-color 0.25s ease, transform 0.25s ease;
 
   &:hover {
-    background: rgba(white, 0.1);
-    border-color: rgba(white, 0.5);
+    background: rgba(white, 0.14);
+    border-color: rgba(white, 0.35);
     color: white;
+    transform: translateY(-2px);
   }
 }
 
@@ -1045,12 +1086,13 @@ useHead({
 .hero-stat {
   position: absolute;
   background: white;
-  border-radius: 14px;
+  border-radius: 16px;
   padding: 0.625rem 0.875rem;
   display: flex;
   align-items: center;
   gap: 0.625rem;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.12);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+  border: 1px solid rgba(0, 0, 0, 0.04);
   z-index: 5;
 
   strong {
@@ -1103,44 +1145,148 @@ useHead({
   }
 }
 
+// ─── Shared Section Heading (used across all sections) ───
+.section-heading {
+  text-align: center;
+  margin-bottom: 2.5rem;
+
+  @media (min-width: 768px) {
+    margin-bottom: 3rem;
+  }
+}
+
+.section-label-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.375rem 1rem;
+  border-radius: 999px;
+  background: rgba($cercu-indigo, 0.06);
+  border: 1px solid rgba($cercu-indigo, 0.1);
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: $cercu-indigo;
+  margin-bottom: 1rem;
+  letter-spacing: 0.02em;
+
+  &--light {
+    background: rgba(white, 0.1);
+    border-color: rgba(white, 0.15);
+    color: rgba(white, 0.9);
+  }
+}
+
+.section-label-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: $cercu-indigo;
+  animation: dotPulse 2s ease-in-out infinite;
+
+  &--light {
+    background: white;
+  }
+}
+
+.section-title {
+  font-family: $headings-font-family;
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: $neutral-900;
+  margin-bottom: 0.375rem;
+
+  @media (min-width: 768px) {
+    font-size: 2.125rem;
+  }
+
+  &--light {
+    color: white;
+  }
+}
+
+.section-subtitle {
+  font-size: 0.95rem;
+  color: $neutral-500;
+  margin-bottom: 0;
+
+  &--light {
+    color: rgba(white, 0.6);
+  }
+}
+
 // ─── Categories Section ───
-.section-header {
-  display: flex;
-  flex-direction: column;
+.categories-section {
+  background: white;
+}
+
+.categories-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+
+  @media (min-width: 576px) {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  @media (min-width: 768px) {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.25rem;
+  }
 }
 
 .category-card {
+  position: relative;
   background: white;
-  border: 1px solid $neutral-200;
-  border-radius: $border-radius-lg;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
-  transition: transform 0.25s cubic-bezier(0.22, 1, 0.36, 1),
-    box-shadow 0.25s ease;
+  border: 1px solid rgba($neutral-200, 0.8);
+  border-radius: 20px;
+  padding: 1.5rem 1rem;
+  text-align: center;
+  overflow: hidden;
+  transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 0.35s ease,
+    border-color 0.35s ease;
   cursor: pointer;
 
   &:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+    transform: translateY(-6px);
+    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.08);
+    border-color: rgba($cercu-indigo, 0.15);
   }
 
   &:active {
-    transform: translateY(0);
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+    transform: translateY(-2px);
     transition-duration: 0.1s;
   }
 }
 
+.category-card-glow {
+  position: absolute;
+  width: 120px;
+  height: 120px;
+  top: -20px;
+  right: -20px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba($cercu-indigo, 0.04) 0%, transparent 70%);
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+
+.category-card:hover .category-card-glow {
+  opacity: 1;
+}
+
 .category-icon {
-  width: 52px;
-  height: 52px;
+  width: 56px;
+  height: 56px;
   display: flex;
   align-items: center;
   justify-content: center;
-  border-radius: 14px;
+  border-radius: 16px;
+  margin: 0 auto 0.75rem;
   background: rgba($cercu-indigo, 0.08);
   color: $cercu-indigo;
-  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1),
-    background 0.3s ease;
+  transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
 
   &--coral {
     background: rgba($cercu-coral, 0.1);
@@ -1180,100 +1326,361 @@ useHead({
   transform: scale(1.12) rotate(5deg);
 }
 
-// ─── How It Works ───
-.how-section {
-  background: #f7f7fb;
+.category-name {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: $neutral-800;
+  margin-bottom: 0.25rem;
 }
 
-.how-number {
+.category-count {
+  font-size: 0.72rem;
+  color: $neutral-400;
+}
+
+.btn-see-all {
   display: inline-flex;
   align-items: center;
-  justify-content: center;
-  width: 28px;
-  height: 28px;
-  border-radius: 50%;
-  background: $cercu-indigo;
-  color: white;
-  font-size: 0.75rem;
-  font-weight: 700;
-  margin-bottom: 0.5rem;
+  padding: 0.7rem 1.5rem;
+  font-weight: 600;
+  font-size: 0.9rem;
+  border-radius: 999px;
+  background: rgba($cercu-indigo, 0.06);
+  color: $cercu-indigo;
+  border: 1px solid rgba($cercu-indigo, 0.12);
+  text-decoration: none;
+  transition: background 0.25s ease, border-color 0.25s ease, transform 0.25s ease;
+
+  &:hover {
+    background: rgba($cercu-indigo, 0.1);
+    border-color: rgba($cercu-indigo, 0.25);
+    color: $cercu-indigo;
+    transform: translateY(-2px);
+  }
+
+  .see-all-arrow {
+    transition: transform 0.2s ease;
+  }
+
+  &:hover .see-all-arrow {
+    transform: translateX(3px);
+  }
 }
 
-.how-icon-circle {
-  width: 68px;
-  height: 68px;
-  border-radius: 50%;
+// ─── How It Works (2026 Design) ───
+.how-section {
+  background: linear-gradient(180deg, #f7f7fb 0%, #eeeef6 100%);
+  position: relative;
+  overflow: hidden;
+}
+
+@keyframes dotPulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.5; transform: scale(1.4); }
+}
+
+// Timeline layout
+.how-timeline {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.25rem;
+  position: relative;
+
+  @media (min-width: 768px) {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+  }
+}
+
+// Connector line between cards (desktop)
+.how-connector {
+  display: none;
+
+  @media (min-width: 768px) {
+    display: block;
+    position: absolute;
+    top: 68px;
+    left: calc(33.33% / 2 + 1rem);
+    right: calc(33.33% / 2 + 1rem);
+    z-index: 0;
+    pointer-events: none;
+  }
+}
+
+.how-connector-line {
+  height: 2px;
+  background: linear-gradient(90deg, $cercu-indigo, $cercu-coral, $success);
+  border-radius: 999px;
+  opacity: 0.2;
+}
+
+// Step card
+.how-card {
+  position: relative;
   background: white;
-  border: 1px solid $neutral-200;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+  border: 1px solid rgba($neutral-200, 0.8);
+  border-radius: 20px;
+  padding: 1.75rem 1.5rem 1.5rem;
+  text-align: center;
+  z-index: 1;
+  overflow: hidden;
+  transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 0.35s ease,
+    border-color 0.35s ease;
+
+  &:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.08);
+  }
+
+  &--indigo {
+    &:hover { border-color: rgba($cercu-indigo, 0.25); }
+    .how-card-icon { background: linear-gradient(135deg, rgba($cercu-indigo, 0.1) 0%, rgba($cercu-indigo, 0.18) 100%); color: $cercu-indigo; }
+    .how-card-number { background: $cercu-indigo; }
+    .how-card-glow { background: radial-gradient(circle, rgba($cercu-indigo, 0.06) 0%, transparent 70%); }
+    .how-card-detail { color: $cercu-indigo; background: rgba($cercu-indigo, 0.06); }
+  }
+
+  &--coral {
+    &:hover { border-color: rgba($cercu-coral, 0.25); }
+    .how-card-icon { background: linear-gradient(135deg, rgba($cercu-coral, 0.1) 0%, rgba($cercu-coral, 0.18) 100%); color: $cercu-coral; }
+    .how-card-number { background: $cercu-coral; }
+    .how-card-glow { background: radial-gradient(circle, rgba($cercu-coral, 0.06) 0%, transparent 70%); }
+    .how-card-detail { color: $cercu-coral; background: rgba($cercu-coral, 0.06); }
+  }
+
+  &--success {
+    &:hover { border-color: rgba($success, 0.25); }
+    .how-card-icon { background: linear-gradient(135deg, rgba($success, 0.1) 0%, rgba($success, 0.18) 100%); color: $success; }
+    .how-card-number { background: $success; }
+    .how-card-glow { background: radial-gradient(circle, rgba($success, 0.06) 0%, transparent 70%); }
+    .how-card-detail { color: $success; background: rgba($success, 0.06); }
+  }
+}
+
+.how-card-number {
+  position: absolute;
+  top: 1rem;
+  left: 1rem;
+  width: 26px;
+  height: 26px;
+  border-radius: 8px;
   display: flex;
   align-items: center;
   justify-content: center;
-  color: $cercu-indigo;
-  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1),
-    box-shadow 0.3s ease;
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: white;
+  background: $cercu-indigo;
 }
 
-.how-step:hover .how-icon-circle {
-  transform: scale(1.1) rotate(5deg);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+.how-card-icon {
+  width: 64px;
+  height: 64px;
+  border-radius: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 1.125rem;
+  transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.how-card:hover .how-card-icon {
+  transform: scale(1.1) rotate(3deg);
+}
+
+.how-card-glow {
+  position: absolute;
+  width: 180px;
+  height: 180px;
+  top: -30px;
+  right: -30px;
+  border-radius: 50%;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+
+.how-card:hover .how-card-glow {
+  opacity: 1;
+}
+
+.how-card-title {
+  font-family: $headings-font-family;
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: $neutral-900;
+  margin-bottom: 0.5rem;
+}
+
+.how-card-desc {
+  font-size: 0.85rem;
+  color: $neutral-500;
+  line-height: 1.6;
+  margin-bottom: 1rem;
+}
+
+.how-card-detail {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.375rem;
+  padding: 0.3rem 0.75rem;
+  border-radius: 999px;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.01em;
 }
 
 // ─── Trust Signals ───
 .trust-section {
-  background: $cercu-indigo;
-  padding: 3rem 0;
+  background: linear-gradient(135deg, $cercu-indigo 0%, $cercu-indigo-light 40%, $cercu-indigo-dark 100%);
   color: white;
+  position: relative;
+  overflow: hidden;
+}
+
+.trust-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
 
   @media (min-width: 768px) {
-    padding: 4rem 0;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.25rem;
   }
+}
+
+.trust-card {
+  background: rgba(white, 0.08);
+  border: 1px solid rgba(white, 0.1);
+  border-radius: 20px;
+  padding: 1.5rem 1rem;
+  text-align: center;
+  backdrop-filter: blur(4px);
+  transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1),
+    background 0.35s ease,
+    border-color 0.35s ease;
+
+  &:hover {
+    transform: translateY(-6px);
+    background: rgba(white, 0.12);
+    border-color: rgba(white, 0.2);
+  }
+}
+
+.trust-card-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: 14px;
+  background: rgba(white, 0.1);
+  color: rgba(white, 0.9);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 0.875rem;
+  transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.trust-card:hover .trust-card-icon {
+  transform: scale(1.12) rotate(5deg);
 }
 
 .trust-number {
   font-family: $headings-font-family;
-  font-size: 2rem;
+  font-size: 1.75rem;
   font-weight: 700;
   color: white;
   margin-bottom: 0.25rem;
+  line-height: 1.2;
 
   @media (min-width: 768px) {
-    font-size: 2.5rem;
+    font-size: 2.125rem;
   }
 }
 
 .trust-label {
-  color: rgba(white, 0.7);
-  font-size: 0.875rem;
+  color: rgba(white, 0.6);
+  font-size: 0.8rem;
   margin-bottom: 0;
+  line-height: 1.4;
 }
 
-.trust-stat {
-  transition: transform 0.3s ease;
-
-  &:hover {
-    transform: scale(1.05);
-  }
+// ─── CTA Section ───
+.cta-section {
+  background: white;
 }
 
-// ─── CTA Box ───
 .cta-box {
-  background: linear-gradient(
-    135deg,
-    $cercu-indigo 0%,
-    $cercu-indigo-dark 100%
-  );
-  border-radius: 20px;
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(135deg, $cercu-indigo 0%, $cercu-indigo-dark 100%);
+  border-radius: 24px;
   padding: 3rem 2rem;
-  box-shadow: 0 12px 40px rgba($cercu-indigo, 0.25);
+  text-align: center;
+  box-shadow: 0 20px 60px rgba($cercu-indigo, 0.2);
 
   @media (min-width: 768px) {
     padding: 4rem 3rem;
   }
 }
 
-.text-white-75 {
-  color: rgba(white, 0.75);
+.cta-box-glow {
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+
+  &--1 {
+    width: 300px;
+    height: 300px;
+    top: -80px;
+    right: -60px;
+    background: radial-gradient(circle, rgba($cercu-coral, 0.2) 0%, transparent 70%);
+  }
+
+  &--2 {
+    width: 250px;
+    height: 250px;
+    bottom: -60px;
+    left: -40px;
+    background: radial-gradient(circle, rgba($cercu-indigo-light, 0.3) 0%, transparent 70%);
+  }
+}
+
+.cta-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.375rem;
+  padding: 0.3rem 0.875rem;
+  border-radius: 999px;
+  background: rgba(white, 0.1);
+  border: 1px solid rgba(white, 0.15);
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: rgba(white, 0.9);
+  margin-bottom: 1.25rem;
+  letter-spacing: 0.02em;
+}
+
+.cta-title {
+  font-family: $headings-font-family;
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: white;
+  margin-bottom: 0.75rem;
+
+  @media (min-width: 768px) {
+    font-size: 2.125rem;
+  }
+}
+
+.cta-desc {
+  font-size: 0.95rem;
+  color: rgba(white, 0.65);
+  margin-bottom: 1.75rem;
+  max-width: 480px;
+  margin-left: auto;
+  margin-right: auto;
+  line-height: 1.6;
 }
 
 .btn-cta-light {
@@ -1282,17 +1689,26 @@ useHead({
   padding: 0.875rem 2rem;
   font-weight: 600;
   font-size: 1rem;
-  border-radius: $border-radius-lg;
+  border-radius: 999px;
   background: white;
   color: $cercu-indigo;
   border: none;
-  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.1);
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.12);
+  text-decoration: none;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
 
   &:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+    transform: translateY(-3px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.18);
     color: $cercu-indigo-dark;
+  }
+
+  .cta-arrow {
+    transition: transform 0.2s ease;
+  }
+
+  &:hover .cta-arrow {
+    transform: translateX(3px);
   }
 }
 

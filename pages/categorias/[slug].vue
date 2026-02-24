@@ -13,7 +13,10 @@
           </nav>
 
           <div class="category-heading" :class="{ 'anim-in': mounted }">
-            <div class="category-icon-lg">
+            <div
+              class="category-icon-lg"
+              :class="`category-icon-lg--${categoryColor}`"
+            >
               <Icon :name="category.icon || 'mdi:wrench'" size="32" />
             </div>
             <div>
@@ -120,11 +123,18 @@
 <script setup lang="ts">
 const route = useRoute()
 const categoriesStore = useCategoriesStore()
+const { getColorForCategory } = useCategoryColor()
 const loading = ref(true)
 const mounted = ref(false)
 const category = ref<any>(null)
 
+const categoryColor = computed(() =>
+  getColorForCategory(route.params.slug as string)
+)
+
 onMounted(async () => {
+  // Ensure full categories list is loaded for color mapping
+  await categoriesStore.fetchAll().catch(() => {})
   try {
     category.value = await categoriesStore.fetchById(route.params.slug as string)
   } finally {
@@ -225,7 +235,7 @@ useHead({ title: () => `${category.value?.name || 'Categoria'} - CERCU` })
   width: 60px;
   height: 60px;
   border-radius: 16px;
-  background: linear-gradient(135deg, rgba($cercu-indigo, 0.08) 0%, rgba($cercu-indigo, 0.15) 100%);
+  background: rgba($cercu-indigo, 0.08);
   color: $cercu-indigo;
   display: flex;
   align-items: center;
@@ -236,6 +246,15 @@ useHead({ title: () => `${category.value?.name || 'Categoria'} - CERCU` })
     width: 68px;
     height: 68px;
   }
+
+  &--coral { background: rgba($cercu-coral, 0.1); color: $cercu-coral; }
+  &--warning { background: rgba($warning, 0.1); color: $warning; }
+  &--success { background: rgba($success, 0.1); color: $success; }
+  &--info { background: rgba($info, 0.1); color: $info; }
+  &--indigo { background: rgba($cercu-indigo, 0.08); color: $cercu-indigo; }
+  &--danger { background: rgba($danger, 0.1); color: $danger; }
+  &--teal { background: rgba(#14b8a6, 0.1); color: #14b8a6; }
+  &--purple { background: rgba(#8b5cf6, 0.1); color: #8b5cf6; }
 }
 
 .category-title {
@@ -341,7 +360,8 @@ useHead({ title: () => `${category.value?.name || 'Categoria'} - CERCU` })
     background: rgba($cercu-indigo, 0.06);
     border-color: rgba($cercu-indigo, 0.2);
     color: $cercu-indigo;
-    transform: translateY(-1px);
+    transform: translateY(-2px);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
   }
 }
 

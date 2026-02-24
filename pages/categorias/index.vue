@@ -24,7 +24,10 @@
           >
             <NuxtLink :to="`/categorias/${cat.slug}`" class="text-decoration-none">
               <div class="category-card">
-                <div class="category-card-icon">
+                <div
+                  class="category-card-icon"
+                  :class="`category-card-icon--${getColorForCategory(cat.slug)}`"
+                >
                   <Icon :name="cat.icon || 'mdi:wrench'" size="26" />
                 </div>
                 <h6 class="category-card-name">{{ cat.name }}</h6>
@@ -53,7 +56,10 @@
           >
             <NuxtLink :to="`/categorias/${cat.slug}`" class="text-decoration-none">
               <div class="category-card">
-                <div class="category-card-icon">
+                <div
+                  class="category-card-icon"
+                  :class="`category-card-icon--${getColorForCategory(cat.slug)}`"
+                >
                   <Icon :name="cat.icon || 'mdi:wrench'" size="26" />
                 </div>
                 <h6 class="category-card-name">{{ cat.name }}</h6>
@@ -69,6 +75,7 @@
 
 <script setup lang="ts">
 const categoriesStore = useCategoriesStore()
+const { getColorForCategory } = useCategoryColor()
 const mounted = ref(false)
 
 onMounted(async () => {
@@ -224,18 +231,26 @@ useHead({ title: 'Categorias - CERCU' })
   width: 52px;
   height: 52px;
   border-radius: 14px;
-  background: linear-gradient(135deg, rgba($cercu-indigo, 0.08) 0%, rgba($cercu-indigo, 0.15) 100%);
+  background: rgba($cercu-indigo, 0.08);
   color: $cercu-indigo;
   display: flex;
   align-items: center;
   justify-content: center;
   margin: 0 auto 0.75rem;
   transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), background 0.3s ease;
+
+  &--coral { background: rgba($cercu-coral, 0.1); color: $cercu-coral; }
+  &--warning { background: rgba($warning, 0.1); color: $warning; }
+  &--success { background: rgba($success, 0.1); color: $success; }
+  &--info { background: rgba($info, 0.1); color: $info; }
+  &--indigo { background: rgba($cercu-indigo, 0.08); color: $cercu-indigo; }
+  &--danger { background: rgba($danger, 0.1); color: $danger; }
+  &--teal { background: rgba(#14b8a6, 0.1); color: #14b8a6; }
+  &--purple { background: rgba(#8b5cf6, 0.1); color: #8b5cf6; }
 }
 
 .category-card:hover .category-card-icon {
   transform: scale(1.12) rotate(5deg);
-  background: linear-gradient(135deg, rgba($cercu-indigo, 0.12) 0%, rgba($cercu-indigo, 0.22) 100%);
 }
 
 .category-card-name {
