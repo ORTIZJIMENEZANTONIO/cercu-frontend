@@ -8,14 +8,14 @@
       <Transition name="fade" appear>
         <template v-if="!loading && lead">
           <div>
-            <div class="card main-card p-4 mb-4" :class="{ 'anim-in': mounted }">
-              <div class="d-flex justify-content-between align-items-start mb-3">
+            <div class="card main-card p-3 p-md-4 mb-3 mb-md-4" :class="{ 'anim-in': mounted }">
+              <div class="lead-header mb-3">
                 <div>
-                  <h2 class="h5 fw-bold mb-1">{{ lead.lead.categoryName }}</h2>
+                  <h2 class="lead-category-name mb-1">{{ lead.lead.categoryName }}</h2>
                   <span :class="['badge', urgencyBadge]">{{ urgencyLabel }}</span>
                 </div>
                 <div class="text-end">
-                  <div class="h4 fw-bold text-brand">${{ lead.lead.priceMXN }} MXN</div>
+                  <div class="lead-price">${{ lead.lead.priceMXN }} MXN</div>
                   <small class="text-muted">Costo del lead</small>
                 </div>
               </div>
@@ -69,7 +69,7 @@
               </Transition>
 
               <!-- Actions -->
-              <div v-if="!takenData" class="d-flex gap-2 mt-3">
+              <div v-if="!takenData" class="lead-actions mt-3">
                 <AppButton variant="outline-secondary" @click="handleDecline">
                   Declinar
                 </AppButton>
@@ -185,14 +185,56 @@ async function handleDecline() {
   }
 }
 
+.lead-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 0.75rem;
+}
+
+.lead-category-name {
+  font-family: $headings-font-family;
+  font-size: 1.125rem;
+  font-weight: 700;
+  color: $neutral-900;
+
+  @media (min-width: 768px) { font-size: 1.25rem; }
+}
+
+.lead-price {
+  font-family: $headings-font-family;
+  font-size: 1.125rem;
+  font-weight: 700;
+  color: $cercu-indigo;
+  white-space: nowrap;
+
+  @media (min-width: 768px) { font-size: 1.5rem; }
+}
+
+.lead-actions {
+  display: flex;
+  gap: 0.5rem;
+
+  @media (max-width: 479px) {
+    flex-direction: column;
+
+    .flex-grow-1 { width: 100%; }
+  }
+}
+
 .lead-photo {
-  width: 100px;
-  height: 100px;
+  width: 80px;
+  height: 80px;
   object-fit: cover;
   border-radius: 10px;
   border: 1px solid $neutral-200;
   transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
   cursor: pointer;
+
+  @media (min-width: 768px) {
+    width: 100px;
+    height: 100px;
+  }
 
   &:hover {
     transform: scale(1.08);

@@ -1,4 +1,7 @@
 export const useAuthStore = defineStore('auth', () => {
+  const config = useRuntimeConfig()
+  const apiBase = config.public.apiBase as string
+
   const token = useCookie<string | null>('cercu_token', {
     maxAge: 60 * 40,
     path: '/',
@@ -28,11 +31,10 @@ export const useAuthStore = defineStore('auth', () => {
   }
 
   async function login(phone: string, code: string, name?: string, email?: string, dateOfBirth?: string) {
-    const config = useRuntimeConfig()
     const body: any = { phone, code, name }
     if (email) body.email = email
     if (dateOfBirth) body.dateOfBirth = dateOfBirth
-    const data: any = await $fetch(`${config.public.apiBase}/auth/verify-otp`, {
+    const data: any = await $fetch(`${apiBase}/auth/verify-otp`, {
       method: 'POST',
       body,
     })
@@ -42,11 +44,10 @@ export const useAuthStore = defineStore('auth', () => {
   }
 
   async function googleLogin(credential: string, name?: string, dateOfBirth?: string) {
-    const config = useRuntimeConfig()
     const body: any = { credential }
     if (name) body.name = name
     if (dateOfBirth) body.dateOfBirth = dateOfBirth
-    const data: any = await $fetch(`${config.public.apiBase}/auth/google`, {
+    const data: any = await $fetch(`${apiBase}/auth/google`, {
       method: 'POST',
       body,
     })
@@ -58,8 +59,7 @@ export const useAuthStore = defineStore('auth', () => {
   async function refreshTokenAction() {
     if (!refreshToken.value) return false
     try {
-      const config = useRuntimeConfig()
-      const data: any = await $fetch(`${config.public.apiBase}/auth/refresh`, {
+      const data: any = await $fetch(`${apiBase}/auth/refresh`, {
         method: 'POST',
         body: { refreshToken: refreshToken.value },
       })
@@ -74,8 +74,7 @@ export const useAuthStore = defineStore('auth', () => {
   async function fetchMe() {
     if (!token.value) return
     try {
-      const config = useRuntimeConfig()
-      const data: any = await $fetch(`${config.public.apiBase}/auth/me`, {
+      const data: any = await $fetch(`${apiBase}/auth/me`, {
         headers: { Authorization: `Bearer ${token.value}` },
       })
       setUser(data.data)

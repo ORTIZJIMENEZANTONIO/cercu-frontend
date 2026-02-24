@@ -17,11 +17,8 @@ export const useLeadsStore = defineStore('leads', {
     async fetchUserLeads() {
       this.userLeadsLoading = true;
       try {
-        const authStore = useAuthStore();
-        const config = useRuntimeConfig();
-        const data: any = await $fetch(`${config.public.apiBase}/users/leads`, {
-          headers: { Authorization: `Bearer ${authStore.token}` },
-        });
+        const { $api } = useNuxtApp();
+        const data: any = await $api('/users/leads');
         this.userLeads = data.data || [];
       } catch (e: any) {
         if (e?.response?.status === 404 || e?.status === 404 || e?.statusCode === 404) {
@@ -37,11 +34,8 @@ export const useLeadsStore = defineStore('leads', {
     async fetchProLeads() {
       this.loading = true;
       try {
-        const authStore = useAuthStore();
-        const config = useRuntimeConfig();
-        const data: any = await $fetch(`${config.public.apiBase}/professionals/leads`, {
-          headers: { Authorization: `Bearer ${authStore.token}` },
-        });
+        const { $api } = useNuxtApp();
+        const data: any = await $api('/professionals/leads');
         this.leads = data.data;
         this.stats.total = this.leads.length;
         this.stats.pending = this.leads.filter((l: any) => l.status === 'pending' || l.status === 'viewed').length;
@@ -59,32 +53,21 @@ export const useLeadsStore = defineStore('leads', {
     },
 
     async fetchLeadPreview(leadId: number) {
-      const authStore = useAuthStore();
-      const config = useRuntimeConfig();
-      const data: any = await $fetch(`${config.public.apiBase}/professionals/leads/${leadId}/preview`, {
-        headers: { Authorization: `Bearer ${authStore.token}` },
-      });
+      const { $api } = useNuxtApp();
+      const data: any = await $api(`/professionals/leads/${leadId}/preview`);
       this.currentLead = data.data;
       return data.data;
     },
 
     async takeLead(leadId: number) {
-      const authStore = useAuthStore();
-      const config = useRuntimeConfig();
-      const data: any = await $fetch(`${config.public.apiBase}/professionals/leads/${leadId}/take`, {
-        method: 'POST',
-        headers: { Authorization: `Bearer ${authStore.token}` },
-      });
+      const { $api } = useNuxtApp();
+      const data: any = await $api(`/professionals/leads/${leadId}/take`, { method: 'POST' });
       return data.data;
     },
 
     async declineLead(leadId: number) {
-      const authStore = useAuthStore();
-      const config = useRuntimeConfig();
-      await $fetch(`${config.public.apiBase}/professionals/leads/${leadId}/decline`, {
-        method: 'POST',
-        headers: { Authorization: `Bearer ${authStore.token}` },
-      });
+      const { $api } = useNuxtApp();
+      await $api(`/professionals/leads/${leadId}/decline`, { method: 'POST' });
     },
   },
 });

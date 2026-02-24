@@ -22,10 +22,10 @@ $neutral-700: #404040;
 $neutral-800: #262626;
 $neutral-900: #171717;
 
-// ─── Neumorphism Tokens ───
-$neu-bg:           #F0F0F8;
-$neu-bg-dark:      #E4E4EE;
-$neu-bg-light:     #FAFAFF;
+// ─── Surface Tokens (clean design) ───
+$neu-bg:           #FFFFFF;
+$neu-bg-dark:      $neutral-100;
+$neu-bg-light:     #FAFAFA;
 
 // State Colors
 $success: #10B981;
@@ -86,20 +86,20 @@ $border-radius-lg: 0.75rem;
 $border-radius-xl: 1rem;
 $border-radius-pill: 50rem;
 
-// Neumorphism shadow colors
-$neu-shadow-light: rgba(255, 255, 255, 0.8);
-$neu-shadow-dark:  rgba(174, 174, 204, 0.4);
+// Clean shadow tokens
+$neu-shadow-light: rgba(255, 255, 255, 0);
+$neu-shadow-dark:  rgba(0, 0, 0, 0.06);
 
-// Neumorphism raised shadows (element pops out)
-$neu-shadow-sm:  4px 4px 8px $neu-shadow-dark, -4px -4px 8px $neu-shadow-light;
-$neu-shadow-md:  6px 6px 12px $neu-shadow-dark, -6px -6px 12px $neu-shadow-light;
-$neu-shadow-lg:  8px 8px 16px $neu-shadow-dark, -8px -8px 16px $neu-shadow-light;
-$neu-shadow-xl:  12px 12px 24px $neu-shadow-dark, -12px -12px 24px $neu-shadow-light;
+// Raised shadows (clean flat style)
+$neu-shadow-sm:  0 1px 3px rgba(0, 0, 0, 0.06);
+$neu-shadow-md:  0 2px 8px rgba(0, 0, 0, 0.08);
+$neu-shadow-lg:  0 4px 16px rgba(0, 0, 0, 0.1);
+$neu-shadow-xl:  0 8px 30px rgba(0, 0, 0, 0.12);
 
-// Neumorphism inset shadows (element pressed in)
-$neu-inset-sm:  inset 2px 2px 5px $neu-shadow-dark, inset -2px -2px 5px $neu-shadow-light;
-$neu-inset-md:  inset 4px 4px 8px $neu-shadow-dark, inset -4px -4px 8px $neu-shadow-light;
-$neu-inset-lg:  inset 6px 6px 12px $neu-shadow-dark, inset -6px -6px 12px $neu-shadow-light;
+// Inset shadows (subtle pressed state)
+$neu-inset-sm:  inset 0 1px 2px rgba(0, 0, 0, 0.06);
+$neu-inset-md:  inset 0 2px 4px rgba(0, 0, 0, 0.08);
+$neu-inset-lg:  inset 0 3px 6px rgba(0, 0, 0, 0.1);
 
 // Bootstrap shadow aliases
 $box-shadow-sm:  $neu-shadow-sm;
@@ -107,17 +107,17 @@ $box-shadow:     $neu-shadow-md;
 $box-shadow-lg:  $neu-shadow-lg;
 $box-shadow-xl:  $neu-shadow-xl;
 
-// Body — neumorphism uniform surface
-$body-bg: $neu-bg;
+// Body — clean surface
+$body-bg: #F7F7FB;
 $body-color: $neutral-800;
 
-// Cards — neumorphism
+// Cards — clean
 $card-border-radius: $border-radius-lg;
-$card-border-color: transparent;
+$card-border-color: $neutral-200;
 $card-spacer-y: 1.25rem;
 $card-spacer-x: 1.25rem;
-$card-cap-bg: $neu-bg;
-$card-bg: $neu-bg;
+$card-cap-bg: white;
+$card-bg: white;
 
 // Buttons
 $btn-border-radius: $border-radius;
@@ -125,12 +125,12 @@ $btn-padding-y: 0.625rem;
 $btn-padding-x: 1.25rem;
 $btn-font-weight: 600;
 
-// Forms — neumorphism inset
+// Forms — clean
 $input-border-radius: $border-radius;
-$input-border-color: transparent;
-$input-bg: $neu-bg;
-$input-focus-border-color: transparent;
-$input-focus-box-shadow: inset 4px 4px 8px $neu-shadow-dark, inset -4px -4px 8px $neu-shadow-light, 0 0 0 3px rgba($cercu-indigo, 0.2);
+$input-border-color: $neutral-200;
+$input-bg: white;
+$input-focus-border-color: $cercu-indigo;
+$input-focus-box-shadow: 0 0 0 3px rgba($cercu-indigo, 0.15);
 $input-padding-y: 0.625rem;
 $input-padding-x: 0.875rem;
 

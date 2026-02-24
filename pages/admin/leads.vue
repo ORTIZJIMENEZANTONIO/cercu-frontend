@@ -97,6 +97,7 @@
 <script setup lang="ts">
 definePageMeta({ layout: 'admin', middleware: ['role'] })
 
+const { $api } = useNuxtApp()
 const adminStore = useAdminStore()
 const toast = useToast()
 const mounted = ref(false)
@@ -129,12 +130,9 @@ function fetchLeads(page = 1) {
 }
 
 async function cancelLead(lead: any) {
-  const authStore = useAuthStore()
-  const config = useRuntimeConfig()
   try {
-    await $fetch(`${config.public.apiBase}/admin/leads/${lead.id}/cancel`, {
+    await $api(`/admin/leads/${lead.id}/cancel`, {
       method: 'POST',
-      headers: { Authorization: `Bearer ${authStore.token}` },
       body: { reason: 'Cancelled by admin' },
     })
     toast.success('Lead cancelado')

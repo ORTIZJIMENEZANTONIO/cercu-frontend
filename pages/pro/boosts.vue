@@ -118,12 +118,12 @@ useHead({ title: 'Boosts - CERCU Pro' });
 .page-header { margin-bottom: 1.25rem; opacity: 0; transform: translateY(12px); transition: opacity 0.4s ease, transform 0.4s cubic-bezier(0.22, 1, 0.36, 1); &.anim-in { opacity: 1; transform: translateY(0); } }
 .page-title { font-family: $headings-font-family; font-size: 1.375rem; font-weight: 700; color: $neutral-900; margin-bottom: 0.25rem; }
 .page-subtitle { font-size: 0.875rem; color: $neutral-600; margin-bottom: 0; }
-.content-card { background: white; border: 1px solid $neutral-200; border-radius: 16px; padding: 1.25rem; box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06); opacity: 0; transform: translateY(16px); transition: opacity 0.5s ease, transform 0.5s cubic-bezier(0.22, 1, 0.36, 1); &.anim-in { opacity: 1; transform: translateY(0); } }
+.content-card { background: white; border: 1px solid $neutral-200; border-radius: 16px; padding: 1rem; box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06); opacity: 0; transform: translateY(16px); transition: opacity 0.5s ease, transform 0.5s cubic-bezier(0.22, 1, 0.36, 1); &.anim-in { opacity: 1; transform: translateY(0); } @media (min-width: 768px) { padding: 1.25rem; } }
 .content-card-title { display: flex; align-items: center; font-size: 1rem; font-weight: 600; color: $neutral-800; margin-bottom: 1rem; }
 .text-indigo { color: $cercu-indigo; }
 
 .active-boosts-list { display: flex; flex-direction: column; gap: 0.75rem; }
-.active-boost-item { display: flex; align-items: center; gap: 0.75rem; padding: 0.75rem; border-radius: 12px; background: $neutral-50; border: 1px solid $neutral-100; }
+.active-boost-item { display: flex; align-items: center; gap: 0.5rem; padding: 0.625rem; border-radius: 12px; background: $neutral-50; border: 1px solid $neutral-100; @media (min-width: 768px) { gap: 0.75rem; padding: 0.75rem; } }
 .active-boost-icon { width: 36px; height: 36px; border-radius: 10px; display: flex; align-items: center; justify-content: center; background: white; color: $cercu-coral; border: 1px solid $neutral-200; flex-shrink: 0; }
 
 .boosts-grid {

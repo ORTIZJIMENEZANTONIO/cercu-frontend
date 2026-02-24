@@ -17,11 +17,8 @@ export const useAdminStore = defineStore('admin', {
   actions: {
     async fetchSummary() {
       try {
-        const authStore = useAuthStore();
-        const config = useRuntimeConfig();
-        const data: any = await $fetch(`${config.public.apiBase}/admin/summary`, {
-          headers: { Authorization: `Bearer ${authStore.token}` },
-        });
+        const { $api } = useNuxtApp();
+        const data: any = await $api('/admin/summary');
         this.summary = data.data;
       } catch {
         // Summary stays null — dashboard shows cards without stats
@@ -31,12 +28,9 @@ export const useAdminStore = defineStore('admin', {
     async fetchUsers(query: Record<string, any> = {}) {
       this.loading = true;
       try {
-        const authStore = useAuthStore();
-        const config = useRuntimeConfig();
+        const { $api } = useNuxtApp();
         const params = new URLSearchParams(query as any).toString();
-        const data: any = await $fetch(`${config.public.apiBase}/admin/users?${params}`, {
-          headers: { Authorization: `Bearer ${authStore.token}` },
-        });
+        const data: any = await $api(`/admin/users?${params}`);
         this.users = data.data;
         this.pagination = data.pagination;
       } finally {
@@ -47,12 +41,9 @@ export const useAdminStore = defineStore('admin', {
     async fetchProfessionals(query: Record<string, any> = {}) {
       this.loading = true;
       try {
-        const authStore = useAuthStore();
-        const config = useRuntimeConfig();
+        const { $api } = useNuxtApp();
         const params = new URLSearchParams(query as any).toString();
-        const data: any = await $fetch(`${config.public.apiBase}/admin/professionals?${params}`, {
-          headers: { Authorization: `Bearer ${authStore.token}` },
-        });
+        const data: any = await $api(`/admin/professionals?${params}`);
         this.professionals = data.data;
         this.pagination = data.pagination;
       } finally {
@@ -63,12 +54,9 @@ export const useAdminStore = defineStore('admin', {
     async fetchLeads(query: Record<string, any> = {}) {
       this.loading = true;
       try {
-        const authStore = useAuthStore();
-        const config = useRuntimeConfig();
+        const { $api } = useNuxtApp();
         const params = new URLSearchParams(query as any).toString();
-        const data: any = await $fetch(`${config.public.apiBase}/admin/leads?${params}`, {
-          headers: { Authorization: `Bearer ${authStore.token}` },
-        });
+        const data: any = await $api(`/admin/leads?${params}`);
         this.leads = data.data;
         this.pagination = data.pagination;
       } finally {
@@ -77,33 +65,21 @@ export const useAdminStore = defineStore('admin', {
     },
 
     async blockUser(userId: string, reason: string) {
-      const authStore = useAuthStore();
-      const config = useRuntimeConfig();
-      await $fetch(`${config.public.apiBase}/admin/users/${userId}/block`, {
-        method: 'POST',
-        headers: { Authorization: `Bearer ${authStore.token}` },
-        body: { reason },
-      });
+      const { $api } = useNuxtApp();
+      await $api(`/admin/users/${userId}/block`, { method: 'POST', body: { reason } });
     },
 
     async approveProfessional(userId: string) {
-      const authStore = useAuthStore();
-      const config = useRuntimeConfig();
-      await $fetch(`${config.public.apiBase}/admin/professionals/${userId}/approve`, {
-        method: 'POST',
-        headers: { Authorization: `Bearer ${authStore.token}` },
-      });
+      const { $api } = useNuxtApp();
+      await $api(`/admin/professionals/${userId}/approve`, { method: 'POST' });
     },
 
     // ─── Categories ─────────────────────────────────────────
     async fetchCategories() {
       this.loading = true;
       try {
-        const authStore = useAuthStore();
-        const config = useRuntimeConfig();
-        const data: any = await $fetch(`${config.public.apiBase}/admin/categories`, {
-          headers: { Authorization: `Bearer ${authStore.token}` },
-        });
+        const { $api } = useNuxtApp();
+        const data: any = await $api('/admin/categories');
         this.categories = data.data;
       } finally {
         this.loading = false;
@@ -111,145 +87,82 @@ export const useAdminStore = defineStore('admin', {
     },
 
     async createCategory(body: any) {
-      const authStore = useAuthStore();
-      const config = useRuntimeConfig();
-      const data: any = await $fetch(`${config.public.apiBase}/admin/categories`, {
-        method: 'POST',
-        headers: { Authorization: `Bearer ${authStore.token}` },
-        body,
-      });
+      const { $api } = useNuxtApp();
+      const data: any = await $api('/admin/categories', { method: 'POST', body });
       return data.data;
     },
 
     async updateCategory(id: number, body: any) {
-      const authStore = useAuthStore();
-      const config = useRuntimeConfig();
-      const data: any = await $fetch(`${config.public.apiBase}/admin/categories/${id}`, {
-        method: 'PATCH',
-        headers: { Authorization: `Bearer ${authStore.token}` },
-        body,
-      });
+      const { $api } = useNuxtApp();
+      const data: any = await $api(`/admin/categories/${id}`, { method: 'PATCH', body });
       return data.data;
     },
 
     async deleteCategory(id: number) {
-      const authStore = useAuthStore();
-      const config = useRuntimeConfig();
-      await $fetch(`${config.public.apiBase}/admin/categories/${id}`, {
-        method: 'DELETE',
-        headers: { Authorization: `Bearer ${authStore.token}` },
-      });
+      const { $api } = useNuxtApp();
+      await $api(`/admin/categories/${id}`, { method: 'DELETE' });
     },
 
     async addChip(categoryId: number, body: any) {
-      const authStore = useAuthStore();
-      const config = useRuntimeConfig();
-      const data: any = await $fetch(`${config.public.apiBase}/admin/categories/${categoryId}/chips`, {
-        method: 'POST',
-        headers: { Authorization: `Bearer ${authStore.token}` },
-        body,
-      });
+      const { $api } = useNuxtApp();
+      const data: any = await $api(`/admin/categories/${categoryId}/chips`, { method: 'POST', body });
       return data.data;
     },
 
     async updateChip(chipId: number, body: any) {
-      const authStore = useAuthStore();
-      const config = useRuntimeConfig();
-      const data: any = await $fetch(`${config.public.apiBase}/admin/chips/${chipId}`, {
-        method: 'PATCH',
-        headers: { Authorization: `Bearer ${authStore.token}` },
-        body,
-      });
+      const { $api } = useNuxtApp();
+      const data: any = await $api(`/admin/chips/${chipId}`, { method: 'PATCH', body });
       return data.data;
     },
 
     async deleteChip(chipId: number) {
-      const authStore = useAuthStore();
-      const config = useRuntimeConfig();
-      await $fetch(`${config.public.apiBase}/admin/chips/${chipId}`, {
-        method: 'DELETE',
-        headers: { Authorization: `Bearer ${authStore.token}` },
-      });
+      const { $api } = useNuxtApp();
+      await $api(`/admin/chips/${chipId}`, { method: 'DELETE' });
     },
 
     async addField(categoryId: number, body: any) {
-      const authStore = useAuthStore();
-      const config = useRuntimeConfig();
-      const data: any = await $fetch(`${config.public.apiBase}/admin/categories/${categoryId}/fields`, {
-        method: 'POST',
-        headers: { Authorization: `Bearer ${authStore.token}` },
-        body,
-      });
+      const { $api } = useNuxtApp();
+      const data: any = await $api(`/admin/categories/${categoryId}/fields`, { method: 'POST', body });
       return data.data;
     },
 
     async updateField(fieldId: number, body: any) {
-      const authStore = useAuthStore();
-      const config = useRuntimeConfig();
-      const data: any = await $fetch(`${config.public.apiBase}/admin/fields/${fieldId}`, {
-        method: 'PATCH',
-        headers: { Authorization: `Bearer ${authStore.token}` },
-        body,
-      });
+      const { $api } = useNuxtApp();
+      const data: any = await $api(`/admin/fields/${fieldId}`, { method: 'PATCH', body });
       return data.data;
     },
 
     async deleteField(fieldId: number) {
-      const authStore = useAuthStore();
-      const config = useRuntimeConfig();
-      await $fetch(`${config.public.apiBase}/admin/fields/${fieldId}`, {
-        method: 'DELETE',
-        headers: { Authorization: `Bearer ${authStore.token}` },
-      });
+      const { $api } = useNuxtApp();
+      await $api(`/admin/fields/${fieldId}`, { method: 'DELETE' });
     },
 
     async setPricing(categoryId: number, body: any) {
-      const authStore = useAuthStore();
-      const config = useRuntimeConfig();
-      const data: any = await $fetch(`${config.public.apiBase}/admin/categories/${categoryId}/pricing`, {
-        method: 'POST',
-        headers: { Authorization: `Bearer ${authStore.token}` },
-        body,
-      });
+      const { $api } = useNuxtApp();
+      const data: any = await $api(`/admin/categories/${categoryId}/pricing`, { method: 'POST', body });
       return data.data;
     },
 
     async deletePricing(pricingId: number) {
-      const authStore = useAuthStore();
-      const config = useRuntimeConfig();
-      await $fetch(`${config.public.apiBase}/admin/pricing/${pricingId}`, {
-        method: 'DELETE',
-        headers: { Authorization: `Bearer ${authStore.token}` },
-      });
+      const { $api } = useNuxtApp();
+      await $api(`/admin/pricing/${pricingId}`, { method: 'DELETE' });
     },
 
     // ─── Pending Profile Changes ────────────────────────────
     async fetchPendingChanges() {
-      const authStore = useAuthStore();
-      const config = useRuntimeConfig();
-      const data: any = await $fetch(`${config.public.apiBase}/admin/pending-changes`, {
-        headers: { Authorization: `Bearer ${authStore.token}` },
-      });
+      const { $api } = useNuxtApp();
+      const data: any = await $api('/admin/pending-changes');
       this.pendingChanges = data.data;
     },
 
     async approveChange(changeId: number) {
-      const authStore = useAuthStore();
-      const config = useRuntimeConfig();
-      await $fetch(`${config.public.apiBase}/admin/pending-changes/${changeId}/approve`, {
-        method: 'POST',
-        headers: { Authorization: `Bearer ${authStore.token}` },
-      });
+      const { $api } = useNuxtApp();
+      await $api(`/admin/pending-changes/${changeId}/approve`, { method: 'POST' });
     },
 
     async rejectChange(changeId: number, adminNotes?: string) {
-      const authStore = useAuthStore();
-      const config = useRuntimeConfig();
-      await $fetch(`${config.public.apiBase}/admin/pending-changes/${changeId}/reject`, {
-        method: 'POST',
-        headers: { Authorization: `Bearer ${authStore.token}` },
-        body: { adminNotes },
-      });
+      const { $api } = useNuxtApp();
+      await $api(`/admin/pending-changes/${changeId}/reject`, { method: 'POST', body: { adminNotes } });
     },
   },
 });

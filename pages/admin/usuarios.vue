@@ -139,6 +139,7 @@
 <script setup lang="ts">
 definePageMeta({ layout: 'admin', middleware: ['role'] })
 
+const { $api } = useNuxtApp()
 const adminStore = useAdminStore()
 const toast = useToast()
 const mounted = ref(false)
@@ -187,11 +188,8 @@ function openEdit(user: any) {
 async function saveEditUser() {
   editSaving.value = true
   try {
-    const authStore = useAuthStore()
-    const config = useRuntimeConfig()
-    await $fetch(`${config.public.apiBase}/admin/users/${editingUser.value.id}`, {
+    await $api(`/admin/users/${editingUser.value.id}`, {
       method: 'PATCH',
-      headers: { Authorization: `Bearer ${authStore.token}` },
       body: { ...editForm },
     })
     toast.success('Usuario actualizado')
@@ -215,12 +213,9 @@ async function handleBlock(user: any) {
 }
 
 async function handleUnblock(user: any) {
-  const authStore = useAuthStore()
-  const config = useRuntimeConfig()
   try {
-    await $fetch(`${config.public.apiBase}/admin/users/${user.id}/unblock`, {
+    await $api(`/admin/users/${user.id}/unblock`, {
       method: 'POST',
-      headers: { Authorization: `Bearer ${authStore.token}` },
     })
     toast.success('Usuario desbloqueado')
     fetchUsers()

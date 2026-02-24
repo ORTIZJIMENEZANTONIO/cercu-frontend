@@ -23,11 +23,9 @@ export const useOnboardingStore = defineStore('onboarding', {
     async submit() {
       this.submitting = true;
       try {
-        const authStore = useAuthStore();
-        const config = useRuntimeConfig();
-        const data: any = await $fetch(`${config.public.apiBase}/professionals/onboard`, {
+        const { $api } = useNuxtApp();
+        const data: any = await $api('/professionals/onboard', {
           method: 'POST',
-          headers: { Authorization: `Bearer ${authStore.token}` },
           body: {
             businessName: this.businessName,
             description: this.description,

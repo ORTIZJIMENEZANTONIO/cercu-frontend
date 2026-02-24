@@ -1013,13 +1013,13 @@ useHead({
 
 .map-label {
   position: absolute;
-  background: $neu-bg;
+  background: white;
   border-radius: 8px;
   padding: 0.25rem 0.625rem;
   font-size: 0.7rem;
   font-weight: 600;
   color: $neutral-800;
-  box-shadow: $neu-shadow-md;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
   display: flex;
   align-items: center;
   gap: 0.25rem;
@@ -1044,13 +1044,13 @@ useHead({
 // ─── Hero Floating Stats ───
 .hero-stat {
   position: absolute;
-  background: $neu-bg;
+  background: white;
   border-radius: 14px;
   padding: 0.625rem 0.875rem;
   display: flex;
   align-items: center;
   gap: 0.625rem;
-  box-shadow: $neu-shadow-lg;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.12);
   z-index: 5;
 
   strong {
@@ -1092,8 +1092,7 @@ useHead({
   width: 36px;
   height: 36px;
   border-radius: 10px;
-  background: $neu-bg;
-  box-shadow: $neu-shadow-sm;
+  background: rgba($cercu-indigo, 0.08);
   color: $cercu-indigo;
   display: flex;
   align-items: center;

@@ -10,11 +10,8 @@ export const useProfessionalStore = defineStore('professional', {
       this.loading = true;
       this.profileMissing = false;
       try {
-        const authStore = useAuthStore();
-        const config = useRuntimeConfig();
-        const data: any = await $fetch(`${config.public.apiBase}/professionals/profile`, {
-          headers: { Authorization: `Bearer ${authStore.token}` },
-        });
+        const { $api } = useNuxtApp();
+        const data: any = await $api('/professionals/profile');
         this.profile = data.data;
       } catch (e: any) {
         if (e?.response?.status === 404 || e?.status === 404 || e?.statusCode === 404) {
@@ -27,88 +24,59 @@ export const useProfessionalStore = defineStore('professional', {
     },
 
     async updateProfile(updates: any) {
-      const authStore = useAuthStore();
-      const config = useRuntimeConfig();
-      const data: any = await $fetch(`${config.public.apiBase}/professionals/profile`, {
-        method: 'PATCH',
-        headers: { Authorization: `Bearer ${authStore.token}` },
-        body: updates,
-      });
+      const { $api } = useNuxtApp();
+      const data: any = await $api('/professionals/profile', { method: 'PATCH', body: updates });
       this.profile = data.data;
     },
 
     async toggleAvailability(isAvailable: boolean) {
-      const authStore = useAuthStore();
-      const config = useRuntimeConfig();
-      await $fetch(`${config.public.apiBase}/professionals/availability`, {
-        method: 'PATCH',
-        headers: { Authorization: `Bearer ${authStore.token}` },
-        body: { isAvailable },
-      });
+      const { $api } = useNuxtApp();
+      await $api('/professionals/availability', { method: 'PATCH', body: { isAvailable } });
       if (this.profile) this.profile.isAvailable = isAvailable;
     },
 
     async updateCategories(categoryIds: number[]) {
-      const authStore = useAuthStore();
-      const config = useRuntimeConfig();
-      const data: any = await $fetch(`${config.public.apiBase}/professionals/categories`, {
-        method: 'PUT',
-        headers: { Authorization: `Bearer ${authStore.token}` },
-        body: { categoryIds },
-      });
+      const { $api } = useNuxtApp();
+      const data: any = await $api('/professionals/categories', { method: 'PUT', body: { categoryIds } });
       this.profile = data.data;
     },
 
     async getWorkPhotos() {
-      const authStore = useAuthStore();
-      const config = useRuntimeConfig();
-      const data: any = await $fetch(`${config.public.apiBase}/professionals/work-photos`, {
-        headers: { Authorization: `Bearer ${authStore.token}` },
-      });
+      const { $api } = useNuxtApp();
+      const data: any = await $api('/professionals/work-photos');
       return data.data;
     },
 
     async uploadWorkPhotos(categoryId: number, files: File[]) {
-      const authStore = useAuthStore();
-      const config = useRuntimeConfig();
+      const { $api } = useNuxtApp();
       const formData = new FormData();
       for (const file of files) {
         formData.append('photos', file);
       }
-      const data: any = await $fetch(`${config.public.apiBase}/professionals/work-photos/${categoryId}`, {
+      const data: any = await $api(`/professionals/work-photos/${categoryId}`, {
         method: 'POST',
-        headers: { Authorization: `Bearer ${authStore.token}` },
         body: formData,
       });
       return data.data;
     },
 
     async deleteWorkPhoto(photoId: number) {
-      const authStore = useAuthStore();
-      const config = useRuntimeConfig();
-      await $fetch(`${config.public.apiBase}/professionals/work-photos/${photoId}`, {
-        method: 'DELETE',
-        headers: { Authorization: `Bearer ${authStore.token}` },
-      });
+      const { $api } = useNuxtApp();
+      await $api(`/professionals/work-photos/${photoId}`, { method: 'DELETE' });
     },
 
     async requestProfileChange(fieldName: string, requestedValue: string) {
-      const authStore = useAuthStore();
-      const config = useRuntimeConfig();
-      const data: any = await $fetch(`${config.public.apiBase}/professionals/profile-changes`, {
+      const { $api } = useNuxtApp();
+      const data: any = await $api('/professionals/profile-changes', {
         method: 'POST',
-        headers: { Authorization: `Bearer ${authStore.token}` },
         body: { fieldName, requestedValue },
       });
       return data.data;
     },
 
     async getPendingChanges() {
-      const authStore = useAuthStore();
-      const config = useRuntimeConfig();
-      const data: any = await $fetch(`${config.public.apiBase}/professionals/profile-changes`, {
-        headers: { Authorization: `Bearer ${authStore.token}` },
-      });
+      const { $api } = useNuxtApp();
+      const data: any = await $api('/professionals/profile-changes');
       return data.data;
     },
   },

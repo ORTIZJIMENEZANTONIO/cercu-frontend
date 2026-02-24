@@ -226,8 +226,9 @@ watch(mobileOpen, (open) => {
   position: sticky;
   top: 0;
   z-index: 1030;
-  background: $neu-bg;
-  box-shadow: $neu-shadow-md;
+  background: white;
+  border-bottom: 1px solid $neutral-200;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
 }
 
 .header-inner {
@@ -258,7 +259,7 @@ watch(mobileOpen, (open) => {
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: $neu-shadow-sm;
+  box-shadow: 0 2px 8px rgba($cercu-indigo, 0.25);
 }
 
 .header-logo-text {
@@ -290,12 +291,13 @@ watch(mobileOpen, (open) => {
 
   &:hover {
     color: $cercu-indigo;
-    box-shadow: $neu-inset-sm;
+    background: rgba($cercu-indigo, 0.04);
   }
 
   &.router-link-active {
     color: $cercu-indigo;
     font-weight: 600;
+    background: rgba($cercu-indigo, 0.06);
   }
 }
 
@@ -315,13 +317,13 @@ watch(mobileOpen, (open) => {
   color: $neutral-700;
   text-decoration: none;
   border-radius: $border-radius;
-  box-shadow: $neu-shadow-sm;
-  transition: color 0.2s ease, box-shadow 0.2s ease, transform 0.15s ease;
+  border: 1px solid $neutral-200;
+  transition: color 0.2s ease, border-color 0.2s ease, transform 0.15s ease;
 
   &:hover {
     color: $cercu-indigo;
+    border-color: rgba($cercu-indigo, 0.3);
     transform: translateY(-1px);
-    box-shadow: $neu-shadow-md;
   }
 }
 
@@ -335,18 +337,18 @@ watch(mobileOpen, (open) => {
   text-decoration: none;
   background: $cercu-indigo;
   border-radius: $border-radius;
-  box-shadow: 4px 4px 10px rgba(darken($cercu-indigo, 15%), 0.5), -4px -4px 10px rgba(lighten($cercu-indigo, 20%), 0.4);
+  box-shadow: 0 2px 8px rgba($cercu-indigo, 0.3);
   transition: box-shadow 0.2s ease, transform 0.15s ease;
 
   &:hover {
     color: white;
     transform: translateY(-1px);
-    box-shadow: 6px 6px 14px rgba(darken($cercu-indigo, 15%), 0.5), -6px -6px 14px rgba(lighten($cercu-indigo, 20%), 0.4);
+    box-shadow: 0 4px 14px rgba($cercu-indigo, 0.4);
   }
 
   &:active {
     transform: translateY(0);
-    box-shadow: inset 3px 3px 6px rgba(darken($cercu-indigo, 15%), 0.5), inset -3px -3px 6px rgba(lighten($cercu-indigo, 20%), 0.4);
+    box-shadow: 0 1px 4px rgba($cercu-indigo, 0.2);
   }
 }
 
@@ -363,7 +365,7 @@ watch(mobileOpen, (open) => {
   transition: box-shadow 0.2s ease;
 
   &:hover {
-    box-shadow: $neu-inset-sm;
+    background: $neutral-50;
   }
 }
 
@@ -378,7 +380,7 @@ watch(mobileOpen, (open) => {
   justify-content: center;
   font-size: 0.8rem;
   font-weight: 700;
-  box-shadow: $neu-shadow-sm;
+  box-shadow: 0 2px 6px rgba($cercu-indigo, 0.25);
 }
 
 .header-dropdown {
@@ -387,10 +389,10 @@ watch(mobileOpen, (open) => {
   right: 0;
   margin-top: 0.5rem;
   width: 220px;
-  background: $neu-bg;
+  background: white;
   border-radius: 12px;
-  box-shadow: $neu-shadow-xl;
-  border: none;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+  border: 1px solid $neutral-200;
   overflow: hidden;
   z-index: 1040;
 }
@@ -411,9 +413,8 @@ watch(mobileOpen, (open) => {
 }
 
 .header-dropdown-divider {
-  height: 2px;
-  background: none;
-  box-shadow: inset 0 1px 2px $neu-shadow-dark, inset 0 -1px 2px $neu-shadow-light;
+  height: 1px;
+  background: $neutral-200;
 }
 
 .header-dropdown-item {
@@ -431,12 +432,12 @@ watch(mobileOpen, (open) => {
   transition: box-shadow 0.15s ease;
 
   &:hover {
-    box-shadow: $neu-inset-sm;
+    background: $neutral-50;
   }
 
   &--danger {
     color: $danger;
-    &:hover { box-shadow: $neu-inset-sm; }
+    &:hover { background: rgba($danger, 0.04); }
   }
 }
 
@@ -485,8 +486,8 @@ watch(mobileOpen, (open) => {
   width: 300px;
   max-width: 85vw;
   height: 100%;
-  background: $neu-bg;
-  box-shadow: $neu-shadow-xl;
+  background: white;
+  box-shadow: -4px 0 20px rgba(0, 0, 0, 0.12);
   display: flex;
   flex-direction: column;
   overflow-y: auto;
@@ -497,7 +498,7 @@ watch(mobileOpen, (open) => {
   align-items: center;
   justify-content: space-between;
   padding: 1rem 1.25rem;
-  box-shadow: inset 0 -2px 4px $neu-shadow-dark;
+  border-bottom: 1px solid $neutral-200;
 }
 
 .mobile-close {
@@ -506,15 +507,14 @@ watch(mobileOpen, (open) => {
   display: flex;
   align-items: center;
   justify-content: center;
-  background: $neu-bg;
-  border: none;
+  background: $neutral-50;
+  border: 1px solid $neutral-200;
   border-radius: $border-radius;
   color: $neutral-500;
   cursor: pointer;
-  box-shadow: $neu-shadow-sm;
-  transition: box-shadow 0.15s ease;
+  transition: background 0.15s ease;
 
-  &:hover { box-shadow: $neu-inset-sm; }
+  &:hover { background: $neutral-100; }
 }
 
 .mobile-nav {
@@ -542,26 +542,25 @@ watch(mobileOpen, (open) => {
   transition: box-shadow 0.2s ease, color 0.2s ease;
 
   &:hover {
-    box-shadow: $neu-inset-sm;
+    background: $neutral-50;
     color: $cercu-indigo;
   }
 
   &--highlight {
     color: $cercu-indigo;
     font-weight: 600;
-    box-shadow: $neu-shadow-sm;
+    background: rgba($cercu-indigo, 0.06);
   }
 
   &--danger {
     color: $danger;
-    &:hover { box-shadow: $neu-inset-sm; }
+    &:hover { background: rgba($danger, 0.04); }
   }
 }
 
 .mobile-nav-divider {
-  height: 2px;
-  background: none;
-  box-shadow: inset 0 1px 2px $neu-shadow-dark, inset 0 -1px 2px $neu-shadow-light;
+  height: 1px;
+  background: $neutral-200;
   margin: 0.5rem 1rem;
 }
 </style>

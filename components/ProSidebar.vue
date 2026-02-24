@@ -1,5 +1,6 @@
 <template>
-  <aside class="sidebar">
+  <!-- Desktop sidebar -->
+  <aside class="sidebar d-none d-md-block">
     <nav class="sidebar-nav">
       <div class="sidebar-section-label">Profesional</div>
       <ul class="sidebar-list">
@@ -36,6 +37,21 @@
       </ul>
     </nav>
   </aside>
+
+  <!-- Mobile bottom tab bar -->
+  <nav class="bottom-bar d-md-none">
+    <NuxtLink
+      v-for="tab in mobileNav"
+      :key="tab.to"
+      :to="tab.to"
+      class="bottom-tab"
+      :exact-active-class="tab.exact ? 'active' : ''"
+      :active-class="tab.exact ? '' : 'active'"
+    >
+      <Icon :name="tab.icon" size="20" />
+      <span>{{ tab.label }}</span>
+    </NuxtLink>
+  </nav>
 </template>
 
 <script setup lang="ts">
@@ -48,7 +64,15 @@ const navItems = [
 const growthItems = [
   { to: '/pro/planes', icon: 'mdi:crown', label: 'Mi Plan', exact: false },
   { to: '/pro/boosts', icon: 'mdi:rocket-launch', label: 'Boosts', exact: false },
-  { to: '/pro/gamificacion', icon: 'mdi:trophy', label: 'Panel', exact: false },
+  { to: '/pro/panel', icon: 'mdi:trophy', label: 'Panel', exact: false },
+]
+
+const mobileNav = [
+  { to: '/pro', icon: 'mdi:inbox', label: 'Inbox', exact: true },
+  { to: '/pro/perfil', icon: 'mdi:account', label: 'Perfil', exact: false },
+  { to: '/pro/planes', icon: 'mdi:crown', label: 'Plan', exact: false },
+  { to: '/pro/panel', icon: 'mdi:trophy', label: 'Panel', exact: false },
+  { to: '/pro/boosts', icon: 'mdi:rocket-launch', label: 'Boosts', exact: false },
 ]
 </script>
 
@@ -68,9 +92,45 @@ const growthItems = [
     top: 64px;
     min-height: calc(100vh - 64px);
   }
+}
 
-  @media (max-width: 767.98px) {
-    display: none;
+// ─── Mobile Bottom Tab Bar ───
+.bottom-bar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 1030;
+  display: flex;
+  align-items: stretch;
+  background: white;
+  border-top: 1px solid $neutral-200;
+  box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.06);
+  padding-bottom: env(safe-area-inset-bottom, 0);
+}
+
+.bottom-tab {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.125rem;
+  padding: 0.5rem 0.25rem;
+  font-size: 0.6rem;
+  font-weight: 500;
+  color: $neutral-400;
+  text-decoration: none;
+  transition: color 0.2s ease;
+  -webkit-tap-highlight-color: transparent;
+
+  &.active {
+    color: $cercu-indigo;
+    font-weight: 600;
+  }
+
+  &:active {
+    transform: scale(0.92);
   }
 }
 

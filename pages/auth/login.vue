@@ -165,10 +165,10 @@ onUnmounted(() => clearInterval(cooldownTimer))
 
 <style lang="scss" scoped>
 .auth-card {
-  background: $neu-bg;
-  border: none;
+  background: white;
+  border: 1px solid $neutral-200;
   border-radius: 16px;
-  box-shadow: $neu-shadow-lg;
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.08);
   opacity: 0;
   transform: translateY(20px);
   transition: opacity 0.5s ease, transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
@@ -183,8 +183,8 @@ onUnmounted(() => clearInterval(cooldownTimer))
   width: 56px;
   height: 56px;
   border-radius: 50%;
-  background: $neu-bg;
-  box-shadow: $neu-shadow-sm;
+  background: rgba($cercu-indigo, 0.08);
+  color: $cercu-indigo;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -205,9 +205,8 @@ onUnmounted(() => clearInterval(cooldownTimer))
   &::after {
     content: '';
     flex: 1;
-    height: 2px;
-    background: none;
-    box-shadow: inset 0 1px 2px $neu-shadow-dark, inset 0 -1px 2px $neu-shadow-light;
+    height: 1px;
+    background: $neutral-200;
   }
 }
 </style>

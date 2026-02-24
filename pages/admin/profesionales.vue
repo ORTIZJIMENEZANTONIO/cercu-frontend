@@ -119,6 +119,7 @@
 <script setup lang="ts">
 definePageMeta({ layout: 'admin', middleware: ['role'] })
 
+const { $api } = useNuxtApp()
 const adminStore = useAdminStore()
 const toast = useToast()
 const mounted = ref(false)
@@ -153,12 +154,9 @@ async function approve(pro: any) {
 }
 
 async function reject(pro: any) {
-  const authStore = useAuthStore()
-  const config = useRuntimeConfig()
   try {
-    await $fetch(`${config.public.apiBase}/admin/professionals/${pro.userId}/reject`, {
+    await $api(`/admin/professionals/${pro.userId}/reject`, {
       method: 'POST',
-      headers: { Authorization: `Bearer ${authStore.token}` },
       body: { reason: 'Rejected by admin' },
     })
     toast.success('Profesional rechazado')
@@ -167,12 +165,9 @@ async function reject(pro: any) {
 }
 
 async function suspend(pro: any) {
-  const authStore = useAuthStore()
-  const config = useRuntimeConfig()
   try {
-    await $fetch(`${config.public.apiBase}/admin/professionals/${pro.userId}/suspend`, {
+    await $api(`/admin/professionals/${pro.userId}/suspend`, {
       method: 'POST',
-      headers: { Authorization: `Bearer ${authStore.token}` },
       body: { reason: 'Suspended by admin' },
     })
     toast.success('Profesional suspendido')

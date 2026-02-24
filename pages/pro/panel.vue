@@ -140,8 +140,8 @@ useHead({ title: 'Gamificación - CERCU Pro' });
 .content-card-title { display: flex; align-items: center; font-size: 1rem; font-weight: 600; color: $neutral-800; margin-bottom: 1rem; }
 .text-indigo { color: $cercu-indigo; }
 
-.stats-row { display: flex; gap: 0.75rem; overflow-x: auto; scrollbar-width: none; opacity: 0; transform: translateY(12px); transition: opacity 0.4s ease 0.05s, transform 0.4s cubic-bezier(0.22, 1, 0.36, 1) 0.05s; &.anim-in { opacity: 1; transform: translateY(0); } &::-webkit-scrollbar { display: none; } @media (min-width: 768px) { display: grid; grid-template-columns: repeat(3, 1fr); } }
-.stat-card { flex-shrink: 0; min-width: 110px; background: white; border: 1px solid $neutral-200; border-radius: 14px; padding: 1rem; text-align: center; box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06); }
+.stats-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.5rem; opacity: 0; transform: translateY(12px); transition: opacity 0.4s ease 0.05s, transform 0.4s cubic-bezier(0.22, 1, 0.36, 1) 0.05s; &.anim-in { opacity: 1; transform: translateY(0); } @media (min-width: 768px) { gap: 0.75rem; } }
+.stat-card { background: white; border: 1px solid $neutral-200; border-radius: 14px; padding: 0.75rem 0.5rem; text-align: center; box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06); @media (min-width: 768px) { padding: 1rem; } }
 .stat-card-icon { width: 40px; height: 40px; border-radius: 12px; display: flex; align-items: center; justify-content: center; margin: 0 auto 0.5rem; background: $neutral-50; border: 1px solid $neutral-100; &--xp { color: $cercu-indigo; } &--streak { color: $cercu-coral; } &--achievements { color: $warning; } }
 .stat-card-value { font-family: $headings-font-family; font-size: 1.25rem; font-weight: 700; color: $neutral-900; }
 .stat-card-label { font-size: 0.65rem; font-weight: 500; color: $neutral-500; text-transform: uppercase; letter-spacing: 0.03em; }

@@ -24,7 +24,7 @@
 .layout-auth {
   min-height: 100vh;
   min-height: 100dvh;
-  background: $neu-bg;
+  background: #F7F7FB;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -56,7 +56,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: $neu-shadow-sm;
+  box-shadow: 0 2px 8px rgba($cercu-indigo, 0.25);
 }
 
 .auth-logo-text {

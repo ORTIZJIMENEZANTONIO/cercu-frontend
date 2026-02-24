@@ -55,11 +55,9 @@ export const useServiceRequestStore = defineStore('serviceRequest', {
     async submit() {
       this.submitting = true;
       try {
-        const authStore = useAuthStore();
-        const config = useRuntimeConfig();
-        const data: any = await $fetch(`${config.public.apiBase}/leads`, {
+        const { $api } = useNuxtApp();
+        const data: any = await $api('/leads', {
           method: 'POST',
-          headers: { Authorization: `Bearer ${authStore.token}` },
           body: {
             categoryId: this.categoryId,
             urgencyTier: this.urgencyTier,

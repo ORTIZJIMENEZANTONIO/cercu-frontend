@@ -34,11 +34,8 @@ export const useGamificationStore = defineStore('gamification', {
     async fetchDashboard() {
       this.loading = true;
       try {
-        const authStore = useAuthStore();
-        const config = useRuntimeConfig();
-        const data: any = await $fetch(`${config.public.apiBase}/gamification/dashboard`, {
-          headers: { Authorization: `Bearer ${authStore.token}` },
-        });
+        const { $api } = useNuxtApp();
+        const data: any = await $api('/gamification/dashboard');
         this.dashboard = data.data;
       } catch { /* ignore */ } finally {
         this.loading = false;
@@ -47,44 +44,32 @@ export const useGamificationStore = defineStore('gamification', {
 
     async fetchAchievements() {
       try {
-        const authStore = useAuthStore();
-        const config = useRuntimeConfig();
-        const data: any = await $fetch(`${config.public.apiBase}/gamification/achievements`, {
-          headers: { Authorization: `Bearer ${authStore.token}` },
-        });
+        const { $api } = useNuxtApp();
+        const data: any = await $api('/gamification/achievements');
         this.achievements = data.data;
       } catch { /* ignore */ }
     },
 
     async fetchMissions() {
       try {
-        const authStore = useAuthStore();
-        const config = useRuntimeConfig();
-        const data: any = await $fetch(`${config.public.apiBase}/gamification/missions`, {
-          headers: { Authorization: `Bearer ${authStore.token}` },
-        });
+        const { $api } = useNuxtApp();
+        const data: any = await $api('/gamification/missions');
         this.missions = data.data;
       } catch { /* ignore */ }
     },
 
     async fetchXpHistory() {
       try {
-        const authStore = useAuthStore();
-        const config = useRuntimeConfig();
-        const data: any = await $fetch(`${config.public.apiBase}/gamification/xp-history`, {
-          headers: { Authorization: `Bearer ${authStore.token}` },
-        });
+        const { $api } = useNuxtApp();
+        const data: any = await $api('/gamification/xp-history');
         this.xpHistory = data.data;
       } catch { /* ignore */ }
     },
 
     async fetchTrustScore() {
       try {
-        const authStore = useAuthStore();
-        const config = useRuntimeConfig();
-        const data: any = await $fetch(`${config.public.apiBase}/gamification/trust-score`, {
-          headers: { Authorization: `Bearer ${authStore.token}` },
-        });
+        const { $api } = useNuxtApp();
+        const data: any = await $api('/gamification/trust-score');
         this.trustScore = data.data;
       } catch { /* ignore */ }
     },
@@ -93,11 +78,8 @@ export const useGamificationStore = defineStore('gamification', {
     async adminFetchLevels() {
       this.loading = true;
       try {
-        const authStore = useAuthStore();
-        const config = useRuntimeConfig();
-        const data: any = await $fetch(`${config.public.apiBase}/admin/levels`, {
-          headers: { Authorization: `Bearer ${authStore.token}` },
-        });
+        const { $api } = useNuxtApp();
+        const data: any = await $api('/admin/levels');
         this.levels = data.data;
       } finally {
         this.loading = false;
@@ -105,13 +87,8 @@ export const useGamificationStore = defineStore('gamification', {
     },
 
     async adminUpdateLevel(id: number, body: any) {
-      const authStore = useAuthStore();
-      const config = useRuntimeConfig();
-      const data: any = await $fetch(`${config.public.apiBase}/admin/levels/${id}`, {
-        method: 'PATCH',
-        headers: { Authorization: `Bearer ${authStore.token}` },
-        body,
-      });
+      const { $api } = useNuxtApp();
+      const data: any = await $api(`/admin/levels/${id}`, { method: 'PATCH', body });
       return data.data;
     },
 
@@ -119,11 +96,8 @@ export const useGamificationStore = defineStore('gamification', {
     async adminFetchAchievements() {
       this.loading = true;
       try {
-        const authStore = useAuthStore();
-        const config = useRuntimeConfig();
-        const data: any = await $fetch(`${config.public.apiBase}/admin/achievements`, {
-          headers: { Authorization: `Bearer ${authStore.token}` },
-        });
+        const { $api } = useNuxtApp();
+        const data: any = await $api('/admin/achievements');
         this.achievementTemplates = data.data;
       } finally {
         this.loading = false;
@@ -131,45 +105,28 @@ export const useGamificationStore = defineStore('gamification', {
     },
 
     async adminCreateAchievement(body: any) {
-      const authStore = useAuthStore();
-      const config = useRuntimeConfig();
-      const data: any = await $fetch(`${config.public.apiBase}/admin/achievements`, {
-        method: 'POST',
-        headers: { Authorization: `Bearer ${authStore.token}` },
-        body,
-      });
+      const { $api } = useNuxtApp();
+      const data: any = await $api('/admin/achievements', { method: 'POST', body });
       return data.data;
     },
 
     async adminUpdateAchievement(id: number, body: any) {
-      const authStore = useAuthStore();
-      const config = useRuntimeConfig();
-      const data: any = await $fetch(`${config.public.apiBase}/admin/achievements/${id}`, {
-        method: 'PATCH',
-        headers: { Authorization: `Bearer ${authStore.token}` },
-        body,
-      });
+      const { $api } = useNuxtApp();
+      const data: any = await $api(`/admin/achievements/${id}`, { method: 'PATCH', body });
       return data.data;
     },
 
     async adminDeleteAchievement(id: number) {
-      const authStore = useAuthStore();
-      const config = useRuntimeConfig();
-      await $fetch(`${config.public.apiBase}/admin/achievements/${id}`, {
-        method: 'DELETE',
-        headers: { Authorization: `Bearer ${authStore.token}` },
-      });
+      const { $api } = useNuxtApp();
+      await $api(`/admin/achievements/${id}`, { method: 'DELETE' });
     },
 
     // ─── Admin: Mission Templates ───
     async adminFetchMissionTemplates() {
       this.loading = true;
       try {
-        const authStore = useAuthStore();
-        const config = useRuntimeConfig();
-        const data: any = await $fetch(`${config.public.apiBase}/admin/mission-templates`, {
-          headers: { Authorization: `Bearer ${authStore.token}` },
-        });
+        const { $api } = useNuxtApp();
+        const data: any = await $api('/admin/mission-templates');
         this.missionTemplates = data.data;
       } finally {
         this.loading = false;
@@ -177,45 +134,26 @@ export const useGamificationStore = defineStore('gamification', {
     },
 
     async adminCreateMissionTemplate(body: any) {
-      const authStore = useAuthStore();
-      const config = useRuntimeConfig();
-      const data: any = await $fetch(`${config.public.apiBase}/admin/mission-templates`, {
-        method: 'POST',
-        headers: { Authorization: `Bearer ${authStore.token}` },
-        body,
-      });
+      const { $api } = useNuxtApp();
+      const data: any = await $api('/admin/mission-templates', { method: 'POST', body });
       return data.data;
     },
 
     async adminUpdateMissionTemplate(id: number, body: any) {
-      const authStore = useAuthStore();
-      const config = useRuntimeConfig();
-      const data: any = await $fetch(`${config.public.apiBase}/admin/mission-templates/${id}`, {
-        method: 'PATCH',
-        headers: { Authorization: `Bearer ${authStore.token}` },
-        body,
-      });
+      const { $api } = useNuxtApp();
+      const data: any = await $api(`/admin/mission-templates/${id}`, { method: 'PATCH', body });
       return data.data;
     },
 
     async adminDeleteMissionTemplate(id: number) {
-      const authStore = useAuthStore();
-      const config = useRuntimeConfig();
-      await $fetch(`${config.public.apiBase}/admin/mission-templates/${id}`, {
-        method: 'DELETE',
-        headers: { Authorization: `Bearer ${authStore.token}` },
-      });
+      const { $api } = useNuxtApp();
+      await $api(`/admin/mission-templates/${id}`, { method: 'DELETE' });
     },
 
     // ─── Admin: XP Grant ───
     async adminGrantXP(userId: string, amount: number, notes?: string) {
-      const authStore = useAuthStore();
-      const config = useRuntimeConfig();
-      const data: any = await $fetch(`${config.public.apiBase}/admin/xp/grant`, {
-        method: 'POST',
-        headers: { Authorization: `Bearer ${authStore.token}` },
-        body: { userId, amount, notes },
-      });
+      const { $api } = useNuxtApp();
+      const data: any = await $api('/admin/xp/grant', { method: 'POST', body: { userId, amount, notes } });
       return data.data;
     },
   },

@@ -51,7 +51,7 @@ const navItems = [
 const monetItems = [
   { to: '/admin/planes', icon: 'mdi:crown', label: 'Planes', exact: false },
   { to: '/admin/boosts', icon: 'mdi:rocket-launch', label: 'Boosts', exact: false },
-  { to: '/admin/gamificacion', icon: 'mdi:trophy', label: 'Gamificación', exact: false },
+  { to: '/admin/panel', icon: 'mdi:trophy', label: 'Gamificación', exact: false },
   { to: '/admin/configuracion', icon: 'mdi:cog', label: 'Configuración', exact: false },
 ]
 </script>

@@ -34,12 +34,14 @@ const xpEvents = useXpEvents();
   min-height: calc(100vh - 56px);
   min-height: calc(100dvh - 56px);
   background: #F7F7FB;
-  padding: 1.25rem;
+  padding: 1rem;
+  padding-bottom: calc(4rem + env(safe-area-inset-bottom, 0px));
 
   @media (min-width: 768px) {
     min-height: calc(100vh - 64px);
     margin-left: 260px;
     padding: 1.5rem 2rem;
+    padding-bottom: 1.5rem;
   }
 }
 </style>

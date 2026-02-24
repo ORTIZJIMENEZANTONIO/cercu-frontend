@@ -257,6 +257,7 @@ const proStore = useProfessionalStore()
 const authStore = useAuthStore()
 const categoriesStore = useCategoriesStore()
 const toast = useToast()
+const { $api } = useNuxtApp()
 const config = useRuntimeConfig()
 const mounted = ref(false)
 const saving = ref(false)
@@ -330,9 +331,8 @@ async function uploadPicture() {
   try {
     const formData = new FormData()
     formData.append('profilePicture', selectedFile.value)
-    await $fetch(`${config.public.apiBase}/users/profile-picture`, {
+    await $api('/users/profile-picture', {
       method: 'POST',
-      headers: { Authorization: `Bearer ${authStore.token}` },
       body: formData,
     })
     await authStore.fetchMe()
@@ -521,38 +521,33 @@ useHead({ title: 'Mi Perfil - CERCU Pro' })
 
 // ─── Stats Row ───
 .stats-row {
-  display: flex;
-  gap: 0.75rem;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.5rem;
   margin-bottom: 1.25rem;
-  overflow-x: auto;
-  padding-bottom: 0.25rem;
-  -webkit-overflow-scrolling: touch;
-  scrollbar-width: none;
   opacity: 0;
   transform: translateY(12px);
   transition: opacity 0.4s ease 0.05s, transform 0.4s cubic-bezier(0.22, 1, 0.36, 1) 0.05s;
 
   &.anim-in { opacity: 1; transform: translateY(0); }
-  &::-webkit-scrollbar { display: none; }
 
   @media (min-width: 768px) {
-    display: grid;
     grid-template-columns: repeat(4, 1fr);
-    overflow: visible;
+    gap: 0.75rem;
     margin-bottom: 1.5rem;
   }
 }
 
 .stat-card {
-  flex-shrink: 0;
-  min-width: 120px;
   background: white;
   border: 1px solid $neutral-200;
   border-radius: 14px;
-  padding: 1rem;
+  padding: 0.75rem 0.5rem;
   text-align: center;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
   transition: transform 0.25s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.25s ease;
+
+  @media (min-width: 768px) { padding: 1rem; }
 
   &:hover {
     transform: translateY(-2px);
@@ -800,8 +795,13 @@ useHead({ title: 'Mi Perfil - CERCU Pro' })
 
 .work-photos-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
-  gap: 0.625rem;
+  grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+  gap: 0.5rem;
+
+  @media (min-width: 768px) {
+    grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+    gap: 0.625rem;
+  }
 }
 
 .work-photo-item {
@@ -837,11 +837,14 @@ useHead({ title: 'Mi Perfil - CERCU Pro' })
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  opacity: 0;
+  opacity: 1;
   transition: opacity 0.2s ease;
 
-  .work-photo-item:hover & {
-    opacity: 1;
+  @media (min-width: 768px) {
+    opacity: 0;
+    .work-photo-item:hover & {
+      opacity: 1;
+    }
   }
 }
 

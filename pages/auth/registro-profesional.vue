@@ -229,10 +229,10 @@ onUnmounted(() => clearInterval(cooldownTimer))
 
 <style lang="scss" scoped>
 .auth-card {
-  background: $neu-bg;
-  border: none;
+  background: white;
+  border: 1px solid $neutral-200;
   border-radius: 16px;
-  box-shadow: $neu-shadow-lg;
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.08);
   opacity: 0;
   transform: translateY(20px);
   transition: opacity 0.5s ease, transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
@@ -247,8 +247,8 @@ onUnmounted(() => clearInterval(cooldownTimer))
   width: 56px;
   height: 56px;
   border-radius: 50%;
-  background: $neu-bg;
-  box-shadow: $neu-shadow-sm;
+  background: rgba($cercu-coral, 0.1);
+  color: $cercu-coral;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -269,9 +269,8 @@ onUnmounted(() => clearInterval(cooldownTimer))
   &::after {
     content: '';
     flex: 1;
-    height: 2px;
-    background: none;
-    box-shadow: inset 0 1px 2px $neu-shadow-dark, inset 0 -1px 2px $neu-shadow-light;
+    height: 1px;
+    background: $neutral-200;
   }
 }
 
@@ -296,10 +295,16 @@ onUnmounted(() => clearInterval(cooldownTimer))
   align-items: center;
   gap: 0.75rem;
   padding: 0.75rem;
-  background: $neu-bg;
-  border: none;
+  background: white;
+  border: 1px solid $neutral-200;
   border-radius: 12px;
-  box-shadow: $neu-shadow-sm;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  }
 
   strong {
     display: block;
@@ -312,14 +317,17 @@ onUnmounted(() => clearInterval(cooldownTimer))
     font-size: 0.75rem;
     color: $neutral-500;
   }
+
+  &:nth-child(1) .pro-benefit-icon { background: rgba($success, 0.1); color: $success; }
+  &:nth-child(2) .pro-benefit-icon { background: rgba($cercu-coral, 0.1); color: $cercu-coral; }
+  &:nth-child(3) .pro-benefit-icon { background: rgba($cercu-indigo, 0.08); color: $cercu-indigo; }
 }
 
 .pro-benefit-icon {
   width: 36px;
   height: 36px;
   border-radius: 10px;
-  background: $neu-bg;
-  box-shadow: $neu-shadow-sm;
+  background: rgba($cercu-indigo, 0.08);
   color: $cercu-indigo;
   display: flex;
   align-items: center;

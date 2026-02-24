@@ -1,31 +1,33 @@
 <template>
   <div>
-    <div class="page-header d-flex justify-content-between align-items-center mb-3" :class="{ 'anim-in': mounted }">
-      <h1 class="h4 fw-bold mb-0">Inbox de Leads</h1>
-      <div class="d-flex align-items-center gap-3">
-        <span class="text-muted small">{{ leadsStore.stats.total }} leads</span>
-        <div class="form-check form-switch">
-          <input
-            class="form-check-input"
-            type="checkbox"
-            :checked="proStore.profile?.isAvailable"
-            @change="toggleAvailable"
-          />
-          <label class="form-check-label small">Disponible</label>
+    <div class="page-header mb-3" :class="{ 'anim-in': mounted }">
+      <div class="d-flex justify-content-between align-items-center flex-wrap gap-2">
+        <h1 class="page-title mb-0">Inbox de Leads</h1>
+        <div class="d-flex align-items-center gap-2">
+          <span class="text-muted small d-none d-sm-inline">{{ leadsStore.stats.total }} leads</span>
+          <div class="form-check form-switch mb-0">
+            <input
+              class="form-check-input"
+              type="checkbox"
+              :checked="proStore.profile?.isAvailable"
+              @change="toggleAvailable"
+            />
+            <label class="form-check-label small">Disponible</label>
+          </div>
         </div>
       </div>
     </div>
 
     <!-- Gamification Quick Summary -->
     <div class="gam-strip mb-3" :class="{ 'anim-in': mounted }" style="transition-delay: 0.05s">
-      <NuxtLink to="/pro/gamificacion" class="gam-strip-item text-decoration-none">
+      <NuxtLink to="/pro/panel" class="gam-strip-item text-decoration-none">
         <div class="gam-strip-icon"><Icon name="mdi:shield-star" size="18" /></div>
         <div class="gam-strip-info">
           <span class="gam-strip-value">{{ gamStore.dashboard?.levelName || 'Bronce' }}</span>
           <span class="gam-strip-label">Nivel</span>
         </div>
       </NuxtLink>
-      <NuxtLink to="/pro/gamificacion" class="gam-strip-item text-decoration-none">
+      <NuxtLink to="/pro/panel" class="gam-strip-item text-decoration-none">
         <div class="gam-strip-icon gam-strip-icon--xp"><Icon name="mdi:star-four-points" size="18" /></div>
         <div class="gam-strip-info">
           <span class="gam-strip-value">{{ gamStore.totalXP }} XP</span>
@@ -52,7 +54,7 @@
     <div v-if="gamStore.activeMissions.length" class="missions-quick mb-3" :class="{ 'anim-in': mounted }" style="transition-delay: 0.1s">
       <div class="d-flex justify-content-between align-items-center mb-2">
         <span class="missions-quick-title"><Icon name="mdi:target" size="16" class="me-1 text-indigo" /> Misiones activas</span>
-        <NuxtLink to="/pro/gamificacion" class="small text-indigo text-decoration-none">Ver todas</NuxtLink>
+        <NuxtLink to="/pro/panel" class="small text-indigo text-decoration-none">Ver todas</NuxtLink>
       </div>
       <div class="missions-quick-list">
         <div v-for="m in gamStore.activeMissions.slice(0, 2)" :key="m.id" class="mission-mini">
@@ -74,43 +76,38 @@
           description="Cuando un usuario solicite un servicio en tu zona, aparecera aqui."
         />
       </Transition>
-      <TransitionGroup v-if="leadsStore.leads.length > 0" name="slide-up" tag="div" class="d-flex flex-column gap-3">
+      <TransitionGroup v-if="leadsStore.leads.length > 0" name="slide-up" tag="div" class="leads-list">
         <div
           v-for="(match, index) in leadsStore.leads"
           :key="match.matchId"
-          class="lead-card card card-interactive p-3"
+          class="lead-card"
           :class="{ 'lead-card--urgent': match.lead.urgencyTier === 'immediate' }"
           :style="{ transitionDelay: `${index * 0.06}s` }"
         >
-          <NuxtLink :to="`/pro/leads/${match.lead.id}`" class="text-decoration-none text-dark">
-            <div class="d-flex justify-content-between align-items-start">
-              <div>
-                <div class="d-flex align-items-center gap-2 mb-1">
-                  <Icon :name="match.lead.categoryIcon || 'mdi:wrench'" class="text-brand" />
+          <NuxtLink :to="`/pro/leads/${match.lead.id}`" class="lead-card-link">
+            <div class="lead-card-top">
+              <div class="lead-card-info">
+                <div class="lead-card-category">
+                  <Icon :name="match.lead.categoryIcon || 'mdi:wrench'" class="text-brand" size="16" />
                   <strong>{{ match.lead.categoryName }}</strong>
                   <AppStatusPill :status="match.lead.status" />
                 </div>
-                <div class="d-flex flex-wrap gap-1 mb-2">
-                  <TransitionGroup name="pop">
-                    <span v-for="(chip, i) in match.lead.chips" :key="i" class="badge bg-light text-dark small">
-                      {{ chip }}
-                    </span>
-                  </TransitionGroup>
-                </div>
-                <div class="text-muted small">
-                  <Icon name="mdi:map-marker" size="14" class="me-1" />
-                  {{ match.distanceKm }}km de distancia
-                  <span class="mx-2">|</span>
-                  <Icon name="mdi:star" size="14" class="me-1 text-warning" />
-                  Score: {{ match.score }}
+                <div class="lead-card-chips">
+                  <span v-for="(chip, i) in match.lead.chips" :key="i" class="lead-chip">
+                    {{ chip }}
+                  </span>
                 </div>
               </div>
-              <div class="text-end">
-                <div class="h5 fw-bold text-brand mb-0">${{ match.lead.priceMXN }}</div>
+              <div class="lead-card-price">
+                <span class="lead-price-amount">${{ match.lead.priceMXN }}</span>
                 <span :class="['badge', urgencyBadge(match.lead.urgencyTier)]">
                   {{ urgencyLabel(match.lead.urgencyTier) }}
                 </span>
               </div>
+            </div>
+            <div class="lead-card-meta">
+              <span><Icon name="mdi:map-marker" size="13" /> {{ match.distanceKm }}km</span>
+              <span><Icon name="mdi:star" size="13" class="text-warning" /> Score: {{ match.score }}</span>
             </div>
           </NuxtLink>
         </div>
@@ -177,6 +174,15 @@ useHead({ title: 'Dashboard Pro - CERCU' })
     opacity: 1;
     transform: translateY(0);
   }
+}
+
+.page-title {
+  font-family: $headings-font-family;
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: $neutral-900;
+
+  @media (min-width: 768px) { font-size: 1.375rem; }
 }
 
 // ─── Gamification Strip ───
@@ -253,16 +259,41 @@ useHead({ title: 'Dashboard Pro - CERCU' })
   gap: 0.5rem;
 }
 
-.mission-mini-name { font-size: 0.75rem; font-weight: 500; color: $neutral-700; flex-shrink: 0; min-width: 120px; }
+.mission-mini-name { font-size: 0.75rem; font-weight: 500; color: $neutral-700; flex-shrink: 0; min-width: 80px; max-width: 120px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .mission-mini-bar { flex: 1; height: 4px; background: $neutral-200; border-radius: 2px; overflow: hidden; }
 .mission-mini-fill { height: 100%; background: $cercu-indigo; border-radius: 2px; transition: width 0.6s ease; }
 .mission-mini-count { font-size: 0.65rem; font-weight: 600; color: $neutral-500; flex-shrink: 0; }
 
 // ─── Leads ───
+.leads-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.625rem;
+
+  @media (min-width: 768px) { gap: 0.75rem; }
+}
+
 .lead-card {
-  &.lead-card--urgent {
-    position: relative;
-    overflow: hidden;
+  background: white;
+  border: 1px solid $neutral-200;
+  border-left: 4px solid $cercu-indigo;
+  border-radius: 14px;
+  overflow: hidden;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+  transition: transform 0.25s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.25s ease;
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+  }
+
+  &:active {
+    transform: translateY(0) scale(0.995);
+    transition-duration: 0.1s;
+  }
+
+  &--urgent {
+    border-left-color: $cercu-coral;
 
     &::before {
       content: '';
@@ -275,6 +306,97 @@ useHead({ title: 'Dashboard Pro - CERCU' })
       animation: urgentPulse 2s ease-in-out infinite;
     }
   }
+}
+
+.lead-card-link {
+  display: block;
+  padding: 0.75rem;
+  text-decoration: none;
+  color: inherit;
+
+  @media (min-width: 768px) { padding: 1rem 1.25rem; }
+}
+
+.lead-card-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 0.75rem;
+}
+
+.lead-card-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.lead-card-category {
+  display: flex;
+  align-items: center;
+  gap: 0.375rem;
+  margin-bottom: 0.375rem;
+  flex-wrap: wrap;
+
+  strong {
+    font-size: 0.85rem;
+    color: $neutral-900;
+
+    @media (min-width: 768px) { font-size: 0.9375rem; }
+  }
+}
+
+.lead-card-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem;
+  margin-bottom: 0.25rem;
+}
+
+.lead-chip {
+  display: inline-block;
+  padding: 0.125rem 0.5rem;
+  background: $neutral-100;
+  color: $neutral-700;
+  border-radius: 999px;
+  font-size: 0.675rem;
+  font-weight: 500;
+
+  @media (min-width: 768px) { font-size: 0.75rem; padding: 0.1875rem 0.625rem; }
+}
+
+.lead-card-price {
+  flex-shrink: 0;
+  text-align: right;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 0.25rem;
+}
+
+.lead-price-amount {
+  font-family: $headings-font-family;
+  font-size: 1rem;
+  font-weight: 700;
+  color: $cercu-indigo;
+  white-space: nowrap;
+
+  @media (min-width: 768px) { font-size: 1.125rem; }
+}
+
+.lead-card-meta {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-top: 0.375rem;
+  font-size: 0.7rem;
+  color: $neutral-500;
+
+  span {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.2rem;
+  }
+
+  @media (min-width: 768px) { font-size: 0.75rem; }
 }
 
 @keyframes urgentPulse {

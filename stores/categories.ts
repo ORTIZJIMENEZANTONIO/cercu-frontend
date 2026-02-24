@@ -13,15 +13,15 @@ export const useCategoriesStore = defineStore('categories', {
   actions: {
     async fetchAll() {
       if (this.loaded) return;
-      const config = useRuntimeConfig();
-      const data: any = await $fetch(`${config.public.apiBase}/categories`);
+      const { $apiPublic } = useNuxtApp();
+      const data: any = await $apiPublic('/categories');
       this.categories = data.data;
       this.loaded = true;
     },
 
     async fetchById(id: string | number) {
-      const config = useRuntimeConfig();
-      const data: any = await $fetch(`${config.public.apiBase}/categories/${id}`);
+      const { $apiPublic } = useNuxtApp();
+      const data: any = await $apiPublic(`/categories/${id}`);
       this.currentCategory = data.data;
       return data.data;
     },

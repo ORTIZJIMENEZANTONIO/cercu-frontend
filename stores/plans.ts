@@ -15,8 +15,8 @@ export const usePlansStore = defineStore('plans', {
     async fetchPlans() {
       this.loading = true;
       try {
-        const config = useRuntimeConfig();
-        const data: any = await $fetch(`${config.public.apiBase}/plans`);
+        const { $apiPublic } = useNuxtApp();
+        const data: any = await $apiPublic('/plans');
         this.plans = data.data;
       } finally {
         this.loading = false;
@@ -25,11 +25,8 @@ export const usePlansStore = defineStore('plans', {
 
     async fetchCurrentSubscription() {
       try {
-        const authStore = useAuthStore();
-        const config = useRuntimeConfig();
-        const data: any = await $fetch(`${config.public.apiBase}/subscriptions/current`, {
-          headers: { Authorization: `Bearer ${authStore.token}` },
-        });
+        const { $api } = useNuxtApp();
+        const data: any = await $api('/subscriptions/current');
         this.currentSubscription = data.data;
       } catch (e: any) {
         if (e?.statusCode === 404 || e?.status === 404) {
@@ -39,35 +36,21 @@ export const usePlansStore = defineStore('plans', {
     },
 
     async subscribe(planId: number) {
-      const authStore = useAuthStore();
-      const config = useRuntimeConfig();
-      const data: any = await $fetch(`${config.public.apiBase}/subscriptions/subscribe`, {
-        method: 'POST',
-        headers: { Authorization: `Bearer ${authStore.token}` },
-        body: { planId },
-      });
+      const { $api } = useNuxtApp();
+      const data: any = await $api('/subscriptions/subscribe', { method: 'POST', body: { planId } });
       this.currentSubscription = data.data;
       return data.data;
     },
 
     async cancelSubscription() {
-      const authStore = useAuthStore();
-      const config = useRuntimeConfig();
-      await $fetch(`${config.public.apiBase}/subscriptions/cancel`, {
-        method: 'POST',
-        headers: { Authorization: `Bearer ${authStore.token}` },
-      });
+      const { $api } = useNuxtApp();
+      await $api('/subscriptions/cancel', { method: 'POST' });
       await this.fetchCurrentSubscription();
     },
 
     async changePlan(planId: number) {
-      const authStore = useAuthStore();
-      const config = useRuntimeConfig();
-      const data: any = await $fetch(`${config.public.apiBase}/subscriptions/change-plan`, {
-        method: 'POST',
-        headers: { Authorization: `Bearer ${authStore.token}` },
-        body: { planId },
-      });
+      const { $api } = useNuxtApp();
+      const data: any = await $api('/subscriptions/change-plan', { method: 'POST', body: { planId } });
       this.currentSubscription = data.data;
       return data.data;
     },
@@ -76,11 +59,8 @@ export const usePlansStore = defineStore('plans', {
     async adminFetchPlans() {
       this.loading = true;
       try {
-        const authStore = useAuthStore();
-        const config = useRuntimeConfig();
-        const data: any = await $fetch(`${config.public.apiBase}/admin/plans`, {
-          headers: { Authorization: `Bearer ${authStore.token}` },
-        });
+        const { $api } = useNuxtApp();
+        const data: any = await $api('/admin/plans');
         this.plans = data.data;
       } finally {
         this.loading = false;
@@ -88,54 +68,32 @@ export const usePlansStore = defineStore('plans', {
     },
 
     async adminCreatePlan(body: any) {
-      const authStore = useAuthStore();
-      const config = useRuntimeConfig();
-      const data: any = await $fetch(`${config.public.apiBase}/admin/plans`, {
-        method: 'POST',
-        headers: { Authorization: `Bearer ${authStore.token}` },
-        body,
-      });
+      const { $api } = useNuxtApp();
+      const data: any = await $api('/admin/plans', { method: 'POST', body });
       return data.data;
     },
 
     async adminUpdatePlan(id: number, body: any) {
-      const authStore = useAuthStore();
-      const config = useRuntimeConfig();
-      const data: any = await $fetch(`${config.public.apiBase}/admin/plans/${id}`, {
-        method: 'PATCH',
-        headers: { Authorization: `Bearer ${authStore.token}` },
-        body,
-      });
+      const { $api } = useNuxtApp();
+      const data: any = await $api(`/admin/plans/${id}`, { method: 'PATCH', body });
       return data.data;
     },
 
     async adminDeletePlan(id: number) {
-      const authStore = useAuthStore();
-      const config = useRuntimeConfig();
-      await $fetch(`${config.public.apiBase}/admin/plans/${id}`, {
-        method: 'DELETE',
-        headers: { Authorization: `Bearer ${authStore.token}` },
-      });
+      const { $api } = useNuxtApp();
+      await $api(`/admin/plans/${id}`, { method: 'DELETE' });
     },
 
     // ─── Admin ConfigKV ───
     async adminGetConfig(key: string) {
-      const authStore = useAuthStore();
-      const config = useRuntimeConfig();
-      const data: any = await $fetch(`${config.public.apiBase}/admin/config/${key}`, {
-        headers: { Authorization: `Bearer ${authStore.token}` },
-      });
+      const { $api } = useNuxtApp();
+      const data: any = await $api(`/admin/config/${key}`);
       return data.data;
     },
 
     async adminSetConfig(key: string, value: string, description?: string) {
-      const authStore = useAuthStore();
-      const config = useRuntimeConfig();
-      const data: any = await $fetch(`${config.public.apiBase}/admin/config/${key}`, {
-        method: 'PUT',
-        headers: { Authorization: `Bearer ${authStore.token}` },
-        body: { value, description },
-      });
+      const { $api } = useNuxtApp();
+      const data: any = await $api(`/admin/config/${key}`, { method: 'PUT', body: { value, description } });
       return data.data;
     },
   },

@@ -13,31 +13,23 @@ export const useBoostsStore = defineStore('boosts', {
   actions: {
     async fetchBoostTypes() {
       try {
-        const config = useRuntimeConfig();
-        const data: any = await $fetch(`${config.public.apiBase}/boosts/types`);
+        const { $apiPublic } = useNuxtApp();
+        const data: any = await $apiPublic('/boosts/types');
         this.boostTypes = data.data;
       } catch { /* ignore */ }
     },
 
     async fetchActiveBoosts() {
       try {
-        const authStore = useAuthStore();
-        const config = useRuntimeConfig();
-        const data: any = await $fetch(`${config.public.apiBase}/boosts/active`, {
-          headers: { Authorization: `Bearer ${authStore.token}` },
-        });
+        const { $api } = useNuxtApp();
+        const data: any = await $api('/boosts/active');
         this.activeBoosts = data.data;
       } catch { /* ignore */ }
     },
 
     async purchaseBoost(boostTypeId: number) {
-      const authStore = useAuthStore();
-      const config = useRuntimeConfig();
-      const data: any = await $fetch(`${config.public.apiBase}/boosts/purchase`, {
-        method: 'POST',
-        headers: { Authorization: `Bearer ${authStore.token}` },
-        body: { boostTypeId },
-      });
+      const { $api } = useNuxtApp();
+      const data: any = await $api('/boosts/purchase', { method: 'POST', body: { boostTypeId } });
       await this.fetchActiveBoosts();
       return data.data;
     },
@@ -46,11 +38,8 @@ export const useBoostsStore = defineStore('boosts', {
     async adminFetchBoostTypes() {
       this.loading = true;
       try {
-        const authStore = useAuthStore();
-        const config = useRuntimeConfig();
-        const data: any = await $fetch(`${config.public.apiBase}/admin/boost-types`, {
-          headers: { Authorization: `Bearer ${authStore.token}` },
-        });
+        const { $api } = useNuxtApp();
+        const data: any = await $api('/admin/boost-types');
         this.boostTypes = data.data;
       } finally {
         this.loading = false;
@@ -58,34 +47,20 @@ export const useBoostsStore = defineStore('boosts', {
     },
 
     async adminCreateBoostType(body: any) {
-      const authStore = useAuthStore();
-      const config = useRuntimeConfig();
-      const data: any = await $fetch(`${config.public.apiBase}/admin/boost-types`, {
-        method: 'POST',
-        headers: { Authorization: `Bearer ${authStore.token}` },
-        body,
-      });
+      const { $api } = useNuxtApp();
+      const data: any = await $api('/admin/boost-types', { method: 'POST', body });
       return data.data;
     },
 
     async adminUpdateBoostType(id: number, body: any) {
-      const authStore = useAuthStore();
-      const config = useRuntimeConfig();
-      const data: any = await $fetch(`${config.public.apiBase}/admin/boost-types/${id}`, {
-        method: 'PATCH',
-        headers: { Authorization: `Bearer ${authStore.token}` },
-        body,
-      });
+      const { $api } = useNuxtApp();
+      const data: any = await $api(`/admin/boost-types/${id}`, { method: 'PATCH', body });
       return data.data;
     },
 
     async adminDeleteBoostType(id: number) {
-      const authStore = useAuthStore();
-      const config = useRuntimeConfig();
-      await $fetch(`${config.public.apiBase}/admin/boost-types/${id}`, {
-        method: 'DELETE',
-        headers: { Authorization: `Bearer ${authStore.token}` },
-      });
+      const { $api } = useNuxtApp();
+      await $api(`/admin/boost-types/${id}`, { method: 'DELETE' });
     },
   },
 });
