@@ -70,9 +70,10 @@ const growthItems = [
 const mobileNav = [
   { to: '/pro', icon: 'mdi:inbox', label: 'Inbox', exact: true },
   { to: '/pro/perfil', icon: 'mdi:account', label: 'Perfil', exact: false },
-  { to: '/pro/planes', icon: 'mdi:crown', label: 'Plan', exact: false },
   { to: '/pro/panel', icon: 'mdi:trophy', label: 'Panel', exact: false },
+  { to: '/pro/planes', icon: 'mdi:crown', label: 'Plan', exact: false },
   { to: '/pro/boosts', icon: 'mdi:rocket-launch', label: 'Boosts', exact: false },
+  { to: '/pro/configuracion', icon: 'mdi:cog', label: 'Config', exact: false },
 ]
 </script>
 
@@ -111,18 +112,21 @@ const mobileNav = [
 
 .bottom-tab {
   flex: 1;
+  min-width: 0;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 0.125rem;
-  padding: 0.5rem 0.25rem;
-  font-size: 0.6rem;
+  gap: 0.1rem;
+  padding: 0.45rem 0.125rem;
+  font-size: 0.55rem;
   font-weight: 500;
   color: $neutral-400;
   text-decoration: none;
   transition: color 0.2s ease;
   -webkit-tap-highlight-color: transparent;
+  overflow: hidden;
+  white-space: nowrap;
 
   &.active {
     color: $cercu-indigo;

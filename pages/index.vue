@@ -925,7 +925,7 @@ useHead({
   position: absolute;
   inset: 0;
   z-index: 1;
-  background: rgba($cercu-indigo, 0.45);
+  background: rgba($cercu-indigo, 0.35);
   pointer-events: none;
 }
 

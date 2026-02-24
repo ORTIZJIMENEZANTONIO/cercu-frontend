@@ -14,7 +14,7 @@
             v-if="gamStore.dashboard"
             :level="gamStore.dashboard.currentLevel"
             :name="gamStore.dashboard.levelName"
-            :icon="gamStore.dashboard.levelIcon"
+            :icon="gamStore.dashboard.levelIcon || 'mdi:shield-star'"
             :total-x-p="gamStore.dashboard.totalXP"
             :current-level-x-p="gamStore.dashboard.xpForCurrentLevel"
             :next-x-p="gamStore.dashboard.xpForNextLevel"
