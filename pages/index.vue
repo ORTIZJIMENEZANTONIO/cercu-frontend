@@ -2,7 +2,15 @@
   <div>
     <!-- Hero -->
     <section class="hero-section">
-      <div class="hero-bg" />
+      <div class="hero-bg" aria-hidden="true">
+        <span class="lava-orb orb--i1"></span>
+        <span class="lava-orb orb--i2"></span>
+        <span class="lava-orb orb--i3"></span>
+        <span class="lava-orb orb--i4"></span>
+        <span class="lava-orb orb--c1"></span>
+        <span class="lava-orb orb--c2"></span>
+      </div>
+
       <div class="container hero-container">
         <div class="row align-items-center min-vh-hero">
           <div class="col-lg-6 hero-content">
@@ -15,8 +23,8 @@
               <span class="hero-title-accent">cerca de ti</span>
             </h1>
             <p class="hero-subtitle" :class="{ 'anim-in': mounted }">
-              Plomeros, electricistas, cerrajeros y mas.
-              Agenda en minutos, sin complicaciones.
+              Plomeros, electricistas, cerrajeros y mas. Agenda en minutos, sin
+              complicaciones.
             </p>
             <div class="hero-search" :class="{ 'anim-in': mounted }">
               <div class="position-relative">
@@ -37,7 +45,10 @@
                 Solicitar servicio
                 <Icon name="mdi:arrow-right" class="ms-2 cta-arrow" size="18" />
               </NuxtLink>
-              <NuxtLink to="/categorias" class="btn btn-hero-secondary btn-press">
+              <NuxtLink
+                to="/categorias"
+                class="btn btn-hero-secondary btn-press"
+              >
                 Ver categorias
               </NuxtLink>
             </div>
@@ -53,13 +64,27 @@
                     :center="[19.4326, -99.1332]"
                     :min-zoom="12"
                     :max-zoom="16"
-                    :max-bounds="[[19.15, -99.45], [19.65, -98.85]]"
+                    :max-bounds="[
+                      [19.15, -99.45],
+                      [19.65, -98.85],
+                    ]"
                     :max-bounds-viscosity="1.0"
                     :use-global-leaflet="false"
-                    :options="{ zoomControl: false, attributionControl: false, dragging: true, scrollWheelZoom: false, doubleClickZoom: false, touchZoom: true, boxZoom: false, keyboard: false }"
+                    :options="{
+                      zoomControl: false,
+                      attributionControl: false,
+                      dragging: true,
+                      scrollWheelZoom: false,
+                      doubleClickZoom: false,
+                      touchZoom: true,
+                      boxZoom: false,
+                      keyboard: false,
+                    }"
                     class="map-leaflet-bg"
                   >
-                    <LTileLayer url="https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png" />
+                    <LTileLayer
+                      url="https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png"
+                    />
                   </LMap>
                 </ClientOnly>
                 <!-- Indigo overlay to blend with theme -->
@@ -70,16 +95,28 @@
                 <div class="map-pin map-pin--center">
                   <Icon name="mdi:home" size="16" />
                 </div>
-                <div class="map-pin map-pin--1 float" style="animation-delay: 0s">
+                <div
+                  class="map-pin map-pin--1 float"
+                  style="animation-delay: 0s"
+                >
                   <Icon name="mdi:wrench" size="12" />
                 </div>
-                <div class="map-pin map-pin--2 float" style="animation-delay: 0.5s">
+                <div
+                  class="map-pin map-pin--2 float"
+                  style="animation-delay: 0.5s"
+                >
                   <Icon name="mdi:lightning-bolt" size="12" />
                 </div>
-                <div class="map-pin map-pin--3 float" style="animation-delay: 1s">
+                <div
+                  class="map-pin map-pin--3 float"
+                  style="animation-delay: 1s"
+                >
                   <Icon name="mdi:key" size="12" />
                 </div>
-                <div class="map-pin map-pin--4 float" style="animation-delay: 1.5s">
+                <div
+                  class="map-pin map-pin--4 float"
+                  style="animation-delay: 1.5s"
+                >
                   <Icon name="mdi:hammer" size="12" />
                 </div>
                 <!-- Distance label -->
@@ -120,7 +157,9 @@
     <section ref="categoriesSection" class="section-padding">
       <div class="container">
         <div class="section-header mb-4">
-          <h2 ref="categoriesTitle" class="h3 fw-bold mb-1">Servicios populares</h2>
+          <h2 ref="categoriesTitle" class="h3 fw-bold mb-1">
+            Servicios populares
+          </h2>
           <p class="text-muted mb-0">Selecciona una categoria para empezar</p>
         </div>
         <div class="row g-3">
@@ -129,18 +168,29 @@
             :key="cat.id || cat.slug"
             class="col-6 col-md-4 col-lg-3 category-item"
           >
-            <NuxtLink :to="`/categorias/${cat.slug}`" class="text-decoration-none">
+            <NuxtLink
+              :to="`/categorias/${cat.slug}`"
+              class="text-decoration-none"
+            >
               <div class="card category-card h-100 text-center p-4">
-                <div class="category-icon mx-auto mb-3" :class="`category-icon--${catColorClass(idx)}`">
+                <div
+                  class="category-icon mx-auto mb-3"
+                  :class="`category-icon--${catColorClass(idx)}`"
+                >
                   <Icon :name="cat.icon || 'mdi:wrench'" size="28" />
                 </div>
                 <h6 class="fw-semibold mb-1">{{ cat.name }}</h6>
-                <span class="small text-muted">{{ cat.chips?.length || 0 }} servicios</span>
+                <span class="small text-muted"
+                  >{{ cat.chips?.length || 0 }} servicios</span
+                >
               </div>
             </NuxtLink>
           </div>
         </div>
-        <div v-if="categoriesStore.categories.length > 8" class="text-center mt-4">
+        <div
+          v-if="categoriesStore.categories.length > 8"
+          class="text-center mt-4"
+        >
           <NuxtLink to="/categorias" class="btn btn-outline-primary btn-press">
             Ver todas las categorias
             <Icon name="mdi:arrow-right" class="ms-1" size="16" />
@@ -155,7 +205,11 @@
         <h2 class="h3 fw-bold text-center mb-2">Como funciona</h2>
         <p class="text-center text-muted mb-5">En 3 simples pasos</p>
         <div class="row g-4">
-          <div v-for="(step, i) in howItWorks" :key="i" class="col-md-4 text-center how-step">
+          <div
+            v-for="(step, i) in howItWorks"
+            :key="i"
+            class="col-md-4 text-center how-step"
+          >
             <div class="mb-3">
               <div class="how-number">{{ i + 1 }}</div>
               <div class="how-icon-circle mx-auto">
@@ -173,7 +227,11 @@
     <section ref="trustSection" class="trust-section">
       <div class="container">
         <div class="row g-4 text-center">
-          <div v-for="(stat, i) in trustStats" :key="i" class="col-6 col-md-3 trust-stat">
+          <div
+            v-for="(stat, i) in trustStats"
+            :key="i"
+            class="col-6 col-md-3 trust-stat"
+          >
             <h3 ref="trustNumbers" class="trust-number">{{ stat.display }}</h3>
             <p class="trust-label">{{ stat.label }}</p>
           </div>
@@ -185,8 +243,13 @@
     <section class="section-padding text-center">
       <div class="container">
         <div class="cta-box">
-          <h2 class="h3 fw-bold text-white mb-3">Listo para resolver tu problema?</h2>
-          <p class="text-white-75 mb-4">Describe lo que necesitas y encuentra profesionales verificados cerca de ti.</p>
+          <h2 class="h3 fw-bold text-white mb-3">
+            Listo para resolver tu problema?
+          </h2>
+          <p class="text-white-75 mb-4">
+            Describe lo que necesitas y encuentra profesionales verificados
+            cerca de ti.
+          </p>
           <NuxtLink to="/solicitar" class="btn btn-cta-light btn-press">
             Solicitar servicio gratis
             <Icon name="mdi:arrow-right" class="ms-2" size="18" />
@@ -198,132 +261,424 @@
 </template>
 
 <script setup lang="ts">
-import gsap from 'gsap'
+import gsap from "gsap";
 
-const authStore = useAuthStore()
+const authStore = useAuthStore();
 
-const categoriesStore = useCategoriesStore()
-const { countUp } = useAnimations()
-const { revealChildren, reveal } = useScrollReveal()
+const categoriesStore = useCategoriesStore();
+const { countUp } = useAnimations();
+const { revealChildren, reveal } = useScrollReveal();
 
-const searchQuery = ref('')
-const searchFocused = ref(false)
-const mounted = ref(false)
+const searchQuery = ref("");
+const searchFocused = ref(false);
+const mounted = ref(false);
 
-const categoriesSection = ref<HTMLElement>()
-const categoriesTitle = ref<HTMLElement>()
-const howSection = ref<HTMLElement>()
-const trustSection = ref<HTMLElement>()
-const trustNumbers = ref<HTMLElement[]>([])
+const categoriesSection = ref<HTMLElement>();
+const categoriesTitle = ref<HTMLElement>();
+const howSection = ref<HTMLElement>();
+const trustSection = ref<HTMLElement>();
+const trustNumbers = ref<HTMLElement[]>([]);
 
 const howItWorks = [
-  { icon: 'mdi:clipboard-text', title: 'Describe tu necesidad', desc: 'Selecciona el servicio, describe el problema y sube fotos si quieres.' },
-  { icon: 'mdi:map-marker-radius', title: 'Encontramos profesionales', desc: 'Buscamos los mejores profesionales verificados cerca de tu ubicacion.' },
-  { icon: 'mdi:handshake', title: 'Agenda y resuelve', desc: 'El profesional te contacta, coordinan la visita y resuelven tu problema.' },
-]
+  {
+    icon: "mdi:clipboard-text",
+    title: "Describe tu necesidad",
+    desc: "Selecciona el servicio, describe el problema y sube fotos si quieres.",
+  },
+  {
+    icon: "mdi:map-marker-radius",
+    title: "Encontramos profesionales",
+    desc: "Buscamos los mejores profesionales verificados cerca de tu ubicacion.",
+  },
+  {
+    icon: "mdi:handshake",
+    title: "Agenda y resuelve",
+    desc: "El profesional te contacta, coordinan la visita y resuelven tu problema.",
+  },
+];
 
 const trustStats = [
-  { value: 500, display: '500+', label: 'Profesionales verificados', prefix: '', suffix: '+' },
-  { value: 12, display: '12', label: 'Categorias de servicio', prefix: '', suffix: '' },
-  { value: 0, display: 'CDMX', label: 'y Estado de Mexico', isText: true },
-  { value: 0, display: '24/7', label: 'Emergencias disponibles', isText: true },
-]
+  {
+    value: 500,
+    display: "500+",
+    label: "Profesionales verificados",
+    prefix: "",
+    suffix: "+",
+  },
+  {
+    value: 12,
+    display: "12",
+    label: "Categorias de servicio",
+    prefix: "",
+    suffix: "",
+  },
+  { value: 0, display: "CDMX", label: "y Estado de Mexico", isText: true },
+  { value: 0, display: "24/7", label: "Emergencias disponibles", isText: true },
+];
 
 const displayCategories = computed(() =>
   categoriesStore.categories.slice(0, 8)
-)
+);
 
-const catColors = ['coral', 'warning', 'success', 'info', 'indigo', 'danger', 'teal', 'purple']
+const catColors = [
+  "coral",
+  "warning",
+  "success",
+  "info",
+  "indigo",
+  "danger",
+  "teal",
+  "purple",
+];
 function catColorClass(idx: number) {
-  return catColors[idx % catColors.length]
+  return catColors[idx % catColors.length];
 }
 
 onMounted(() => {
   // Redirect logged-in regular users to solicitudes dashboard
-  if (authStore.isAuthenticated && !authStore.isProfessional && !authStore.isAdmin) {
-    return navigateTo('/solicitudes', { replace: true })
+  if (
+    authStore.isAuthenticated &&
+    !authStore.isProfessional &&
+    !authStore.isAdmin
+  ) {
+    return navigateTo("/solicitudes", { replace: true });
   }
 
   // Trigger hero animations immediately
   requestAnimationFrame(() => {
-    mounted.value = true
-  })
+    mounted.value = true;
+  });
 
   // Fetch categories in background (don't block UI)
-  categoriesStore.fetchAll().catch(() => {})
+  categoriesStore.fetchAll().catch(() => {});
 
-  animateScrollSections()
-})
+  animateScrollSections();
+});
 
 function animateScrollSections() {
   if (categoriesTitle.value) {
-    reveal(categoriesTitle.value, 'fadeUp')
+    reveal(categoriesTitle.value, "fadeUp");
   }
   if (categoriesSection.value) {
-    revealChildren(categoriesSection.value, '.category-item', 0.08)
+    revealChildren(categoriesSection.value, ".category-item", 0.08);
   }
   if (howSection.value) {
-    revealChildren(howSection.value, '.how-step', 0.15)
+    revealChildren(howSection.value, ".how-step", 0.15);
   }
 
   if (trustSection.value) {
-    const io = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          animateTrustNumbers()
-          io.unobserve(entry.target)
-        }
-      })
-    }, { threshold: 0.3 })
-    io.observe(trustSection.value)
+    const io = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            animateTrustNumbers();
+            io.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.3 }
+    );
+    io.observe(trustSection.value);
   }
 }
 
 function animateTrustNumbers() {
-  if (!trustNumbers.value?.length) return
+  if (!trustNumbers.value?.length) return;
   trustNumbers.value.forEach((el, i) => {
-    const stat = trustStats[i]
+    const stat = trustStats[i];
     if (stat.isText) {
-      gsap.fromTo(el, { opacity: 0, scale: 0.5 }, { opacity: 1, scale: 1, duration: 0.5, delay: i * 0.1, ease: 'back.out(1.7)' })
+      gsap.fromTo(
+        el,
+        { opacity: 0, scale: 0.5 },
+        {
+          opacity: 1,
+          scale: 1,
+          duration: 0.5,
+          delay: i * 0.1,
+          ease: "back.out(1.7)",
+        }
+      );
     } else if (stat.value > 0) {
-      gsap.fromTo(el, { opacity: 0 }, { opacity: 1, duration: 0.3, delay: i * 0.1 })
-      countUp(el, stat.value, { duration: 1.2, delay: i * 0.1, prefix: stat.prefix, suffix: stat.suffix })
+      gsap.fromTo(
+        el,
+        { opacity: 0 },
+        { opacity: 1, duration: 0.3, delay: i * 0.1 }
+      );
+      countUp(el, stat.value, {
+        duration: 1.2,
+        delay: i * 0.1,
+        prefix: stat.prefix,
+        suffix: stat.suffix,
+      });
     }
-  })
+  });
 }
 
 function goToSearch() {
-  navigateTo({ path: '/buscar', query: { q: searchQuery.value } })
+  navigateTo({ path: "/buscar", query: { q: searchQuery.value } });
 }
 
 useHead({
-  title: 'CERCU - Oficios a domicilio en CDMX',
+  title: "CERCU - Oficios a domicilio en CDMX",
   meta: [
-    { name: 'description', content: 'Encuentra profesionales de confianza para servicios a domicilio en CDMX y Estado de Mexico.' },
+    {
+      name: "description",
+      content:
+        "Encuentra profesionales de confianza para servicios a domicilio en CDMX y Estado de Mexico.",
+    },
   ],
-})
+});
 </script>
 
 <style lang="scss" scoped>
-// ─── Hero Section ───
 .hero-section {
   position: relative;
   overflow: hidden;
-  background: linear-gradient(135deg, $cercu-indigo 0%, darken($cercu-indigo, 8%) 50%, $cercu-indigo-dark 100%);
   color: white;
+
+  /* base oficial */
+  background: linear-gradient(
+    135deg,
+    $cercu-indigo 0%,
+    $cercu-indigo-light 35%,
+    #5b56f0 55%,
+    /* micro-shift dentro de indigo-light */ $cercu-indigo-dark 100%
+  );
 }
 
+/* capa lava */
 .hero-bg {
   position: absolute;
   inset: 0;
-  background: radial-gradient(circle at 70% 50%, rgba(white, 0.06) 0%, transparent 60%),
-    radial-gradient(circle at 20% 80%, rgba($cercu-coral, 0.08) 0%, transparent 40%);
   pointer-events: none;
+  z-index: 0;
+
+  /* brillo base suave */
+  background: radial-gradient(
+      circle at 72% 48%,
+      rgba(255, 255, 255, 0.06) 0%,
+      transparent 62%
+    ),
+    radial-gradient(
+      circle at 18% 78%,
+      rgba(255, 255, 255, 0.04) 0%,
+      transparent 55%
+    );
+
+  filter: saturate(1.1) contrast(1.02);
 }
 
+/* orbs */
+.lava-orb {
+  position: absolute;
+  border-radius: 999px;
+  filter: blur(26px);
+  transform: translate3d(0, 0, 0);
+  will-change: transform;
+  opacity: 0.9;
+  mix-blend-mode: screen;
+}
+
+/* ── INDIGO (predominan) ─────────────────────────── */
+.orb--i1 {
+  width: 780px;
+  height: 780px;
+  top: -34%;
+  left: -18%;
+  background: radial-gradient(
+    circle at 30% 30%,
+    rgba(79, 70, 229, 0.88) 0%,
+    rgba(79, 70, 229, 0) 68%
+  );
+  animation: lavaA 10s ease-in-out infinite;
+}
+
+.orb--i2 {
+  width: 720px;
+  height: 720px;
+  top: -28%;
+  right: -22%;
+  background: radial-gradient(
+    circle at 30% 30%,
+    rgba(55, 48, 163, 0.86) 0%,
+    rgba(55, 48, 163, 0) 70%
+  );
+  animation: lavaB 13s ease-in-out infinite;
+}
+
+.orb--i3 {
+  width: 860px;
+  height: 860px;
+  bottom: -42%;
+  left: 4%;
+  background: radial-gradient(
+    circle at 30% 30%,
+    rgba(46, 42, 138, 0.92) 0%,
+    rgba(46, 42, 138, 0) 72%
+  );
+  animation: lavaC 16s ease-in-out infinite;
+}
+
+.orb--i4 {
+  width: 640px;
+  height: 640px;
+  bottom: -34%;
+  right: 8%;
+  opacity: 0.75;
+  background: radial-gradient(
+    circle at 30% 30%,
+    rgba(79, 70, 229, 0.62) 0%,
+    rgba(79, 70, 229, 0) 72%
+  );
+  animation: lavaD 12s ease-in-out infinite;
+}
+
+/* ── CORAL (acento muy controlado) ───────────────── */
+.orb--c1 {
+  width: 520px;
+  height: 520px;
+  top: 18%;
+  left: 56%;
+  opacity: 0.55;
+  background: radial-gradient(
+    circle at 30% 30%,
+    rgba(251, 113, 133, 0.7) 0%,
+    rgba(251, 113, 133, 0) 70%
+  );
+  animation: lavaE 11s ease-in-out infinite;
+}
+
+.orb--c2 {
+  width: 460px;
+  height: 460px;
+  bottom: 6%;
+  left: 22%;
+  opacity: 0.42;
+  mix-blend-mode: overlay;
+  background: radial-gradient(
+    circle at 30% 30%,
+    rgba(253, 164, 175, 0.55) 0%,
+    rgba(253, 164, 175, 0) 72%
+  );
+  animation: lavaF 14s ease-in-out infinite;
+}
+
+/* ── Movimiento “lava” (más notorio) ─────────────── */
+/* Nota: amplitudes grandes + desfasados = se percibe lava */
+@keyframes lavaA {
+  0% {
+    transform: translate3d(0%, 0%, 0) scale(1);
+  }
+  25% {
+    transform: translate3d(18%, 10%, 0) scale(1.1);
+  }
+  50% {
+    transform: translate3d(30%, -10%, 0) scale(0.98);
+  }
+  75% {
+    transform: translate3d(10%, -22%, 0) scale(1.14);
+  }
+  100% {
+    transform: translate3d(0%, 0%, 0) scale(1);
+  }
+}
+
+@keyframes lavaB {
+  0% {
+    transform: translate3d(0%, 0%, 0) scale(1);
+  }
+  20% {
+    transform: translate3d(-20%, 14%, 0) scale(1.12);
+  }
+  50% {
+    transform: translate3d(-34%, -12%, 0) scale(0.96);
+  }
+  80% {
+    transform: translate3d(-14%, -24%, 0) scale(1.12);
+  }
+  100% {
+    transform: translate3d(0%, 0%, 0) scale(1);
+  }
+}
+
+@keyframes lavaC {
+  0% {
+    transform: translate3d(0%, 0%, 0) scale(1);
+  }
+  30% {
+    transform: translate3d(16%, -14%, 0) scale(1.08);
+  }
+  55% {
+    transform: translate3d(30%, -30%, 0) scale(1.16);
+  }
+  80% {
+    transform: translate3d(12%, -10%, 0) scale(0.98);
+  }
+  100% {
+    transform: translate3d(0%, 0%, 0) scale(1);
+  }
+}
+
+@keyframes lavaD {
+  0% {
+    transform: translate3d(0%, 0%, 0) scale(1);
+  }
+  25% {
+    transform: translate3d(-14%, -14%, 0) scale(1.14);
+  }
+  50% {
+    transform: translate3d(-28%, -26%, 0) scale(0.97);
+  }
+  75% {
+    transform: translate3d(-10%, -8%, 0) scale(1.12);
+  }
+  100% {
+    transform: translate3d(0%, 0%, 0) scale(1);
+  }
+}
+
+/* coral con movimiento “flotante” más corto para acento */
+@keyframes lavaE {
+  0% {
+    transform: translate3d(0%, 0%, 0) scale(1);
+  }
+  40% {
+    transform: translate3d(-12%, 10%, 0) scale(1.1);
+  }
+  70% {
+    transform: translate3d(10%, -8%, 0) scale(0.98);
+  }
+  100% {
+    transform: translate3d(0%, 0%, 0) scale(1);
+  }
+}
+
+@keyframes lavaF {
+  0% {
+    transform: translate3d(0%, 0%, 0) scale(1);
+  }
+  35% {
+    transform: translate3d(14%, -10%, 0) scale(1.08);
+  }
+  75% {
+    transform: translate3d(-10%, -14%, 0) scale(1.03);
+  }
+  100% {
+    transform: translate3d(0%, 0%, 0) scale(1);
+  }
+}
+
+/* contenido arriba */
 .hero-container {
   position: relative;
   z-index: 1;
+}
+
+/* reduce motion */
+@media (prefers-reduced-motion: reduce) {
+  .lava-orb {
+    animation: none;
+  }
 }
 
 .min-vh-hero {
@@ -356,7 +711,8 @@ useHead({
   backdrop-filter: blur(4px);
   opacity: 0;
   transform: translateY(12px);
-  transition: opacity 0.5s ease 0.1s, transform 0.5s cubic-bezier(0.22, 1, 0.36, 1) 0.1s;
+  transition: opacity 0.5s ease 0.1s,
+    transform 0.5s cubic-bezier(0.22, 1, 0.36, 1) 0.1s;
 
   &.anim-in {
     opacity: 1;
@@ -374,7 +730,8 @@ useHead({
   margin-bottom: 1rem;
   opacity: 0;
   transform: translateY(20px);
-  transition: opacity 0.6s ease 0.2s, transform 0.6s cubic-bezier(0.22, 1, 0.36, 1) 0.2s;
+  transition: opacity 0.6s ease 0.2s,
+    transform 0.6s cubic-bezier(0.22, 1, 0.36, 1) 0.2s;
 
   @media (min-width: 992px) {
     font-size: 2.75rem;
@@ -399,7 +756,8 @@ useHead({
   max-width: 440px;
   opacity: 0;
   transform: translateY(16px);
-  transition: opacity 0.5s ease 0.35s, transform 0.5s cubic-bezier(0.22, 1, 0.36, 1) 0.35s;
+  transition: opacity 0.5s ease 0.35s,
+    transform 0.5s cubic-bezier(0.22, 1, 0.36, 1) 0.35s;
 
   &.anim-in {
     opacity: 1;
@@ -413,7 +771,8 @@ useHead({
   max-width: 440px;
   opacity: 0;
   transform: translateY(16px);
-  transition: opacity 0.5s ease 0.45s, transform 0.5s cubic-bezier(0.22, 1, 0.36, 1) 0.45s;
+  transition: opacity 0.5s ease 0.45s,
+    transform 0.5s cubic-bezier(0.22, 1, 0.36, 1) 0.45s;
 
   &.anim-in {
     opacity: 1;
@@ -460,7 +819,8 @@ useHead({
   flex-wrap: wrap;
   opacity: 0;
   transform: translateY(16px);
-  transition: opacity 0.5s ease 0.55s, transform 0.5s cubic-bezier(0.22, 1, 0.36, 1) 0.55s;
+  transition: opacity 0.5s ease 0.55s,
+    transform 0.5s cubic-bezier(0.22, 1, 0.36, 1) 0.55s;
 
   &.anim-in {
     opacity: 1;
@@ -521,7 +881,8 @@ useHead({
   height: 400px;
   opacity: 0;
   transform: translateY(30px) scale(0.95);
-  transition: opacity 0.7s ease 0.4s, transform 0.7s cubic-bezier(0.22, 1, 0.36, 1) 0.4s;
+  transition: opacity 0.7s ease 0.4s,
+    transform 0.7s cubic-bezier(0.22, 1, 0.36, 1) 0.4s;
 
   &.anim-in {
     opacity: 1;
@@ -584,8 +945,15 @@ useHead({
 }
 
 @keyframes pulseRadius {
-  0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 0.8; }
-  50% { transform: translate(-50%, -50%) scale(1.05); opacity: 1; }
+  0%,
+  100% {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 0.8;
+  }
+  50% {
+    transform: translate(-50%, -50%) scale(1.05);
+    opacity: 1;
+  }
 }
 
 .map-pin {
@@ -711,8 +1079,13 @@ useHead({
 }
 
 @keyframes floatStat {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-6px); }
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-6px);
+  }
 }
 
 .hero-stat-icon {
@@ -742,7 +1115,8 @@ useHead({
   border: 1px solid $neutral-200;
   border-radius: $border-radius-lg;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
-  transition: transform 0.25s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.25s ease;
+  transition: transform 0.25s cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 0.25s ease;
   cursor: pointer;
 
   &:hover {
@@ -766,16 +1140,41 @@ useHead({
   border-radius: 14px;
   background: rgba($cercu-indigo, 0.08);
   color: $cercu-indigo;
-  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), background 0.3s ease;
+  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1),
+    background 0.3s ease;
 
-  &--coral { background: rgba($cercu-coral, 0.1); color: $cercu-coral; }
-  &--warning { background: rgba($warning, 0.1); color: $warning; }
-  &--success { background: rgba($success, 0.1); color: $success; }
-  &--info { background: rgba($info, 0.1); color: $info; }
-  &--indigo { background: rgba($cercu-indigo, 0.08); color: $cercu-indigo; }
-  &--danger { background: rgba($danger, 0.1); color: $danger; }
-  &--teal { background: rgba(#14B8A6, 0.1); color: #14B8A6; }
-  &--purple { background: rgba(#8B5CF6, 0.1); color: #8B5CF6; }
+  &--coral {
+    background: rgba($cercu-coral, 0.1);
+    color: $cercu-coral;
+  }
+  &--warning {
+    background: rgba($warning, 0.1);
+    color: $warning;
+  }
+  &--success {
+    background: rgba($success, 0.1);
+    color: $success;
+  }
+  &--info {
+    background: rgba($info, 0.1);
+    color: $info;
+  }
+  &--indigo {
+    background: rgba($cercu-indigo, 0.08);
+    color: $cercu-indigo;
+  }
+  &--danger {
+    background: rgba($danger, 0.1);
+    color: $danger;
+  }
+  &--teal {
+    background: rgba(#14b8a6, 0.1);
+    color: #14b8a6;
+  }
+  &--purple {
+    background: rgba(#8b5cf6, 0.1);
+    color: #8b5cf6;
+  }
 }
 
 .category-card:hover .category-icon {
@@ -784,7 +1183,7 @@ useHead({
 
 // ─── How It Works ───
 .how-section {
-  background: #F7F7FB;
+  background: #f7f7fb;
 }
 
 .how-number {
@@ -812,7 +1211,8 @@ useHead({
   align-items: center;
   justify-content: center;
   color: $cercu-indigo;
-  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.3s ease;
+  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1),
+    box-shadow 0.3s ease;
 }
 
 .how-step:hover .how-icon-circle {
@@ -859,7 +1259,11 @@ useHead({
 
 // ─── CTA Box ───
 .cta-box {
-  background: linear-gradient(135deg, $cercu-indigo 0%, $cercu-indigo-dark 100%);
+  background: linear-gradient(
+    135deg,
+    $cercu-indigo 0%,
+    $cercu-indigo-dark 100%
+  );
   border-radius: 20px;
   padding: 3rem 2rem;
   box-shadow: 0 12px 40px rgba($cercu-indigo, 0.25);

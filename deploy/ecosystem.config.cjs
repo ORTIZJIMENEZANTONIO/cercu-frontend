@@ -25,7 +25,7 @@ module.exports = {
       env: {
         NODE_ENV: 'production',
         PORT: 3001,
-        NUXT_PUBLIC_API_BASE: 'https://tudominio.com/api/v1',
+        NUXT_PUBLIC_API_BASE: 'https://cercu.com.mx/api/v1',
       },
       max_memory_restart: '300M',
       log_date_format: 'YYYY-MM-DD HH:mm:ss',
