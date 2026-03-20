@@ -52,6 +52,16 @@
           </NuxtLink>
         </nav>
 
+        <!-- Institutional logos (centered on mobile, inline on desktop) -->
+        <div class="flex items-center gap-2 sm:gap-3">
+          <a href="https://www.ciiemad.ipn.mx/" target="_blank" rel="noopener noreferrer" class="shrink-0">
+            <img src="/images/logo-ciiemad.png" alt="CIIEMAD - IPN" class="h-8 sm:h-10 w-auto" />
+          </a>
+          <a href="https://www.ipn.mx/" target="_blank" rel="noopener noreferrer" class="shrink-0">
+            <img src="/images/logo-ipn.svg" alt="Instituto Politécnico Nacional" class="h-8 sm:h-10 w-auto" />
+          </a>
+        </div>
+
         <!-- Desktop CTA + Mobile toggle -->
         <div class="flex items-center gap-3">
           <NuxtLink to="/mapa" class="btn-primary btn-sm hidden lg:inline-flex">

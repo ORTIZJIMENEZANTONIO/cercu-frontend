@@ -77,8 +77,16 @@
         </div>
       </div>
 
-      <!-- Bottom bar -->
+      <!-- Institutional logos -->
       <div class="mt-10 border-t border-white/10 pt-6">
+        <div class="flex items-center justify-center gap-6 mb-4">
+          <a href="https://www.ciiemad.ipn.mx/" target="_blank" rel="noopener noreferrer">
+            <img src="/images/logo-ciiemad.png" alt="CIIEMAD - IPN" class="h-14 w-auto rounded-full bg-white p-1" />
+          </a>
+          <a href="https://www.ipn.mx/" target="_blank" rel="noopener noreferrer">
+            <img src="/images/logo-ipn.svg" alt="Instituto Politécnico Nacional" class="h-12 w-auto brightness-0 invert" />
+          </a>
+        </div>
         <p class="text-center text-xs text-white/40">
           &copy; 2024 Observatorio de Techos Verdes CDMX. Todos los derechos reservados.
         </p>
